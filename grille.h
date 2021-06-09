@@ -43,26 +43,22 @@ Grid initialisation_tableau_ordi();
  */
 Grid placement_grille_bateau(Grid tableau_ordi, Boat bateau[], int i);
 
-
 /**
  * Affiche le tableau de jeu
  * @param tableau_ordi
  */
 void affichage_tableau(Grid tableau_ordi);
 
-
-
 /**
- *
+ * Place les bateaux horizontaux sur le tableau ordinateur
  * @param tableau_ordi
  * @param bateau
  * @return
  */
 Grid placement_horizontal(Grid tableau_ordi,Boat bateau);
 
-
 /**
- *
+ * Place les bateaux verticaux sur le tableau ordinateur
  * @param tableau_ordi
  * @param bateau
  * @return
@@ -70,38 +66,17 @@ Grid placement_horizontal(Grid tableau_ordi,Boat bateau);
 Grid placement_vertical(Grid tableau_ordi,Boat bateau);
 
 /**
- *
- * @param tableau_ordi
- * @param ligne
- * @param colonne
- * @param taille_bateau
- * @return
- */
-int collision_horizontale(Grid tableau_ordi,int ligne,int colonne,int taille_bateau);
-
-
-
-/**
- *
- * @param tableau_ordi
- * @param ligne
- * @param colonne
- * @param taille_bateau
- * @return
- */
-int collision_verticale(Grid tableau_ordi,int ligne,int colonne,int taille_bateau);
-
-
-/**
- *
+ * Demande où l'utilisateur veut tirer
+ * Message d'erreur si l'utilisateur tire sur une case inconnue ou s'il tire sur une case déjà touchée
  * @param tableau_joueur
  * @return
  */
 Impact demande_tir(Grid tableau_joueur);
 
-
 /**
- *
+ * Recherche sur la grille ordinateur si un bateau ou plusieurs ont été touché
+ * Créer la zone d'impact du tir d'artillerie (Colonne et Ligne de la case touchésont également touchées)
+ * Indique sur les grilles si un bateau ou plusieurs ont été touché
  * @param tableau_joueur
  * @param tableau_ordi
  * @param point_impact
@@ -111,9 +86,10 @@ Impact demande_tir(Grid tableau_joueur);
  */
 Grid tir_artillerie(Grid tableau_joueur, Grid tableau_ordi,Impact point_impact,int NB_bateau,Boat bateau[]);
 
-
 /**
- *
+ * Recherche sur la grille ordinateur si un bateau ou plusieurs ont été touché
+ * Créer la zone d'impact de la bombe (Toutes las cases en étoile autour de la case touchée)
+ * Indique sur les grilles si un bateau ou plusieurs ont été touché
  * @param tableau_joueur
  * @param tableau_ordi
  * @param point_impact
@@ -123,9 +99,9 @@ Grid tir_artillerie(Grid tableau_joueur, Grid tableau_ordi,Impact point_impact,i
  */
 Grid tir_bombe(Grid tableau_joueur, Grid tableau_ordi,Impact point_impact,int NB_bateau,Boat bateau[]);
 
-
-/**
- *
+/** *
+ * Recherche sur la grille ordinateur si un bateau a été touché
+ * Indique sur les grilles si un bateau a été touché
  * @param tableau_joueur
  * @param tableau_ordi
  * @param point_impact
@@ -133,9 +109,10 @@ Grid tir_bombe(Grid tableau_joueur, Grid tableau_ordi,Impact point_impact,int NB
  */
 Grid tir_simple(Grid tableau_joueur, Grid tableau_ordi, Impact point_impact);
 
-
 /**
- *
+ * Recherche sur la grille ordinateur si un bateau a été touché
+ * Prends l'identification d'un bateau et l'élimine en entier si il est touché
+ * Indique sur les grilles si un bateau a été touché
  * @param tableau_joueur
  * @param tableau_ordi
  * @param point_impact

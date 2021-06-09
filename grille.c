@@ -96,6 +96,17 @@ Grid placement_grille_bateau(Grid tableau_ordi, Boat bateau[], int i){
     return tableau_ordi;
 }
 
+void affichage_tableau(Grid tableau_ordi)
+{
+    int i,j;
+
+    for(i=0;i<tableau_ordi.hauteur;i++){
+        for(j=0;j<tableau_ordi.largeur;j++){
+            printf("%c  ",tableau_ordi.grille[i][j]);
+        }
+        printf("\n");
+    }
+}
 
 Grid placement_vertical(Grid tableau_ordi,Boat bateau){
     int i;
@@ -125,6 +136,7 @@ Impact demande_tir(Grid tableau_joueur){
     char lettre;
     int chiffre;
     int verification;
+
     do{
         verification=0;
         printf("En quelle case voulez vous tirer ( de A0 a J9) ?\n");
@@ -154,25 +166,35 @@ Impact demande_tir(Grid tableau_joueur){
     return tir_actuel;
 }
 
-Grid tir_simple(Grid tableau_joueur, Grid tableau_ordi, Impact point_impact){
+/*Impact tir_actuel;
+    char colonne;
+    int verification;
+    do{
+        verification=0;
+        printf("Sur quelle colonne voulez-vous tirer (de A a J) ?\n");
+        scanf(" %c", &colonne);
+        colonne = toupper(colonne);
+        tir_actuel.colonne = colonne - 'A';
+        while( tir_actuel.colonne < 0 || tir_actuel.colonne > 9)
+        {
+            printf("Veuillez saisir une colonne valide (de A a J).\n");
+            scanf(" %c", &colonne);
+            colonne = toupper(colonne);
+            tir_actuel.colonne = colonne - 'A';
+        }
 
-    if(tableau_ordi.grille[1+point_impact.ligne][1+point_impact.colonne] == ' '){
-        tableau_joueur.grille[1+point_impact.ligne][1+point_impact.colonne] = 'O';
-    } else {
-        tableau_joueur.grille[1+point_impact.ligne][1+point_impact.colonne] = 'X';
-    }
-    return tableau_joueur;
-}
+        printf("Sur quelle ligne voulez-vous tirer (de 0 a 9) ?\n");
+        scanf(" %d", &tir_actuel.ligne);
+        while(tir_actuel.ligne < 0 || tir_actuel.ligne > 9) {
+            printf("Veuillez saisir une ligne valide (de 0 a 9).\n");
+            scanf(" %d", &tir_actuel.ligne);
+        }
+        if (tableau_joueur.grille[1 + tir_actuel.ligne][1 + tir_actuel.colonne] == 'O' ||
+            tableau_joueur.grille[1 + tir_actuel.ligne][1 + tir_actuel.colonne] == 'X') {
+            verification = 1;
+        }
+    }while(verification == 1);*/
 
-Grid tir_tactique(Grid tableau_joueur, Grid tableau_ordi, Impact point_impact){
-
-    if(tableau_ordi.grille[1+point_impact.ligne][1+point_impact.colonne] == ' '){
-        tableau_joueur.grille[1+point_impact.ligne][1+point_impact.colonne] = 'O';
-    } else {
-        tableau_joueur.grille[1+point_impact.ligne][1+point_impact.colonne] = 'X';
-    }
-    return tableau_joueur;
-}
 Grid tir_artillerie(Grid tableau_joueur, Grid tableau_ordi,Impact point_impact,int NB_bateau,Boat bateau[]) {
     int i, j;
     for (j = 1; j < 11; j++) {

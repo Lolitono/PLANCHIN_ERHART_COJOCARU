@@ -13,7 +13,7 @@ void affichage_nb_bateau(Boat bateau[],int NB_bateau) {
         if (bateau[i].touche == bateau[i].taille_bateau) {
             printf("Vous avez coule un bateau de taille %d.\n", bateau[i].taille_bateau);
         } else {
-            printf("-Bateau de taille %d | Nombre de cases touchees = %d\n", bateau[i].taille_bateau, bateau[i].touche);
+            printf("-Bateau de taille %d | Nombre de cases touchees = %d\n\n", bateau[i].taille_bateau, bateau[i].touche);
         }
     }
 }

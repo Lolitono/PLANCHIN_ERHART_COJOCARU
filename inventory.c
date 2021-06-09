@@ -61,7 +61,7 @@ void affichage_missile(Inventory missile){
     printf("\n-Missiles d'artilleries : %d\n",missile.artillerie);
     printf("-Missiles tactiques : %d\n",missile.tactique);
     printf("-Bombes : %d\n",missile.bombe);
-    printf("-Missiles simples : %d\n",missile.simple);
+    printf("-Missiles simples : %d\n\n",missile.simple);
 }
 
 //  Quel missile veut-il choisir

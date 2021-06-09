@@ -89,10 +89,13 @@ int fin_partie(Boat bateau[],Inventory missile,int NB_bateau);
  */
 void partie_finie(int partie);
 
+/**
+ * Demande à l'utilisateur si il souhaite recommencer une partie
+ * Message d'erreur si l'utilisateur saisit une lettre incorrecte
+ * @return
+ */
 char recommencer();
 
-void ecriture_sauvegarde(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau, int nombre_tour, char mode);
 
-int charger_partie(FILE* file);
 
 #endif //PLANCHIN_ERHART_COJOCARU_JEU_H
