@@ -31,13 +31,20 @@ Grid initialisation_tableau(){
 
 Grid initialisation_tableau_ordi(){
     Grid tableau;
-    tableau.hauteur=11;
-    tableau.largeur=11;
+    tableau.hauteur=12;
+    tableau.largeur=12;
     int i,j;
 
     for(i=0;i<tableau.hauteur;i++){
         for(j=0;j<tableau.largeur;j++){
             tableau.grille[i][j] = ' ';
+            if ((i == 0 || i==11) && (j == 0 || j == 11)) {
+                tableau.grille[i][j] = ' ';
+            } else if ((i == 0 && i != j) || (i == 11 && i != j)) {
+                tableau.grille[i][j] = '_';
+            } else if ((j == 0 && j != i) || (j == 11 && j != i)) {
+                tableau.grille[i][j] = '|';
+            }
         }
     }
     return tableau;
@@ -90,7 +97,7 @@ Grid placement_grille_bateau(Grid tableau_ordi, Boat bateau[], int i){
 }
 
 
-Grid placement_horizontal(Grid tableau_ordi,Boat bateau){
+Grid placement_vertical(Grid tableau_ordi,Boat bateau){
     int i;
 
     for (i=0;i<bateau.taille_bateau;i++)
@@ -100,7 +107,7 @@ Grid placement_horizontal(Grid tableau_ordi,Boat bateau){
     return tableau_ordi;
 }
 
-Grid placement_vertical(Grid tableau_ordi,Boat bateau){
+Grid placement_horizontal(Grid tableau_ordi,Boat bateau){
     int i;
 
     for (i=0;i<bateau.taille_bateau;i++){
@@ -109,66 +116,38 @@ Grid placement_vertical(Grid tableau_ordi,Boat bateau){
     return tableau_ordi;
 }
 
-int collision_horizontale(Grid tableau_ordi,int ligne,int colonne,int taille_bateau)
-{
-    int i;
-    for (i=0;i<taille_bateau;i++){
-        if (tableau_ordi.grille[1+ligne+i][1+colonne] != ' '){
-            return 1;
-        }
-    }
-    return 0;
-}
-int collision_verticale(Grid tableau_ordi,int ligne,int colonne,int taille_bateau){
-    int i;
-    for (i=0;i<taille_bateau;i++){
-        if (tableau_ordi.grille[1+ligne][1+colonne+i] != ' '){
-            return 1;
-        }
-    }
-    return 0;
-}
 
-
-void affichage_tableau(Grid tableau_ordi)
-{
-    int i,j;
-
-    for(i=0;i<tableau_ordi.hauteur;i++){
-        for(j=0;j<tableau_ordi.largeur;j++){
-            printf("%c  ",tableau_ordi.grille[i][j]);
-        }
-        printf("\n");
-    }
-}
 
 Impact demande_tir(Grid tableau_joueur){
     Impact tir_actuel;
-    char colonne;
+    char ligne[2]={0};
+    char T[3]={0};
+    char lettre;
+    int chiffre;
     int verification;
     do{
         verification=0;
-        printf("Sur quelle colonne voulez-vous tirer (de A a J) ?\n");
-        scanf(" %c", &colonne);
-        colonne = toupper(colonne);
-        tir_actuel.colonne = colonne - 'A';
-        while( tir_actuel.colonne < 0 || tir_actuel.colonne > 9)
+        printf("En quelle case voulez vous tirer ( de A0 a J9) ?\n");
+        scanf(" %s", &T);
+        lettre = toupper(T[0]);
+        ligne[0] = T[1];
+        chiffre = atoi(ligne);
+        tir_actuel.colonne= lettre-'A';
+        tir_actuel.ligne= chiffre;
+        while( tir_actuel.colonne < 0 || tir_actuel.colonne > 9 || tir_actuel.ligne <0 || tir_actuel.ligne>9 || T[2]!= '\0')
         {
-            printf("Veuillez saisir une colonne valide (de A a J).\n");
-            scanf(" %c", &colonne);
-            colonne = toupper(colonne);
-            tir_actuel.colonne = colonne - 'A';
-        }
-
-        printf("Sur quelle ligne voulez-vous tirer (de 0 a 9) ?\n");
-        scanf(" %d", &tir_actuel.ligne);
-        while(tir_actuel.ligne < 0 || tir_actuel.ligne > 9) {
-            printf("Veuillez saisir une ligne valide (de 0 a 9).\n");
-            scanf(" %d", &tir_actuel.ligne);
+        printf("Votre tir n'est pas valide (case inconnue), veuillez recommencer ...\n");
+            scanf(" %s", &T);
+            lettre = toupper(T[0]);
+            ligne[0] = T[1];
+            chiffre = atoi(ligne);
+            tir_actuel.colonne= lettre-'A';
+            tir_actuel.ligne= chiffre;
         }
         if (tableau_joueur.grille[1 + tir_actuel.ligne][1 + tir_actuel.colonne] == 'O' ||
             tableau_joueur.grille[1 + tir_actuel.ligne][1 + tir_actuel.colonne] == 'X') {
             verification = 1;
+            printf("Votre tir n'est pas valide (case deja touchee), veuillez recommencer ...\n");
         }
     }while(verification == 1);
 
@@ -261,27 +240,25 @@ Grid tir_bombe(Grid tableau_joueur, Grid tableau_ordi,Impact point_impact,int NB
     return tableau_joueur;
 }
 
-int fin_partie(Boat bateau[],Inventory missile,int NB_bateau){
-    int i;
-    int touche=0;
-    int partie;
-    for (i=0;i<NB_bateau;i++){
-        if (bateau[i].touche == bateau[i].taille_bateau) {
-            touche++;
-        }
-    }
-    if(touche == 5 && (missile.tactique != 0 || missile.simple!=0 || missile.artillerie != 0 || missile.bombe != 0)){
-        partie = 1;
-    }else if(touche == 5 && missile.tactique == 0 && missile.simple==0 && missile.artillerie == 0 && missile.bombe == 0){
-        partie = 2;
-    } else if(touche != 5 && missile.tactique == 0 && missile.simple==0 && missile.artillerie == 0 && missile.bombe == 0){
-        partie = 3;
+Grid tir_simple(Grid tableau_joueur, Grid tableau_ordi, Impact point_impact){
+
+    if(tableau_ordi.grille[1+point_impact.ligne][1+point_impact.colonne] == ' '){
+        tableau_joueur.grille[1+point_impact.ligne][1+point_impact.colonne] = 'O';
     } else {
-        partie = 0;
+        tableau_joueur.grille[1+point_impact.ligne][1+point_impact.colonne] = 'X';
     }
-    return partie;
+    return tableau_joueur;
 }
 
+Grid tir_tactique(Grid tableau_joueur, Grid tableau_ordi, Impact point_impact){
+
+    if(tableau_ordi.grille[1+point_impact.ligne][1+point_impact.colonne] == ' '){
+        tableau_joueur.grille[1+point_impact.ligne][1+point_impact.colonne] = 'O';
+    } else {
+        tableau_joueur.grille[1+point_impact.ligne][1+point_impact.colonne] = 'X';
+    }
+    return tableau_joueur;
+}
 /**
  *
  *

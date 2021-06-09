@@ -15,16 +15,19 @@ int main() {
     char rejouer,mode;
 
     srand(time(0));
-//    FILE *file = fopen("sauvegarde_jeu.txt", "w");       Initialisation du fichier de sauvegarde
+//    FILE *file = fopen("sauvegarde_jeu.txt", "w");       //Création du fichier de sauvegarde
+//    fprintf(file,"0");
 //    fclose(file);
-    demarrer = menu();
-    if (demarrer == 1){
+    FILE *file = fopen("sauvegarde_jeu.txt", "r");
+    demarrer = menu(file);
+    fclose(file);
+    if (demarrer == 'D'){
         do {
             tableau_joueur = initialisation_tableau();
             tableau_ordi = initialisation_tableau_ordi();
             mode = demande_mode();
             missile = demande_difficulte();
-            affichage_missile_depart(missile);
+
 
             for (i = 0; i < NB_bateau; i++) {
                 bateau[i] = initialisation_bateau(i);
@@ -32,20 +35,19 @@ int main() {
 
             for (i = 0; i < NB_bateau; i++) {
                 bateau[i].touche = 0;
-                bateau[i].H_V = rand() % 2;
+                bateau[i].H_V = rand() % 2; //0 = horizontal, 1 = vertical
                 bateau[i].identification = 'A' + i;
                 bateau[i] = placement_bateau(tableau_ordi, bateau, i);
                 tableau_ordi = placement_grille_bateau(tableau_ordi, bateau, i);
             }
 
-            printf("Voici le nombre de bateaux que l'ordinateur va placer aleatoirement:\n\n");
-            affichage_nb_bateau(bateau, NB_bateau);
+
 
             //JEU
-            nombre_tour=0;
-            partie = game(tableau_joueur,tableau_ordi, missile,bateau,NB_bateau,mode,nombre_tour);
+            nombre_tour=1;
+            partie = game(tableau_joueur,tableau_ordi, missile,bateau,NB_bateau,mode,nombre_tour,0);
             partie_finie(partie);
-            if(partie == 4){
+            if(partie == 4 || partie == 5){
                 return 0;
             }
             rejouer = recommencer();
@@ -54,16 +56,19 @@ int main() {
 
         return 0;
 
-    } else if (demarrer == 2){
+    } else if (demarrer == 'C'){
 
         FILE *file = fopen("sauvegarde_jeu.txt", "r");
         if(file != NULL) {
-            partie = charger_partie(file);
+            partie = load(file);
             fclose(file);
             partie_finie(partie);
-            if(partie == 4){
+            if(partie == 4 || partie == 5){
                 return 0;
             }
+            FILE *file = fopen("sauvegarde_jeu.txt", "w");
+            fprintf(file,"0");
+            fclose(file);
             rejouer = recommencer();
             if(rejouer == 'O'){
                 do {
@@ -89,18 +94,21 @@ int main() {
                     affichage_nb_bateau(bateau, NB_bateau);
 
                     //JEU
-                    nombre_tour = 0;
-                    partie = game(tableau_joueur,tableau_ordi, missile,bateau,NB_bateau,mode,nombre_tour);
+                    nombre_tour = 1;
+                    partie = game(tableau_joueur,tableau_ordi, missile,bateau,NB_bateau,mode,nombre_tour,0);
                     partie_finie(partie);
-                    if(partie == 4){
+                    if(partie == 4 || partie == 5){
                         return 0;
                     }
+                    FILE *file = fopen("sauvegarde_jeu.txt", "w");
+                    fprintf(file,"0");
+                    fclose(file);
                     rejouer = recommencer();
-                }while(rejouer == 'O');
+                }while(rejouer == '0');
             }
             return 0;
         } else {
-            printf("Erreurde sauvegarde");
+            printf("Erreur de sauvegarde");
         }
     } else {
         return 0;

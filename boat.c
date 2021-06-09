@@ -106,20 +106,43 @@ Boat placement_bateau(Grid tableau_ordi, Boat bateau[], int i){
     return bateau[i];
 }
 
-Boat position_bateau_horizontal(Grid tableau_ordi,Boat bateau)
+Boat position_bateau_vertical(Grid tableau_ordi,Boat bateau)
 {
     do{
         bateau.ligne = rand() % (10-bateau.taille_bateau);
         bateau.colonne = rand() % 10;
-    }while(collision_horizontale(tableau_ordi,bateau.ligne,bateau.colonne,bateau.taille_bateau)==1);
+    }while(collision_verticale(tableau_ordi,bateau)==1);
     return bateau;
 }
 
-Boat position_bateau_vertical(Grid tableau_ordi, Boat bateau)
+int collision_verticale(Grid tableau_ordi,Boat bateau)
+{
+    int i;
+    for (i=0;i<bateau.taille_bateau;i++){
+        if (tableau_ordi.grille[1+bateau.ligne+i][1+bateau.colonne] != ' '){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+Boat position_bateau_horizontal(Grid tableau_ordi, Boat bateau)
 {
     do{
         bateau.ligne = rand() % 10;
         bateau.colonne = rand() % (10-bateau.taille_bateau);
-    }while(collision_verticale(tableau_ordi,bateau.ligne,bateau.colonne,bateau.taille_bateau)==1);
+    }while(collision_horizontale(tableau_ordi,bateau)==1);
     return bateau;
 }
+
+int collision_horizontale(Grid tableau_ordi,Boat bateau){
+    int i;
+    for (i=0;i<bateau.taille_bateau;i++){
+        if (tableau_ordi.grille[1+bateau.ligne][1+bateau.colonne+i] != ' '){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+

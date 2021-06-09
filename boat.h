@@ -41,13 +41,7 @@ Boat initialisation_bateau(int i);
  */
 Boat placement_bateau(Grid tableau, Boat bateau[], int i);
 
-/**
- *
- * @param tableau_ordi
- * @param bateau
- * @return
- */
-Boat position_bateau_horizontal(Grid tableau_ordi, Boat bateau);
+
 
 /**
  *

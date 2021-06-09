@@ -69,7 +69,6 @@ Grid placement_horizontal(Grid tableau_ordi,Boat bateau);
  */
 Grid placement_vertical(Grid tableau_ordi,Boat bateau);
 
-
 /**
  *
  * @param tableau_ordi
@@ -143,16 +142,6 @@ Grid tir_simple(Grid tableau_joueur, Grid tableau_ordi, Impact point_impact);
  * @return
  */
 Grid tir_tactique(Grid tableau_joueur, Grid tableau_ordi, Impact point_impact);
-
-
-/**
- *
- * @param bateau
- * @param missile
- * @param NB_bateau
- * @return
- */
-int fin_partie(Boat bateau[],Inventory missile,int NB_bateau);
 
 
 #endif //PLANCHIN_ERHART_COJOCARU_GRILLE_H
