@@ -7,12 +7,12 @@
 
 
 typedef struct {
-    int taille_bateau;
-    int ligne;
-    int colonne;
-    int H_V;
-    int touche;
-    char identification;
+    int taille_bateau; // la taille du bateau (nombres de cases occupées)
+    int ligne; // indique la ligne de l'extrémité gauche (ou simplement du bateau si bateau horizontal)
+    int colonne; // indique la colonne de l'extrémité gauche du bateau (ou simplement du bateau si bateau vertical)
+    int H_V; // 0 = horizontal ; 1 = vertical
+    int touche; // nombre de cases touchées
+    char identification; // on associe une lettre à chaque bateau
 }Boat;
 
 #include "grille.h"

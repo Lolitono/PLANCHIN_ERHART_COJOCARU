@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include<ctype.h>
 #include "grille.h"
+#include <stdlib.h>
 
 Grid initialisation_tableau(){
     Grid tableau;
