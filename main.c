@@ -15,19 +15,19 @@ int main() {
     char rejouer,mode;
 
     srand(time(0));
-//    FILE *file = fopen("sauvegarde_jeu.txt", "w");       //Création du fichier de sauvegarde
+//    FILE *file = fopen("sauvegarde_jeu.txt", "w");       // 3 lignes à décommenter pour initialiser le fichier de sauvegarde
 //    fprintf(file,"0");
 //    fclose(file);
-    FILE *file = fopen("sauvegarde_jeu.txt", "r");
+    FILE *file = fopen("sauvegarde_jeu.txt", "r");  // ligne à commenter si aucun fichier de sauvegarde n'existe
     demarrer = menu(file);
     fclose(file);
     if (demarrer == 'D'){
         do {
-            tableau_joueur = initialisation_tableau();
-            tableau_ordi = initialisation_tableau_ordi();
+
             mode = demande_mode();
             missile = demande_difficulte();
-
+            tableau_joueur = initialisation_tableau();
+            tableau_ordi = initialisation_tableau_ordi();
 
             for (i = 0; i < NB_bateau; i++) {
                 bateau[i] = initialisation_bateau(i);

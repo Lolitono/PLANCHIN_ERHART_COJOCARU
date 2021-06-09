@@ -5,6 +5,18 @@
 #ifndef PLANCHIN_ERHART_COJOCARU_JEU_H
 #define PLANCHIN_ERHART_COJOCARU_JEU_H
 
+typedef struct {
+    int decision;
+    int max_gauche;
+    int max_droite;
+    int max_haut;
+    int max_bas;
+    int choix_bateau;
+    int verification_mode_active;
+    char tableau_active[6];
+    int mouvement_bateau;
+}Actif;
+
 #include "grille.h"
 #include "inventory.h"
 #include "boat.h"
@@ -26,14 +38,6 @@ char menu(FILE * file);
 char demande_mode();
 
 /**
- * Deplace un bateau choisi alétoirement si il peut se deplacer
- * @param tableau_ordi
- * @param tableau_joueur
- * @param bateau
- */
-void deplacement_bateau_mode_active(Grid *tableau_ordi, Grid tableau_joueur, Boat *(bateau[]),int NB_bateau);
-
-/**
  *
  * @param tableau_joueur
  * @param tableau_ordi
@@ -46,6 +50,24 @@ void deplacement_bateau_mode_active(Grid *tableau_ordi, Grid tableau_joueur, Boa
  * @return
  */
 int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau,char mode,int nombre_tour, int charger);
+
+/**
+ *
+ * @param tableau_ordi
+ * @param tableau_joueur
+ * @param bateau
+ * @param NB_bateau
+ * @return
+ */
+Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tableau_joueur, Boat bateau[],int NB_bateau);
+
+/**
+ * Deplace un bateau choisi alétoirement si il peut se deplacer
+ * @param tableau_ordi
+ * @param tableau_joueur
+ * @param bateau
+ */
+Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Grid tableau_joueur, Boat bateau[],int NB_bateau,Actif deplacement);
 
 /**
  * Sauvegarde dans le fichier "sauvegarde_jeu.txt"

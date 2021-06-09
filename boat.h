@@ -80,4 +80,6 @@ Boat position_bateau_horizontal(Grid tableau_ordi, Boat bateau);
  */
 int collision_horizontale(Grid tableau_ordi,Boat bateau);
 
+
+
 #endif //PLANCHIN_ERHART_COJOCARU_BOAT_H

@@ -67,9 +67,8 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
     int i,j,k,partie,verification;
     char missile_utilise,sauvegarde;
     char temp[5];
-    int deplacement_actif;
 
-
+    Actif deplacement_actif={0};
 
     Impact point_impact;
 
@@ -107,10 +106,12 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
 
         if(nombre_tour!=1 && mode=='A') {
 
-            deplacement_actif = rand()%3;
-            if(deplacement_actif != 0) {
-                deplacement_bateau_mode_active(&tableau_ordi,tableau_joueur, &bateau ,NB_bateau);
-
+            deplacement_actif.decision = rand()%3;
+            if(deplacement_actif.decision != 0) {
+                deplacement_actif = verification_deplacement_bateau_mode_active(tableau_ordi,tableau_joueur, bateau ,NB_bateau);
+                if (deplacement_actif.tableau_active[deplacement_actif.choix_bateau] == bateau[deplacement_actif.choix_bateau].identification && deplacement_actif.verification_mode_active!=5){
+                    bateau[deplacement_actif.choix_bateau] = deplacement_bateau_mode_active(&tableau_ordi,tableau_joueur, bateau ,NB_bateau,deplacement_actif);
+                }
             }
         }
 
@@ -244,7 +245,7 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
             if (mode == 'C' || mode == 'A') {
                 affichage_tableau(tableau_joueur);
                 printf("\n");
-                //affichage_tableau(tableau_ordi);
+                affichage_tableau(tableau_ordi);
             }
             printf("\nVoulez continuer ou sauvegarder et quitter (C/S)?\n");
             scanf(" %c", &sauvegarde);
@@ -319,174 +320,173 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
     return partie;
 }
 
-void deplacement_bateau_mode_active(Grid *tableau_ordi, Grid tableau_joueur, Boat *(bateau[]), int NB_bateau){
-
+Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tableau_joueur, Boat bateau[],int NB_bateau){
     int i,j;
-    char tableau_active[6]={0};
-    int verification_active,deplacement_actif;
-    int choix_bateau;
-    int deplacement_max_gauche ,deplacement_max_droite, deplacement_max_haut, deplacement_max_bas;
+    Actif deplacement;
 
-    int deplacement;
-
-
-    verification_active = 0;
+    deplacement.verification_mode_active = 0;
     for (i = 0; i < NB_bateau; i++) {
-        if (bateau[i]->touche == 0) {
-            tableau_active[i] = bateau[i]->identification;
+        if (bateau[i].touche == 0) {
+            deplacement.tableau_active[i] = bateau[i].identification;
         } else {
-            tableau_active[i] = ' ';
-            verification_active++;
+            deplacement.tableau_active[i] = ' ';
+            deplacement.verification_mode_active++;
         }
     }
-    tableau_active[i] = '\0';
+    deplacement.tableau_active[i] = '\0';
     //printf("%s", tableau_active);
 
-    if (verification_active != 5) {
+    if (deplacement.verification_mode_active != 5) {
 
         do {
             do {
-                choix_bateau = rand() % 5;
-            } while (tableau_active[choix_bateau] == ' '); // Choix bateau aleatoire non touché
+                deplacement.choix_bateau = rand() % 5;
+            } while (deplacement.tableau_active[deplacement.choix_bateau] == ' '); // Choix bateau aleatoire non touché
 
-            //printf("bateau choisie : %c, H_V = %d", bateau[choix_bateau].identification,bateau[choix_bateau].H_V);
-            deplacement_max_gauche = 0;
-            deplacement_max_droite = 0;
-            deplacement_max_haut = 0;
-            deplacement_max_bas = 0;
+    //printf("bateau choisie : %c, H_V = %d", bateau[choix_bateau].identification,bateau[choix_bateau].H_V);
+            deplacement.max_gauche = 0;
+            deplacement.max_droite = 0;
+            deplacement.max_haut = 0;
+            deplacement.max_bas = 0;
             i = 1;
             j = 0;
-            if (bateau[choix_bateau]->H_V == 0) { // si le bateau est horizontal
+            if (bateau[deplacement.choix_bateau].H_V == 0) { // si le bateau est horizontal
                 do {
-                    if (tableau_joueur.grille[bateau[choix_bateau]->ligne + 1][bateau[choix_bateau]->colonne -
+                    if (tableau_joueur.grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne -
                                                                               i +
                                                                               1] == '_' &&
-                        tableau_ordi->grille[bateau[choix_bateau]->ligne + 1][bateau[choix_bateau]->colonne -
-                                                                            i +
-                                                                            1] ==
+                        tableau_ordi.grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne -
+                                                                             i +
+                                                                             1] ==
                         ' ') // si la case directement à gauche du bateau// n'a pas été touché et ne contient pas un autre bateau{
                     {
-                        deplacement_max_gauche++;
+                        deplacement.max_gauche++;
                     }
                     i++;
-                } while (i < 4 && deplacement_max_gauche + 1 == i);
-                //printf("deplacement max gauche : %d", deplacement_max_gauche);
+                } while (i < 4 && deplacement.max_gauche + 1 == i);
+    //printf("deplacement max gauche : %d", deplacement_max_gauche);
 
                 do {
-                    if (tableau_joueur.grille[bateau[choix_bateau]->ligne + 1][bateau[choix_bateau]->colonne +
-                                                                              bateau[choix_bateau]->taille_bateau +
+                    if (tableau_joueur.grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +
+                                                                              bateau[deplacement.choix_bateau].taille_bateau +
                                                                               j + 1] == '_' &&
-                        tableau_ordi->grille[bateau[choix_bateau]->ligne + 1][bateau[choix_bateau]->colonne +
-                                                                            bateau[choix_bateau]->taille_bateau +
-                                                                            j + 1] == ' ') {
-                        deplacement_max_droite++;
+                        tableau_ordi.grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +
+                                                                             bateau[deplacement.choix_bateau].taille_bateau +
+                                                                             j + 1] == ' ') {
+                        deplacement.max_droite++;
                     }
                     j++;
-                } while (j < 3 && deplacement_max_droite == j);
-                //printf("deplacement max droite : %d", deplacement_max_droite);
+                } while (j < 3 && deplacement.max_droite == j);
+    //printf("deplacement max droite : %d", deplacement_max_droite);
 
             } else {
 
                 do {
-                    if (tableau_joueur.grille[bateau[choix_bateau]->ligne - i + 1][
-                                bateau[choix_bateau]->colonne +
+                    if (tableau_joueur.grille[bateau[deplacement.choix_bateau].ligne - i + 1][
+                                bateau[deplacement.choix_bateau].colonne +
                                 1] == '_' &&
-                        tableau_ordi->grille[bateau[choix_bateau]->ligne - i + 1][
-                                bateau[choix_bateau]->colonne +
+                        tableau_ordi.grille[bateau[deplacement.choix_bateau].ligne - i + 1][
+                                bateau[deplacement.choix_bateau].colonne +
                                 1] == ' ') {
-                        deplacement_max_haut++;
+                        deplacement.max_haut++;
                     }
                     i++;
-                } while (i < 4 && deplacement_max_haut + 1 == i);
-                //printf("deplacement max haut : %d", deplacement_max_haut);
+                } while (i < 4 && deplacement.max_haut + 1 == i);
+    //printf("deplacement max haut : %d", deplacement_max_haut);
 
                 do {
-                    if (tableau_joueur.grille[bateau[choix_bateau]->ligne +
-                                              bateau[choix_bateau]->taille_bateau +
-                                              j + 1][bateau[choix_bateau]->colonne + 1] == '_' &&
-                        tableau_ordi->grille[bateau[choix_bateau]->ligne +
-                                            bateau[choix_bateau]->taille_bateau +
-                                            j + 1][bateau[choix_bateau]->colonne + 1] == ' ') {
-                        deplacement_max_bas++;
+                    if (tableau_joueur.grille[bateau[deplacement.choix_bateau].ligne +
+                                              bateau[deplacement.choix_bateau].taille_bateau +
+                                              j + 1][bateau[deplacement.choix_bateau].colonne + 1] == '_' &&
+                        tableau_ordi.grille[bateau[deplacement.choix_bateau].ligne +
+                                             bateau[deplacement.choix_bateau].taille_bateau +
+                                             j + 1][bateau[deplacement.choix_bateau].colonne + 1] == ' ') {
+                        deplacement.max_bas++;
                     }
                     j++;
-                } while (j < 3 && deplacement_max_bas == j);
-                //printf("deplacement max bas : %d", deplacement_max_bas);
+                } while (j < 3 && deplacement.max_bas == j);
+    //printf("deplacement max bas : %d", deplacement_max_bas);
 
             }
 
 
-            if (deplacement_max_droite == 0 && deplacement_max_gauche == 0 && deplacement_max_bas == 0 &&
-                deplacement_max_haut == 0) {
-                tableau_active[choix_bateau] = ' ';
-                verification_active++;
+            if (deplacement.max_droite == 0 && deplacement.max_gauche == 0 && deplacement.max_bas == 0 &&
+                deplacement.max_haut == 0) {
+                deplacement.tableau_active[deplacement.choix_bateau] = ' ';
+                deplacement.verification_mode_active++;
             }
 
-        } while (tableau_active[choix_bateau] == ' ' && verification_active != 5);
+        } while (deplacement.tableau_active[deplacement.choix_bateau] == ' ' && deplacement.verification_mode_active != 5);
+    }
+    return deplacement;
+}
+
+Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Grid tableau_joueur, Boat bateau[], int NB_bateau, Actif deplacement){
+
+    int i,j;
 
 
-        if (tableau_active[choix_bateau] == bateau[choix_bateau]->identification &&
-            verification_active != 5) {
 
-            if (bateau[choix_bateau]->H_V == 0) {
-                deplacement = rand() % (deplacement_max_gauche + deplacement_max_droite) + 1;
-                if (deplacement <= deplacement_max_gauche) {
-                    for (i = 1; i < (deplacement + 1); i++) {
-                        tableau_ordi->grille[bateau[choix_bateau]->ligne + 1][bateau[choix_bateau]->colonne +
-                                                                            bateau[choix_bateau]->taille_bateau -
-                                                                            i + 1] = ' ';
-                        tableau_ordi->grille[bateau[choix_bateau]->ligne + 1][bateau[choix_bateau]->colonne -
-                                                                            i +
-                                                                            1] = bateau[choix_bateau]->identification;
+        if (deplacement.tableau_active[deplacement.choix_bateau] == bateau[deplacement.choix_bateau].identification &&
+            deplacement.verification_mode_active != 5) {
+
+            if (bateau[deplacement.choix_bateau].H_V == 0) {
+                deplacement.mouvement_bateau = rand() % (deplacement.max_gauche + deplacement.max_droite) + 1;
+                if (deplacement.mouvement_bateau <= deplacement.max_gauche) {
+                    for (i = 1; i < (deplacement.mouvement_bateau + 1); i++) {
+                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +
+                                                                             bateau[deplacement.choix_bateau].taille_bateau -
+                                                                             i + 1] = ' ';
+                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne -
+                                                                             i +
+                                                                             1] = bateau[deplacement.choix_bateau].identification;
                     }
-                    bateau[choix_bateau]->colonne = bateau[choix_bateau]->colonne - deplacement;
+                    bateau[deplacement.choix_bateau].colonne = bateau[deplacement.choix_bateau].colonne - deplacement.mouvement_bateau;
                 } else {
-                    for (i = 0; i < (deplacement - deplacement_max_gauche); i++) {
-                        tableau_ordi->grille[bateau[choix_bateau]->ligne + 1][bateau[choix_bateau]->colonne +
-                                                                            i +
-                                                                            1] = ' ';
-                        tableau_ordi->grille[bateau[choix_bateau]->ligne + 1][bateau[choix_bateau]->colonne +
-                                                                            bateau[choix_bateau]->taille_bateau +
-                                                                            i +
-                                                                            1] = bateau[choix_bateau]->identification;
+                    for (i = 0; i < (deplacement.mouvement_bateau - deplacement.max_gauche); i++) {
+                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +
+                                                                             i +
+                                                                             1] = ' ';
+                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +
+                                                                             bateau[deplacement.choix_bateau].taille_bateau +
+                                                                             i +
+                                                                             1] = bateau[deplacement.choix_bateau].identification;
                     }
-                    bateau[choix_bateau]->colonne =
-                            bateau[choix_bateau]->colonne + (deplacement - deplacement_max_gauche);
+                    bateau[deplacement.choix_bateau].colonne =
+                            bateau[deplacement.choix_bateau].colonne + (deplacement.mouvement_bateau - deplacement.max_gauche);
                 }
 
             } else {
-                deplacement = rand() % (deplacement_max_bas + deplacement_max_haut) + 1;
-                if (deplacement <= deplacement_max_haut) {
-                    for (i = 1; i < (deplacement + 1); i++) {
-                        tableau_ordi->grille[bateau[choix_bateau]->ligne +
-                                            bateau[choix_bateau]->taille_bateau -
-                                            i + 1][bateau[choix_bateau]->colonne + 1] = ' ';
-                        tableau_ordi->grille[bateau[choix_bateau]->ligne - i + 1][
-                                bateau[choix_bateau]->colonne +
-                                1] = bateau[choix_bateau]->identification;
+                deplacement.mouvement_bateau = rand() % (deplacement.max_bas + deplacement.max_haut) + 1;
+                if (deplacement.mouvement_bateau <= deplacement.max_haut) {
+                    for (i = 1; i < (deplacement.mouvement_bateau + 1); i++) {
+                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne +
+                                             bateau[deplacement.choix_bateau].taille_bateau -
+                                             i + 1][bateau[deplacement.choix_bateau].colonne + 1] = ' ';
+                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne - i + 1][
+                                bateau[deplacement.choix_bateau].colonne +
+                                1] = bateau[deplacement.choix_bateau].identification;
                     }
-                    bateau[choix_bateau]->ligne = bateau[choix_bateau]->ligne - deplacement;
+                    bateau[deplacement.choix_bateau].ligne = bateau[deplacement.choix_bateau].ligne - deplacement.mouvement_bateau;
                 } else {
-                    for (i = 0; i < (deplacement - deplacement_max_haut); i++) {
-                        tableau_ordi->grille[bateau[choix_bateau]->ligne + i + 1][
-                                bateau[choix_bateau]->colonne +
+                    for (i = 0; i < (deplacement.mouvement_bateau - deplacement.max_haut); i++) {
+                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + i + 1][
+                                bateau[deplacement.choix_bateau].colonne +
                                 1] = ' ';
-                        tableau_ordi->grille[bateau[choix_bateau]->ligne +
-                                            bateau[choix_bateau]->taille_bateau +
-                                            i + 1][bateau[choix_bateau]->colonne +
-                                                   1] = bateau[choix_bateau]->identification;
+                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne +
+                                             bateau[deplacement.choix_bateau].taille_bateau +
+                                             i + 1][bateau[deplacement.choix_bateau].colonne +
+                                                    1] = bateau[deplacement.choix_bateau].identification;
                     }
-                    bateau[choix_bateau]->ligne =
-                            bateau[choix_bateau]->ligne + (deplacement - deplacement_max_haut);
+                    bateau[deplacement.choix_bateau].ligne =
+                            bateau[deplacement.choix_bateau].ligne + (deplacement.mouvement_bateau - deplacement.max_haut);
                 }
             }
 
             //printf("Un bateau de taille %d s'est deplace en nouvelle position : %c %d \n",bateau[choix_bateau].taille_bateau, 'A' + bateau[choix_bateau].colonne,bateau[choix_bateau].ligne);
             printf("Un bateau s'est deplace");
         }
-
-    }
-
+    return bateau[deplacement.choix_bateau];
 }
 
 void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau, int nombre_tour, char mode){
