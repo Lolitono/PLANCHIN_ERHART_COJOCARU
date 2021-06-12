@@ -30,7 +30,7 @@ int main() {
 
             mode = demande_mode();                          // On demande le mode de jeu auquelle l'utilisateur veut jouer
             rejouer = demande_difficulte();                 // On demande la difficulté
-            missile = assignation_missile(rejouer);         //
+            missile = assignation_missile(rejouer);         // On assigne le nombre de missile en fonction de la difficulté
             tableau_joueur = initialisation_tableau();      // On initialise le tableau joueur
             tableau_ordi = initialisation_tableau_ordi();   // On initialise le tableau ordi
 
@@ -74,7 +74,7 @@ int main() {
                 do {
                     mode = demande_mode();                          // On demande le mode de jeu auquelle l'utilisateur veut jouer
                     rejouer = demande_difficulte();                 // On demande la difficulté
-                    missile = assignation_missile(rejouer);         //
+                    missile = assignation_missile(rejouer);         // On assigne le nombre de missile en fonction de la difficulté
                     tableau_joueur = initialisation_tableau();      // On initialise le tableau joueur
                     tableau_ordi = initialisation_tableau_ordi();   // On initialise le tableau ordi
 

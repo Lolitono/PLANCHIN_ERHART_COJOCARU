@@ -100,30 +100,30 @@ void tir_artillerie(Grid *tableau_joueur, Grid *tableau_ordi,Impact point_impact
             if (tableau_joueur->grille[point_impact.ligne + 1][j] == '_' &&
                 tableau_ordi->grille[point_impact.ligne + 1][j] == bateau[i].identification) {          // Si un bateau se trouve sur la colonne de l'impact
                 tableau_joueur->grille[point_impact.ligne + 1][j] = 'X';                                // Il sera marqué sur le tableau joueur
-                bateau[i].touche++;
-                tableau_ordi->grille[point_impact.ligne + 1][j] = ' ';
+                bateau[i].touche++;                                                                     // On ajoute 1 au nombre de fois que le bateau a été touché
+                tableau_ordi->grille[point_impact.ligne + 1][j] = ' ';                                  // On retire la partie du bateau touchée sur le tableau de l'ordinateur
                 if (mode == 'B') {
-                    printf("Un bateau a ete touche en %c%d.\n", 'A' + j - 1, point_impact.ligne);
+                    printf("Un bateau a ete touche en %c%d.\n", 'A' + j - 1, point_impact.ligne);   // On indique à l'utilisateur la position où le missile a touché un bateau si on est en mode "Blind"
                 }
             }
         }
-        if (tableau_joueur->grille[point_impact.ligne + 1][j] == '_') {
-            tableau_joueur->grille[point_impact.ligne + 1][j] = 'O';
+        if (tableau_joueur->grille[point_impact.ligne + 1][j] == '_') {     // Si aucun bateau ne se trouve sur la position
+            tableau_joueur->grille[point_impact.ligne + 1][j] = 'O';        // On le marque d'un 'O'
         }
     }
     for (j = 1; j < 11; j++) {
         for (i = 0; i < NB_bateau; i++) {
-            if (tableau_joueur->grille[j][point_impact.colonne + 1] == '_' && tableau_ordi->grille[j][point_impact.colonne + 1] == bateau[i].identification) {    // Si un bateau se trouve sur la ligne de l'impact alors cela mettra qu'on l'a touché sur le tableau joueur
-                tableau_joueur->grille[j][point_impact.colonne + 1] = 'X';                                  // Il sera marqué sur le tableau joueur
-                bateau[i].touche++;
-                tableau_ordi->grille[j][1 + point_impact.colonne] = ' ';
+            if (tableau_joueur->grille[j][point_impact.colonne + 1] == '_' && tableau_ordi->grille[j][point_impact.colonne + 1] == bateau[i].identification) {    // Si un bateau se trouve sur la ligne de l'impact
+                tableau_joueur->grille[j][point_impact.colonne + 1] = 'X';  // Il sera marqué d'une 'X' sur le tableau joueur
+                bateau[i].touche++;                                         // On ajoute 1 au nombre de fois que le bateau a été touché
+                tableau_ordi->grille[j][1 + point_impact.colonne] = ' ';    // On retire la partie du bateau touchée sur le tableau de l'ordinateur
                 if (mode == 'B') {
-                    printf("Un bateau a ete touche en %c%d.\n", 'A' + point_impact.colonne, j - 1);
+                    printf("Un bateau a ete touche en %c%d.\n", 'A' + point_impact.colonne, j - 1); // On indique à l'utilisateur la position où le missile a touché un bateau si on est en mode "Blind"
                 }
             }
         }
-        if (tableau_joueur->grille[j][point_impact.colonne + 1] == '_' ) {
-            tableau_joueur->grille[j][point_impact.colonne + 1] = 'O';
+        if (tableau_joueur->grille[j][point_impact.colonne + 1] == '_' ) {  // Si aucun bateau ne se trouve sur la position
+            tableau_joueur->grille[j][point_impact.colonne + 1] = 'O';      // On le marque d'un 'O'
         }
     }
 }
@@ -135,34 +135,33 @@ void tir_bombe(Grid *tableau_joueur, Grid *tableau_ordi,Impact point_impact,int 
     for (j = -1; j < 4; j++) {
         for (i = 0; i < NB_bateau; i++) {
             if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne+j] == '_' && tableau_ordi->grille[point_impact.ligne + 1][point_impact.colonne+j] == bateau[i].identification && point_impact.colonne + j > 0 && point_impact.colonne + j <= 11) {
-                tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne+j] = 'X';
-                bateau[i].touche++;
-                tableau_ordi->grille[point_impact.ligne +1][point_impact.colonne+j] = ' ';
+                //Si un bateau se trouve sur le point d'impact, 2 cases à gauche du point d'impact ou 2 cases
+                tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne+j] = 'X';   // Il sera marqué d'une 'X' sur le tableau joueur
+                bateau[i].touche++;                                                             // On ajoute 1 au nombre de fois que le bateau a été touché
+                tableau_ordi->grille[point_impact.ligne +1][point_impact.colonne+j] = ' ';      // On retire la partie du bateau touchée sur le tableau de l'ordinateur
                 if (mode == 'B') {
-                    printf("Un bateau a ete touche en %c%d.\n", 'A' + (point_impact.colonne+j-1),
-                           point_impact.ligne);
+                    printf("Un bateau a ete touche en %c%d.\n", 'A' + (point_impact.colonne+j-1),point_impact.ligne); // On indique à l'utilisateur la position où le missile a touché un bateau si on est en mode "Blind"
                 }
             }
         }
-        if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne+j] == '_') {
-            tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne+j] = 'O';
+        if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne+j] == '_') {    // Si aucun bateau ne se trouve sur la position
+            tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne+j] = 'O';       // On le marque d'un 'O'
         }
     }
 
     for (j = -1; j < 4; j++) {
         for (i = 0; i < NB_bateau; i++) {
             if (tableau_joueur->grille[point_impact.ligne+j][point_impact.colonne + 1] == '_' && tableau_ordi->grille[point_impact.ligne+j][point_impact.colonne + 1] == bateau[i].identification && point_impact.ligne + j > 0 && point_impact.ligne + j <= 11) {
-                tableau_joueur->grille[point_impact.ligne+j][point_impact.colonne + 1] = 'X';
-                bateau[i].touche++;
-                tableau_ordi->grille[point_impact.ligne + j][1 + point_impact.colonne] = ' ';
+                tableau_joueur->grille[point_impact.ligne+j][point_impact.colonne + 1] = 'X';   // Il sera marqué d'une 'X' sur le tableau joueur
+                bateau[i].touche++;                                                             // On ajoute 1 au nombre de fois que le bateau a été touché
+                tableau_ordi->grille[point_impact.ligne + j][1 + point_impact.colonne] = ' ';   // On retire la partie du bateau touchée sur le tableau de l'ordinateur
                 if (mode == 'B') {
-                    printf("Un bateau a ete touche en %c%d.\n", 'A' + point_impact.colonne,
-                           point_impact.ligne+j-1);
+                    printf("Un bateau a ete touche en %c%d.\n", 'A' + point_impact.colonne,point_impact.ligne+j-1);// On indique à l'utilisateur la position où le missile a touché un bateau si on est en mode "Blind"
                 }
             }
         }
-        if (tableau_joueur->grille[point_impact.ligne+j][point_impact.colonne + 1] == '_' ) {
-            tableau_joueur->grille[point_impact.ligne+j][point_impact.colonne + 1] = 'O';
+        if (tableau_joueur->grille[point_impact.ligne+j][point_impact.colonne + 1] == '_' ) {   // Si aucun bateau ne se trouve sur la position
+            tableau_joueur->grille[point_impact.ligne+j][point_impact.colonne + 1] = 'O';       // On le marque d'un 'O'
         }
     }
 
@@ -171,17 +170,16 @@ void tir_bombe(Grid *tableau_joueur, Grid *tableau_ordi,Impact point_impact,int 
             for (i = 0; i < NB_bateau; i++) {
                 if (tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] == '_' &&
                     tableau_ordi->grille[point_impact.ligne + j][point_impact.colonne + k] == bateau[i].identification && point_impact.ligne + j > 0 && point_impact.ligne + j <= 11) {
-                    tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] = 'X';
-                    bateau[i].touche++;
-                    tableau_ordi->grille[point_impact.ligne + j][point_impact.colonne + k] = ' ';
+                    tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] = 'X'; // L'impact sera marqué d'une 'X' sur le tableau joueur
+                    bateau[i].touche++;                                                             // On ajoute 1 au nombre de fois que le bateau a été touché
+                    tableau_ordi->grille[point_impact.ligne + j][point_impact.colonne + k] = ' ';   // On retire la partie du bateau touchée sur le tableau de l'ordinateur
                     if (mode == 'B') {
-                        printf("Un bateau a ete touche en %c%d.\n", 'A' + point_impact.colonne + k - 1,
-                               point_impact.ligne + j - 1);
+                        printf("Un bateau a ete touche en %c%d.\n", 'A' + point_impact.colonne + k - 1,point_impact.ligne + j - 1);// On indique à l'utilisateur la position où le missile a touché un bateau si on est en mode "Blind"
                     }
                 }
             }
-            if (tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] == '_') {
-                tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] = 'O';
+            if (tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] == '_') {  // Si aucun bateau ne se trouve sur la position
+                tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] = 'O';     // On le marque d'un 'O'
             }
         }
     }
@@ -192,17 +190,17 @@ void tir_simple(Grid *tableau_joueur, Grid *tableau_ordi, Impact point_impact,ch
 
     int i;
     for (i = 0; i < NB_bateau; i++) {
-        if(tableau_ordi->grille[1+point_impact.ligne][1+point_impact.colonne] == bateau[i].identification){
-            tableau_joueur->grille[1+point_impact.ligne][1+point_impact.colonne] = 'X';
-            bateau[i].touche++;
-            tableau_ordi->grille[1 + point_impact.ligne][1 + point_impact.colonne] = ' ';
+        if(tableau_ordi->grille[1+point_impact.ligne][1+point_impact.colonne] == bateau[i].identification){ //Si le missile touche un bateau
+            tableau_joueur->grille[1+point_impact.ligne][1+point_impact.colonne] = 'X';     // L'impact sera marqué d'une 'X' sur le tableau joueur
+            bateau[i].touche++;                                                             // On ajoute 1 au nombre de fois que le bateau a été touché
+            tableau_ordi->grille[1 + point_impact.ligne][1 + point_impact.colonne] = ' ';   // On retire la partie du bateau touchée sur le tableau de l'ordinateur
             if (mode == 'B') {
-                printf("Un bateau a ete touche en %c%d.\n", 'A' + point_impact.colonne, point_impact.ligne);
+                printf("Un bateau a ete touche en %c%d.\n", 'A' + point_impact.colonne, point_impact.ligne);    // On indique à l'utilisateur la position où le missile a touché un bateau si on est en mode "Blind"
             }
         }
     }
-    if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] == '_') {
-        tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] = 'O';
+    if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] == '_') {  // Si aucun bateau ne se trouve sur la position
+        tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] = 'O';     // On le marque d'un 'O'
     }
 }
 
@@ -213,22 +211,22 @@ void tir_tactique(Grid *tableau_joueur, Grid *tableau_ordi, Impact point_impact,
 
 
     for (i = 0; i < NB_bateau; i++) {
-        if(tableau_ordi->grille[1+point_impact.ligne][1+point_impact.colonne] == bateau[i].identification){
+        if(tableau_ordi->grille[1+point_impact.ligne][1+point_impact.colonne] == bateau[i].identification){ //Si le missile tombe sur un bateau
             for (k = 1; k < 11; k++) {
                 for (j = 1; j < 11; j++) {
-                    if (tableau_ordi->grille[k][j] == bateau[i].identification) {
-                        tableau_joueur->grille[k][j] = 'X';
-                        tableau_ordi->grille[k][j] = ' ';
+                    if (tableau_ordi->grille[k][j] == bateau[i].identification) {   //On regarde où le bateau est positionner
+                        tableau_joueur->grille[k][j] = 'X'; // Le bateau en entier sera marqué d'une 'X' sur le tableau joueur
+                        tableau_ordi->grille[k][j] = ' ';   // et il sera effacé du tableau de l'ordinateur
                         if (mode == 'B') {
-                            printf("Un bateau a ete touche en %c%d.\n", 'A' + j - 1, k - 1);
+                            printf("Un bateau a ete touche en %c%d.\n", 'A' + j - 1, k - 1);    // On indique à l'utilisateur la position où le missile a touché un bateau si on est en mode "Blind"
                         }
                     }
                 }
             }
-            bateau[i].touche = bateau[i].taille_bateau;
+            bateau[i].touche = bateau[i].taille_bateau; // On déclare le bateau comme coulé
         }
     }
-    if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] == '_') {
-        tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] = 'O';
+    if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] == '_') {  // Si aucun bateau ne se trouve sur la position// Si aucun bateau ne se trouve sur la position
+        tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] = 'O';     // On le marque d'un 'O'
     }
 }
