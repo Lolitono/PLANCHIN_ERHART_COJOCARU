@@ -61,7 +61,6 @@ int main() {
         FILE *file = fopen("sauvegarde_jeu.txt", "r"); //on ouvre le fichier en lecture seule
         if(file != NULL) { //on vérifie qu'il n'y a pas de problèmes avec le ficher
             partie = load(file);
-            fclose(file);
             partie_finie(partie);
             if(partie == 4 || partie == 5){ //si on veut sauvegarder la partie
                 return 0;
@@ -98,9 +97,6 @@ int main() {
                     if(partie == 4 || partie == 5){
                         return 0;
                     }
-                    FILE *file = fopen("sauvegarde_jeu.txt", "w");
-                    fprintf(file,"0");
-                    fclose(file);
                     rejouer = recommencer();
                 }while(rejouer == '0');
             }

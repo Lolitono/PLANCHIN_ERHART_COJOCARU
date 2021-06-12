@@ -102,7 +102,6 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
         } else {
             printf("Vous jouez en mode Active.\n");
         }
-
         printf("\nVoici le nombre de bateaux qu'il vous reste a detruire:\n\n");
         affichage_nb_bateau(bateau, NB_bateau);
         affichage_missile(missile);
@@ -177,7 +176,7 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
             if (sauvegarde == 'S') { // si l'utilisateur veut sauvegarder
                 FILE *file = fopen("sauvegarde_jeu.txt", "r"); // on ouvre le fichier en mode lecture
                 partie = demande_sauvegarde(file, tableau_joueur, tableau_ordi, missile, bateau, NB_bateau, nombre_tour, mode);
-                fclose(file);
+
             }
         }
 
@@ -246,7 +245,7 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
         do {
             do {
                 deplacement.choix_bateau = rand() % 5;
-            } while (deplacement.tableau_active[deplacement.choix_bateau] == ' '); // Choix bateau aleatoire non touché
+            } while (deplacement.tableau_active[deplacement.choix_bateau] == ' '); // Choix d'un bateau aléatoire non touché
 
             //printf("bateau choisie : %c, H_V = %d", bateau[choix_bateau].identification,bateau[choix_bateau].H_V);
             deplacement.max_gauche = 0;
