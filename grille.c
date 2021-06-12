@@ -16,13 +16,13 @@ Grid initialisation_tableau(){
 
     for(i=0;i<tableau.hauteur;i++){
         for(j=0;j<tableau.largeur;j++) {
-            tableau.grille[i][j] = '_';
+            tableau.grille[i][j] = '_';                                 // Des underscore pour montrer les cases encore non touchées
             if ((i == 0 || i==11) && (j == 0 || j == 11)) {
-                tableau.grille[i][j] = ' ';
+                tableau.grille[i][j] = ' ';                             // Des espaces aux coins du tableau pour le visuel
             } else if ((i == 0 && i != j) || (i == 11 && i != j)) {
-                tableau.grille[i][j] = 'A' + (j - 1);
+                tableau.grille[i][j] = 'A' + (j - 1);                   // Des lettres sur la première et dernière ligne du tableau pour caractériser chaque colonne sur laquelle le joueur pourra lancer un missile
             } else if ((j == 0 && j != i) || (j == 11 && j != i)) {
-                tableau.grille[i][j] = '0' + (i - 1);
+                tableau.grille[i][j] = '0' + (i - 1);                   // Des chiffres sur la première et dernière colonne du tableau pour caractériser chaque ligne sur laquelle le joueur pourront lancer un missile
             }
         }
     }
@@ -38,13 +38,13 @@ Grid initialisation_tableau_ordi(){
 
     for(i=0;i<tableau.hauteur;i++){
         for(j=0;j<tableau.largeur;j++){
-            tableau.grille[i][j] = ' ';
+            tableau.grille[i][j] = ' ';                                 // Des espaces sur le tableau pour rendre la détection des bateaux plus facile
             if ((i == 0 || i==11) && (j == 0 || j == 11)) {
-                tableau.grille[i][j] = ' ';
+                tableau.grille[i][j] = ' ';                             // Des espaces aux coins du tableau pour le visuel si l'on affiche le tableau de l'ordinateur
             } else if ((i == 0 && i != j) || (i == 11 && i != j)) {
-                tableau.grille[i][j] = '_';
+                tableau.grille[i][j] = '_';                             // Des underscore sur la première et dernière ligne du tableau pour améliorer le visuel si l'on affiche le tableau de l'ordinateur
             } else if ((j == 0 && j != i) || (j == 11 && j != i)) {
-                tableau.grille[i][j] = '|';
+                tableau.grille[i][j] = '|';                             // Des '|' sur la première et dernière colonne du tableau pour améliorer le visuel si l'on affiche le tableau de l'ordinateur
             }
         }
     }
@@ -97,13 +97,13 @@ Grid placement_grille_bateau(Grid tableau_ordi, Boat bateau[], int i){
     return tableau_ordi;
 }
 
-void affichage_tableau(Grid tableau_ordi)
+void affichage_tableau(Grid tableau)
 {
     int i,j;
 
-    for(i=0;i<tableau_ordi.hauteur;i++){
-        for(j=0;j<tableau_ordi.largeur;j++){
-            printf("%c  ",tableau_ordi.grille[i][j]);
+    for(i=0;i<tableau.hauteur;i++){
+        for(j=0;j<tableau.largeur;j++){
+            printf("%c  ",tableau.grille[i][j]);    // On affiche chaque caractère à la suite des autres avec des espaces pour reformer le tableau du joueur ou de l'ordinateur sur la console
         }
         printf("\n");
     }
@@ -147,7 +147,7 @@ Impact demande_tir(Grid tableau_joueur){
         chiffre = atoi(ligne);
         tir_actuel.colonne= lettre-'A';
         tir_actuel.ligne= chiffre;
-        while( tir_actuel.colonne < 0 || tir_actuel.colonne > 9 || tir_actuel.ligne <0 || tir_actuel.ligne>9 || T[2]!= '\0')
+        while( tir_actuel.colonne < 0 || tir_actuel.colonne > 9 || tir_actuel.ligne <0 || tir_actuel.ligne>9 || T[2]!= '\0') // On vérifie que le tir est bien dans la grille de jeu
         {
         printf("Votre tir n'est pas valide (case inconnue), veuillez recommencer ...\n");
             scanf(" %s", &T);
@@ -158,7 +158,7 @@ Impact demande_tir(Grid tableau_joueur){
             tir_actuel.ligne= chiffre;
         }
         if (tableau_joueur.grille[1 + tir_actuel.ligne][1 + tir_actuel.colonne] == 'O' ||
-            tableau_joueur.grille[1 + tir_actuel.ligne][1 + tir_actuel.colonne] == 'X') {
+            tableau_joueur.grille[1 + tir_actuel.ligne][1 + tir_actuel.colonne] == 'X') {   // On vérifie si l'utilisateur ne tire pas sur une case déjà touchée
             verification = 1;
             printf("Votre tir n'est pas valide (case deja touchee), veuillez recommencer ...\n");
         }
@@ -201,8 +201,8 @@ Grid tir_artillerie(Grid tableau_joueur, Grid tableau_ordi,Impact point_impact,i
     for (j = 1; j < 11; j++) {
         for (i = 0; i < NB_bateau; i++) {
             if (tableau_joueur.grille[point_impact.ligne + 1][j] == '_' &&
-                tableau_ordi.grille[point_impact.ligne + 1][j] == bateau[i].identification) {
-                tableau_joueur.grille[point_impact.ligne + 1][j] = 'X';
+                tableau_ordi.grille[point_impact.ligne + 1][j] == bateau[i].identification) {       // Si un bateau se trouve sur la colonne de l'impact
+                tableau_joueur.grille[point_impact.ligne + 1][j] = 'X';                             // Il sera marqué sur le tableau joueur
             }
         }
         if (tableau_joueur.grille[point_impact.ligne + 1][j] == '_') {
@@ -211,8 +211,8 @@ Grid tir_artillerie(Grid tableau_joueur, Grid tableau_ordi,Impact point_impact,i
     }
     for (j = 1; j < 11; j++) {
         for (i = 0; i < NB_bateau; i++) {
-            if (tableau_joueur.grille[j][point_impact.colonne + 1] == '_' && tableau_ordi.grille[j][point_impact.colonne + 1] == bateau[i].identification) {
-                tableau_joueur.grille[j][point_impact.colonne + 1] = 'X';
+            if (tableau_joueur.grille[j][point_impact.colonne + 1] == '_' && tableau_ordi.grille[j][point_impact.colonne + 1] == bateau[i].identification) {    // Si un bateau se trouve sur la ligne de l'impact alors cela mettra qu'on l'a touché sur le tableau joueur
+                tableau_joueur.grille[j][point_impact.colonne + 1] = 'X';           // Il sera marqué sur le tableau joueur
             }
         }
         if (tableau_joueur.grille[j][point_impact.colonne + 1] == '_' ) {

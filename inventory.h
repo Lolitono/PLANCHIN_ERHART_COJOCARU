@@ -19,7 +19,7 @@ typedef struct {
 /**
  * Demande la difficulté à laquelle l'utilisateur veut jouer
  * Etablit l'inventaire pour chaque difficulté (nombres de missiles)
- * @return l'inventaire
+ * @return l'inventaire de l'utilisateur
  */
 Inventory demande_difficulte();
 
@@ -37,9 +37,9 @@ void affichage_missile(Inventory missile);
 
 /**
  * Demande à l'utilisateur avec quel missile il souhaite tirer
- * Message d'erreur (redemande le choix) si erreur
+ * Message d'erreur (redemande le choix) si missile choisi n'existe pas ou que l'utilisateur n'a plus de ce missile
  * @param missile
- * @return
+ * @return le missile que l'utilisateur a choisi
  */
 char demande_missile(Inventory missile);
 
@@ -47,7 +47,7 @@ char demande_missile(Inventory missile);
  * Indique si il reste assez de missiles de la catégorie choisie
  * @param missile
  * @param tir_actuel
- * @return
+ * @return 1 si l'utilisateur n'a plus assez de missile et 0 si il en a encore
  */
 int verification_missile(Inventory missile,char tir_actuel);
 

@@ -79,7 +79,7 @@ char demande_missile(Inventory missile){
             scanf(" %c", &tir_actuel);
             tir_actuel = toupper(tir_actuel);
         }
-        verification = verification_missile(missile,tir_actuel);
+        verification = verification_missile(missile,tir_actuel);    // On vérfie si l'utilisateur a encore le missile qu'il a choisi
 
     }while(verification == 1);
 

@@ -15,33 +15,32 @@ int main() {
     char rejouer,mode;
 
     srand(time(0));
-//    FILE *file = fopen("sauvegarde_jeu.txt", "w");       // 3 lignes à décommenter pour initialiser le fichier de sauvegarde
-//    fprintf(file,"0");
-//    fclose(file);
+
+//    FILE *file = fopen("sauvegarde_jeu.txt", "w");       /*
+//    fprintf(file,"0");                                    3 lignes à décommenter pour initialiser le fichier de sauvegarde
+//    fclose(file);                                         */
+
     FILE *file = fopen("sauvegarde_jeu.txt", "r");  // ligne à commenter si aucun fichier de sauvegarde n'existe
+
     demarrer = menu(file);
     fclose(file);
+
     if (demarrer == 'D'){
         do {
 
             mode = demande_mode();
-            missile = demande_difficulte();
+            missile=demande_difficulte();
             tableau_joueur = initialisation_tableau();
             tableau_ordi = initialisation_tableau_ordi();
 
             for (i = 0; i < NB_bateau; i++) {
                 bateau[i] = initialisation_bateau(i);
-            }
-
-            for (i = 0; i < NB_bateau; i++) {
                 bateau[i].touche = 0;
-                bateau[i].H_V = rand() % 2; //0 = horizontal, 1 = vertical
-                bateau[i].identification = 'A' + i;
+                bateau[i].H_V = rand() % 2;                                     //0 = horizontal, 1 = vertical
+                bateau[i].identification = 'A' + i;                             //lettre permettant d'identifier chaque bateau
                 bateau[i] = placement_bateau(tableau_ordi, bateau, i);
                 tableau_ordi = placement_grille_bateau(tableau_ordi, bateau, i);
             }
-
-
 
             //JEU
             nombre_tour=1;
@@ -72,17 +71,13 @@ int main() {
             rejouer = recommencer();
             if(rejouer == 'O'){
                 do {
-                    tableau_joueur = initialisation_tableau();
-                    tableau_ordi = initialisation_tableau_ordi();
-                    mode = demande_mode();
-                    missile = demande_difficulte();
-                    affichage_missile_depart(missile);
+                    tableau_joueur = initialisation_tableau();      // On initialise le tableau joueur
+                    tableau_ordi = initialisation_tableau_ordi();   // On initialise le tableau ordi
+                    mode = demande_mode();                          // On demande le mode de jeu auquelle l'utilisateur veut jouer
+                    missile = demande_difficulte();                 // On demande la difficulté
 
                     for (i = 0; i < NB_bateau; i++) {
-                        bateau[i] = initialisation_bateau(i);
-                    }
-
-                    for (i = 0; i < NB_bateau; i++) {
+                        bateau[i] = initialisation_bateau(i);       //
                         bateau[i].touche = 0;
                         bateau[i].H_V = rand() % 2;
                         bateau[i].identification = 'A' + i;
@@ -90,6 +85,7 @@ int main() {
                         tableau_ordi = placement_grille_bateau(tableau_ordi, bateau, i);
                     }
 
+                    affichage_missile_depart(missile);
                     printf("Voici le nombre de bateaux que l'ordinateur va placer aleatoirement:\n\n");
                     affichage_nb_bateau(bateau, NB_bateau);
 
@@ -113,8 +109,9 @@ int main() {
     } else {
         return 0;
     }
-
 }
+
+
 
 // Faire systeme de sauvegarde
 // Demander a chaque tour si l'on veut continuer

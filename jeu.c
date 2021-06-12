@@ -106,7 +106,7 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
 
         if(nombre_tour!=1 && mode=='A') {
 
-            deplacement_actif.decision = rand()%3;
+            deplacement_actif.decision = rand()%3; // Decision de l'ordi si il veut bouger un bateau ou pas
             if(deplacement_actif.decision != 0) {
                 deplacement_actif = verification_deplacement_bateau_mode_active(tableau_ordi,tableau_joueur, bateau ,NB_bateau);
                 if (deplacement_actif.tableau_active[deplacement_actif.choix_bateau] == bateau[deplacement_actif.choix_bateau].identification && deplacement_actif.verification_mode_active!=5){
@@ -116,17 +116,13 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
         }
 
 
-
-
-
         missile_utilise = demande_missile(missile);
         point_impact = demande_tir(tableau_joueur);
         printf("Le missile tombera en %c%d.\n\n", 'A' + point_impact.colonne, point_impact.ligne);
 
         if (missile_utilise == 'A') {
             missile.artillerie = missile.artillerie - 1;
-            tableau_joueur = tir_artillerie(tableau_joueur, tableau_ordi, point_impact, NB_bateau, bateau);
-
+            tableau_joueur = tir_artillerie(&tableau_joueur, &tableau_ordi, point_impact, NB_bateau, bateau);
             for (i = 0; i < NB_bateau; i++) {
                 for (k = 1; k < 11; k++) {
                     if (tableau_ordi.grille[k][1 + point_impact.colonne] == bateau[i].identification &&
@@ -150,10 +146,11 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
                 }
             }
 
+
         } else if (missile_utilise == 'T') {
 
             missile.tactique = missile.tactique - 1;
-            tableau_joueur = tir_tactique(tableau_joueur, tableau_ordi, point_impact);
+            tableau_joueur = tir_tactique(&tableau_joueur, &tableau_ordi, point_impact);
             for (i = 0; i < NB_bateau; i++) {
                 if (tableau_ordi.grille[1 + point_impact.ligne][1 + point_impact.colonne] ==
                     bateau[i].identification &&
@@ -175,7 +172,7 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
         } else if (missile_utilise == 'B') {
 
             missile.bombe = missile.bombe - 1;
-            tableau_joueur = tir_bombe(tableau_joueur, tableau_ordi, point_impact, NB_bateau, bateau);
+            tableau_joueur = tir_bombe(&tableau_joueur, &tableau_ordi, point_impact, NB_bateau, bateau);
             for (i = 0; i < NB_bateau; i++) {
                 for (k = -1; k < 4; k++) {
                     if (tableau_ordi.grille[point_impact.ligne + k][1 + point_impact.colonne] ==
@@ -222,7 +219,7 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
         } else {
 
             missile.simple = missile.simple - 1;
-            tableau_joueur = tir_simple(tableau_joueur, tableau_ordi, point_impact);
+            tableau_joueur = tir_simple(&tableau_joueur, &tableau_ordi, point_impact);
             for (i = 0; i < NB_bateau; i++) {
                 if (tableau_ordi.grille[1 + point_impact.ligne][1 + point_impact.colonne] ==
                     bateau[i].identification &&
