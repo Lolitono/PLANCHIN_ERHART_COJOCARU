@@ -49,7 +49,16 @@ char demande_difficulte();
 
 
 /**
- * Le jeu de la Bataille navale
+ * Affiche le nombre de tour
+ * Affiche le nombre de missiles en fonction du nombre qu'il en reste
+ * Affiche le nombre de bateaux au début de chaque tour
+ * Affiche le tableau joueur si on est en mode Classique ou Active
+ * Fait choisir à l'ordinateur s'il déplace un bateau avec vérification pour le mode Active
+ * Demande en quelle case l'utilisateur veut tirer
+ * Enlève les missiles utilisés dans l'inventaire
+ * Tire un missile et montre le tableau avec les changements (bateau touché ou non)
+ * Demande à l'utilisateur s'il veut sauvegarder ou continuer à la fin de chaque tour
+ * Ouvre un fichier "sauvegarde_jeu.txt" si l'utilisateur choisi de sauvegarder
  * @param tableau_joueur
  * @param tableau_ordi
  * @param missile

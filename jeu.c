@@ -120,7 +120,7 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
         if(nombre_tour!=1 && mode=='A') {
 
             deplacement_actif.decision = rand()%3; // Decision de l'ordi si il veut bouger un bateau ou pas
-            if(deplacement_actif.decision != 0) { //Nous avons chosi que le bateau avait 2 chances sur 3 de bouger
+            if(deplacement_actif.decision != 0) { //Nous avons choisi que le bateau avait 2 chances sur 3 de bouger
                 deplacement_actif = verification_deplacement_bateau_mode_active(tableau_ordi,tableau_joueur, bateau ,NB_bateau);
                 if (deplacement_actif.tableau_active[deplacement_actif.choix_bateau] == bateau[deplacement_actif.choix_bateau].identification && deplacement_actif.verification_mode_active!=5){
                     //Si le bateau choisi est bien identifié dans le tableau de verfication des bateaux pouvant se déplacer ET qu'au moins un bateau peut se déplacer
