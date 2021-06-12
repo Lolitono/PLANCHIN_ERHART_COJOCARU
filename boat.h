@@ -26,14 +26,6 @@ typedef struct {
 Boat initialisation_bateau(int i);
 
 /**
- * Affiche le nombre de bateaux restants et ceux qui ont été touchés
- * Affiche si un bateau est coulé
- * @param bateau
- * @param NB_bateau
- */
-void affichage_nb_bateau(Boat bateau[], int NB_bateau);
-
-/**
  * Place les bateaux dans la grille de jeu ordinateur en fonction de son horizontalité ou de sa verticalité
  * @param tableau
  * @param bateau
@@ -41,6 +33,26 @@ void affichage_nb_bateau(Boat bateau[], int NB_bateau);
  * @return la position du bateau
  */
 Boat placement_bateau(Grid tableau, Boat bateau[], int i);
+
+/**
+ * Définit la position des bateaux horizontaux aléatoirement
+ * @param tableau_ordi
+ * @param bateau
+ * @return la position du bateau (ligne et colonne)
+ */
+Boat position_bateau_horizontal(Grid tableau_ordi, Boat bateau);
+
+
+
+/**
+ * Vérifie et empêche les collisions horizontales entre les bateaux déjà positionnés
+ * @param tableau_ordi
+ * @param ligne
+ * @param colonne
+ * @param taille_bateau
+ * @return 1 si il peut y avoir une colision ou 0 si il n'y en a pas
+ */
+int collision_horizontale(Grid tableau_ordi,Boat bateau);
 
 /**
  * Définit la position des bateaux verticaux
@@ -60,24 +72,14 @@ Boat position_bateau_vertical(Grid tableau_ordi, Boat bateau);
  */
 int collision_verticale(Grid tableau_ordi,Boat bateau);
 
+
 /**
- * Définit la position des bateaux horizontaux aléatoirement
- * @param tableau_ordi
+ * Affiche le nombre de bateaux restants et ceux qui ont été touchés
+ * Affiche si un bateau est coulé
  * @param bateau
- * @return la position du bateau (ligne et colonne)
+ * @param NB_bateau
  */
-Boat position_bateau_horizontal(Grid tableau_ordi, Boat bateau);
-
-/**
- * Vérifie et empêche les collisions horizontales entre les bateaux déjà positionnés
- * @param tableau_ordi
- * @param ligne
- * @param colonne
- * @param taille_bateau
- * @return 1 si il peut y avoir une colision ou 0 si il n'y en a pas
- */
-int collision_horizontale(Grid tableau_ordi,Boat bateau);
-
+void affichage_nb_bateau(Boat bateau[], int NB_bateau);
 
 
 #endif //PLANCHIN_ERHART_COJOCARU_BOAT_H

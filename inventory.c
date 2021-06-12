@@ -47,6 +47,7 @@ Inventory demande_difficulte(){
     return inventaire;
 }
 
+
 void affichage_missile_depart(Inventory missile){
 
     printf("\n-Missiles d'artilleries : %d  (Le missile d'artillerie inflige des degats a tout les bateaux se situant sur la ligne et la colonne du point d'impact).\n",missile.artillerie);
@@ -56,6 +57,7 @@ void affichage_missile_depart(Inventory missile){
     printf("\n=======================================\n\n");
 }
 
+
 void affichage_missile(Inventory missile){
     printf("\nVoici les munitions qu'il vous reste : \n");
     printf("\n-Missiles d'artilleries : %d\n",missile.artillerie);
@@ -64,9 +66,8 @@ void affichage_missile(Inventory missile){
     printf("-Missiles simples : %d\n\n",missile.simple);
 }
 
-//  Quel missile veut-il choisir
 
-char demande_missile(Inventory missile){
+char demande_missile(Inventory missile){  //  Quel missile veut-il choisir
     char tir_actuel;
     int verification;
     do{
@@ -85,6 +86,7 @@ char demande_missile(Inventory missile){
 
     return tir_actuel;
 }
+
 
 int verification_missile(Inventory missile, char tir_actuel){
     if (tir_actuel=='A' && missile.artillerie==0){
@@ -105,3 +107,4 @@ int verification_missile(Inventory missile, char tir_actuel){
     }
     return 0;
 }
+

@@ -22,6 +22,7 @@ typedef struct {
 #include "inventory.h"
 #include "boat.h"
 
+
 /**
  * Affiche le menu avec les trois choix (Démarrer, Charger, Quitter)
  * Le choix "Charger" ne s'affiche pas si il n'y a aucune partie en sauvegarde
@@ -30,6 +31,7 @@ typedef struct {
  * @return une lettre entre D/C/Q en fonction du choix de l'utilisateur
  */
 char menu(FILE * file);
+
 
 /**
  * Affiche les modes disponibles et demande au joueur lequel il souhaite utiliser
@@ -53,26 +55,26 @@ char demande_mode();
 int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau,char mode,int nombre_tour, int charger);
 
 /**
- * Vérifie parmi tous les bateaux si un ou plusieurs baetaux sont touchés
+ * Vérifie parmi tous les bateaux si un ou plusieurs bateaux sont touchés
  * Prends un bateau au hasard dans le tableau et regarde ses déplacements maximum à l'horizontal ou à la vertical
  * @param tableau_ordi
  * @param tableau_joueur
  * @param bateau
  * @param NB_bateau
- * @return la structure actif avec les déplacement max du bateau choisi
+ * @return la structure Actif avec les déplacements max du bateau choisi
  */
 Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tableau_joueur, Boat bateau[],int NB_bateau);
 
+
 /**
- * Déplace le bateau choisi par l'ordinateur d'une distance aléatoire en focntion de ses déplacements maximums
- * @param tableau_ordi  le tableau de l'ordinateur
- * @param tableau_joueur
+ * Déplace le bateau choisi par l'ordinateur d'une distance aléatoire en fonction de ses déplacements maximums
+ * @param tableau_ordi
  * @param bateau
- * @param NB_bateau
- * @param deplacement
+ * @param deplacement   les déplacements max du bateau choisi
  * @return La nouvelle position du bateau
  */
-Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Grid tableau_joueur, Boat bateau[],int NB_bateau,Actif deplacement);
+Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Boat bateau[],Actif deplacement);
+
 
 /**
  * Sauvegarde dans le fichier "sauvegarde_jeu.txt"
@@ -85,13 +87,31 @@ Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Grid tableau_joueur, Boa
  * @param file le fichier de sauvegarde
  * @param tableau_joueur
  * @param tableau_ordi
+ * @param missile Inventaire de missile
+ * @param bateau les données des bateaux
+ * @param NB_bateau Nombre de bateau au total (5)
+ * @param nombre_tour
+ * @param mode
+ */
+void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau, int nombre_tour, char mode);
+
+
+/**
+ * On vérifie la demande de l'utilisateur lorsqu'il veut sauvegarder la partie
+ * Si l'utilisateur veut sauvegarder la partie, on regarde si il y une sauvegarde déjà présente
+ * Si oui, on lui demande si il veut écraser cette sauvegarde
+ * @param file le fichier de sauvegarde
+ * @param tableau_joueur
+ * @param tableau_ordi
  * @param missile
  * @param bateau
  * @param NB_bateau
  * @param nombre_tour
  * @param mode
+ * @return un chiffre entre 4 et 5 (Sauvegarder ou quitter la partie car on ne veut pas ecraser la sauvegarde)
  */
-void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau, int nombre_tour, char mode);
+int demande_sauvegarde(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau, int nombre_tour, char mode);
+
 
 /**
  * Récupère les données sauvegardées dans la fonction save
@@ -100,6 +120,7 @@ void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile,
  * @return un nombre définissant si la partie est finie ou non ou doit etre sauvegardé
  */
 int load(FILE* file);
+
 
 /**
  * Conditionne la victoire ou la défaite en fonction du nombre de missiles restants ou des bateaux coulés
@@ -110,11 +131,13 @@ int load(FILE* file);
  */
 int fin_partie(Boat bateau[],Inventory missile,int NB_bateau);
 
+
 /**
  * Affiche le résultat de la partie (Victoire, Défaite ou Sauvegarde)
  * @param partie
  */
 void partie_finie(int partie);
+
 
 /**
  * Demande à l'utilisateur si il souhaite recommencer une partie
@@ -122,7 +145,6 @@ void partie_finie(int partie);
  * @return le choix de l'utilisateur entre entre 0(Oui)/N(Non)
  */
 char recommencer();
-
 
 
 #endif //PLANCHIN_ERHART_COJOCARU_JEU_H

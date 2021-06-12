@@ -41,8 +41,6 @@ char menu(FILE * file){
         }
     }
 
-
-
     return demarrer;
 }
 
@@ -64,9 +62,9 @@ char demande_mode(){
 }
 
 int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau, char mode, int nombre_tour, int charger){
-    int i,j,k,partie,verification;
+    int partie;
     char missile_utilise,sauvegarde;
-    char temp[5];
+
 
     Actif deplacement_actif={0};
 
@@ -99,18 +97,15 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
                nombre_tour);
 
 
-        char ecraser[5]={0};
-        char quitter[5]={0};
-
-
 
         if(nombre_tour!=1 && mode=='A') {
 
             deplacement_actif.decision = rand()%3; // Decision de l'ordi si il veut bouger un bateau ou pas
-            if(deplacement_actif.decision != 0) {
+            if(deplacement_actif.decision != 0) { //Nous avons chosi que le bateau avait 2 chances sur 3 de bouger
                 deplacement_actif = verification_deplacement_bateau_mode_active(tableau_ordi,tableau_joueur, bateau ,NB_bateau);
                 if (deplacement_actif.tableau_active[deplacement_actif.choix_bateau] == bateau[deplacement_actif.choix_bateau].identification && deplacement_actif.verification_mode_active!=5){
-                    bateau[deplacement_actif.choix_bateau] = deplacement_bateau_mode_active(&tableau_ordi,tableau_joueur, bateau ,NB_bateau,deplacement_actif);
+                    //Si le bateau choisi est bien identifié dans le tableau de verfication des bateaux pouvant se déplacer ET qu'au moins un bateau peut se déplacer
+                    bateau[deplacement_actif.choix_bateau] = deplacement_bateau_mode_active(&tableau_ordi,bateau,deplacement_actif); // On déplace un bateau
                 }
             }
         }
@@ -242,7 +237,7 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
             if (mode == 'C' || mode == 'A') {
                 affichage_tableau(tableau_joueur);
                 printf("\n");
-                affichage_tableau(tableau_ordi);
+                affichage_tableau(tableau_ordi); //Décommenter pour voir le tableau de l'ordinateur en même temps que le tableau du joueur et comparer
             }
             printf("\nVoulez continuer ou sauvegarder et quitter (C/S)?\n");
             scanf(" %c", &sauvegarde);
@@ -252,61 +247,10 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
                 scanf(" %c", &sauvegarde);
                 sauvegarde = toupper(sauvegarde);
             }
-            if (sauvegarde == 'S') {
-                FILE *file = fopen("sauvegarde_jeu.txt", "r");
-                rewind(file);
-                fgets(temp,5,file);
-                verification=atoi(temp);
+            if (sauvegarde == 'S') { // si l'utilisateur veut sauvegarder
+                FILE *file = fopen("sauvegarde_jeu.txt", "r"); // on ouvre le fichier en mode lecture
+                partie = demande_sauvegarde(file, tableau_joueur, tableau_ordi, missile, bateau, NB_bateau, nombre_tour, mode);
                 fclose(file);
-                if(verification == 0){
-                    file = fopen("sauvegarde_jeu.txt", "w");
-                    save(file, tableau_joueur, tableau_ordi, missile, bateau, NB_bateau, nombre_tour, mode);
-                    fclose(file);
-                    partie = 4;
-                } else {
-                    printf("Si vous enregistrez cette partie, la derniere sauvegarde sera ecrasee. Etes-vous sur de vouloir sauvegarder (OUI/NON)\n");
-                    fflush(stdin);
-                    gets(ecraser);
-                    for (i=0;i<5;i++){
-                        ecraser[i] = toupper(ecraser[i]);
-                    }
-
-                    while(strcmp(ecraser,"OUI")!=0 && strcmp(ecraser,"NON")!=0)
-                    {
-                        printf("Veuillez saisir un mot valide (OUI/NON)\n");
-                        fflush(stdin);
-                        gets(ecraser);
-                        for (i=0;i<5;i++){
-                            ecraser[i] = toupper(ecraser[i]);
-                        }
-                    }
-                    if(strcmp(ecraser,"OUI")==0){
-                        file = fopen("sauvegarde_jeu.txt", "w");
-                        save(file, tableau_joueur, tableau_ordi, missile, bateau, NB_bateau, nombre_tour, mode);
-                        fclose(file);
-                        partie = 4;
-                    } else {
-                        printf("Voulez-vous quitter? (OUI/NON)\n");
-                        fflush(stdin);
-                        gets(quitter);
-                        for (i=0;i<5;i++){
-                            quitter[i] = toupper(quitter[i]);
-                        }
-
-                        while(strcmp(quitter,"OUI")!=0 && strcmp(quitter,"NON")!=0)
-                        {
-                            printf("Veuillez saisir un mot valide (OUI/NON)\n");
-                            fflush(stdin);
-                            gets(quitter);
-                            for (i=0;i<5;i++){
-                                quitter[i] = toupper(quitter[i]);
-                            }
-                        }
-                        if (strcmp(quitter,"OUI")==0){
-                            partie = 5;
-                        }
-                    }
-                }
             }
         }
 
@@ -418,110 +362,160 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
     return deplacement;
 }
 
-Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Grid tableau_joueur, Boat bateau[], int NB_bateau, Actif deplacement){
 
-    int i,j;
+Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Boat bateau[], Actif deplacement){
 
+    int i;
 
-
-        if (deplacement.tableau_active[deplacement.choix_bateau] == bateau[deplacement.choix_bateau].identification &&
-            deplacement.verification_mode_active != 5) {
-
-            if (bateau[deplacement.choix_bateau].H_V == 0) {
-                deplacement.mouvement_bateau = rand() % (deplacement.max_gauche + deplacement.max_droite) + 1;
-                if (deplacement.mouvement_bateau <= deplacement.max_gauche) {
-                    for (i = 1; i < (deplacement.mouvement_bateau + 1); i++) {
-                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +
-                                                                             bateau[deplacement.choix_bateau].taille_bateau -
-                                                                             i + 1] = ' ';
-                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne -
-                                                                             i +
-                                                                             1] = bateau[deplacement.choix_bateau].identification;
-                    }
-                    bateau[deplacement.choix_bateau].colonne = bateau[deplacement.choix_bateau].colonne - deplacement.mouvement_bateau;
-                } else {
-                    for (i = 0; i < (deplacement.mouvement_bateau - deplacement.max_gauche); i++) {
-                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +
-                                                                             i +
-                                                                             1] = ' ';
-                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +
-                                                                             bateau[deplacement.choix_bateau].taille_bateau +
-                                                                             i +
-                                                                             1] = bateau[deplacement.choix_bateau].identification;
-                    }
-                    bateau[deplacement.choix_bateau].colonne =
-                            bateau[deplacement.choix_bateau].colonne + (deplacement.mouvement_bateau - deplacement.max_gauche);
-                }
-
-            } else {
-                deplacement.mouvement_bateau = rand() % (deplacement.max_bas + deplacement.max_haut) + 1;
-                if (deplacement.mouvement_bateau <= deplacement.max_haut) {
-                    for (i = 1; i < (deplacement.mouvement_bateau + 1); i++) {
-                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne +
-                                             bateau[deplacement.choix_bateau].taille_bateau -
-                                             i + 1][bateau[deplacement.choix_bateau].colonne + 1] = ' ';
-                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne - i + 1][
-                                bateau[deplacement.choix_bateau].colonne +
-                                1] = bateau[deplacement.choix_bateau].identification;
-                    }
-                    bateau[deplacement.choix_bateau].ligne = bateau[deplacement.choix_bateau].ligne - deplacement.mouvement_bateau;
-                } else {
-                    for (i = 0; i < (deplacement.mouvement_bateau - deplacement.max_haut); i++) {
-                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + i + 1][
-                                bateau[deplacement.choix_bateau].colonne +
-                                1] = ' ';
-                        tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne +
-                                             bateau[deplacement.choix_bateau].taille_bateau +
-                                             i + 1][bateau[deplacement.choix_bateau].colonne +
-                                                    1] = bateau[deplacement.choix_bateau].identification;
-                    }
-                    bateau[deplacement.choix_bateau].ligne =
-                            bateau[deplacement.choix_bateau].ligne + (deplacement.mouvement_bateau - deplacement.max_haut);
-                }
+    if (bateau[deplacement.choix_bateau].H_V == 0) {    // Si le bateau à déplacer est horizontal
+        deplacement.mouvement_bateau = rand() % (deplacement.max_gauche + deplacement.max_droite) + 1; // On choisi aléatoirement le déplacement du bateau par rapport à l'horizontal
+        if (deplacement.mouvement_bateau <= deplacement.max_gauche) {   //Si le déplacement choisi est inférieur au déplcement max gauche, le bateau se déplacera à gauche
+            for (i = 1; i < (deplacement.mouvement_bateau + 1); i++) {  // On répète le décalage du bateau jusqu'à ce que le déplacement choisi soit atteint
+                tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +bateau[deplacement.choix_bateau].taille_bateau -i + 1] = ' '; // La case du bateau la plus à droite disparais sur le tableau ordi
+                tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne -i +1] = bateau[deplacement.choix_bateau].identification; // La case du bateau la plus à gauche plus un décalage de 1 est remplacé par la lettre du bateau sur le tableau ordi
             }
+            bateau[deplacement.choix_bateau].colonne = bateau[deplacement.choix_bateau].colonne - deplacement.mouvement_bateau; // On remplace l'ancienne position sur la colonne par la nouvelle
+        } else { //Sinon le bateau se déplacera à droite
+            for (i = 0; i < (deplacement.mouvement_bateau - deplacement.max_gauche); i++) { // On répète le décalage du bateau jusqu'à ce que le déplacement choisi soit atteint
+                tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +i +1] = ' '; // La case du bateau la plus à gauche disparais sur le tableau ordi
+                tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +bateau[deplacement.choix_bateau].taille_bateau +i +1] = bateau[deplacement.choix_bateau].identification; // La case du bateau la plus à droite plus un décalage de 1 est remplacé par la lettre du bateau sur le tableau ordi
 
-            //printf("Un bateau de taille %d s'est deplace en nouvelle position : %c %d \n",bateau[choix_bateau].taille_bateau, 'A' + bateau[choix_bateau].colonne,bateau[choix_bateau].ligne);
-            printf("Un bateau s'est deplace");
+            }
+            bateau[deplacement.choix_bateau].colonne = bateau[deplacement.choix_bateau].colonne + (deplacement.mouvement_bateau - deplacement.max_gauche); // On remplace l'ancienne position sur la colonne par la nouvelle
         }
+        // On a pas besoin de changer la ligne du bateau pour un déplacement horizontal car le bateau se déplace sur la même ligne
+    } else {    // Sinon le bateau a déplacer est vertical
+        deplacement.mouvement_bateau = rand() % (deplacement.max_bas + deplacement.max_haut) + 1;// On choisi aléatoirement le déplacement du bateau sur la verticale
+        if (deplacement.mouvement_bateau <= deplacement.max_haut) {
+            for (i = 1; i < (deplacement.mouvement_bateau + 1); i++) {
+                tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne +bateau[deplacement.choix_bateau].taille_bateau -i + 1][bateau[deplacement.choix_bateau].colonne + 1] = ' ';
+                tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne - i + 1][bateau[deplacement.choix_bateau].colonne +1] = bateau[deplacement.choix_bateau].identification;
+            }
+            bateau[deplacement.choix_bateau].ligne =bateau[deplacement.choix_bateau].ligne - deplacement.mouvement_bateau;
+        } else {
+            for (i = 0; i < (deplacement.mouvement_bateau - deplacement.max_haut); i++) {
+                tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + i + 1][bateau[deplacement.choix_bateau].colonne +1] = ' ';
+                tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne +bateau[deplacement.choix_bateau].taille_bateau +i + 1][bateau[deplacement.choix_bateau].colonne +1] = bateau[deplacement.choix_bateau].identification;
+            }
+            bateau[deplacement.choix_bateau].ligne =bateau[deplacement.choix_bateau].ligne + (deplacement.mouvement_bateau - deplacement.max_haut);
+        }
+        // On a pas besoin de changer la colonne du bateau pour un déplacement vertical car le bateau se déplace sur la même colonne
+    }
+    //printf("Un bateau de taille %d s'est deplace en nouvelle position : %c %d \n",bateau[choix_bateau].taille_bateau, 'A' + bateau[choix_bateau].colonne,bateau[choix_bateau].ligne);
+    // Ligne à décommenter si vous voulez voir la nouvelle position du bateau choisi
+    printf("Un bateau s'est deplace");
+
     return bateau[deplacement.choix_bateau];
 }
 
+
+int demande_sauvegarde(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau, int nombre_tour, char mode){
+    int i;
+    char temp[5];
+    int verification;
+    int partie;
+    char ecraser[5]={0};
+    char quitter[5]={0};
+
+    rewind(file);
+    fgets(temp,5,file);     // On prend le chiffre au tout début du fichier pour voir si il y a une sauvegarde dans ce fichier
+    verification=atoi(temp);
+    fclose(file);
+    if(verification == 0){      // Si il n'y en a pas on sauvegarde
+        save(file, tableau_joueur, tableau_ordi, missile, bateau, NB_bateau, nombre_tour, mode);
+        partie = 4;
+    } else { // Sinon on demande à l'utilisateur si il veut écraser cette sauvegarde
+
+        printf("Si vous enregistrez cette partie, la derniere sauvegarde sera ecrasee. Etes-vous sur de vouloir sauvegarder (OUI/NON)\n");
+        fflush(stdin);
+        gets(ecraser);
+
+        for (i=0;i<5;i++){
+            ecraser[i] = toupper(ecraser[i]);
+        }
+
+        while(strcmp(ecraser,"OUI")!=0 && strcmp(ecraser,"NON")!=0)         // Verfication avec message d'erreur si l'utilisateur ne saisie pas la bonne chaine de caractère
+        {
+            printf("Veuillez saisir un mot valide (OUI/NON)\n");
+            fflush(stdin);
+            gets(ecraser);
+            for (i=0;i<5;i++){
+                ecraser[i] = toupper(ecraser[i]);
+            }
+        }
+
+        if(strcmp(ecraser,"OUI")==0){ //Si l'utilisateur veut écraser une sauvegarde alors on sauvegarde par dessus en effacant puis sauvegardant
+            save(file, tableau_joueur, tableau_ordi, missile, bateau, NB_bateau, nombre_tour, mode);
+            partie = 4;
+
+        } else {
+
+            printf("Voulez-vous quitter? (OUI/NON)\n");
+            fflush(stdin); //on vide le buffer
+            gets(quitter); //on récupère la réponse de l'utilisateur
+
+            for (i=0;i<5;i++){
+                quitter[i] = toupper(quitter[i]);       //On met en majuscule pour que l'utilisateur puisse taper soit en majuscule, soit en minuscule
+            }
+
+            while(strcmp(quitter,"OUI")!=0 && strcmp(quitter,"NON")!=0)     // Verfication avec message d'erreur si l'utilisateur ne saisie pas la bonne chaine de caractère
+            {
+                printf("Veuillez saisir un mot valide (OUI/NON)\n");
+                fflush(stdin); // on vide le buffer
+                gets(quitter); // on récupère la réponse de l'utilisateur
+                for (i=0;i<5;i++){
+                    quitter[i] = toupper(quitter[i]); //on met en majuscule la saisie de l'utilisateur pour pouvoir lire ce qu'il a écrit même si c'est en minuscule
+                }
+            }
+
+            if (strcmp(quitter,"OUI")==0){ // si l'utilisateur confirme qu'il veut quitter le programme
+                partie = 5; //On quitte la partie
+            } else {
+                partie =0;  //On continue la partie
+            }
+        }
+    }
+    return partie;
+}
+
+
 void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau, int nombre_tour, char mode){
     int i,j;
-    rewind(file);
-    fprintf(file,"1\n");
-    fprintf(file,"%d\n",NB_bateau);
-    fprintf(file,"%d\n",nombre_tour);
-    fprintf(file,"%c\n",mode);
+    file = fopen("sauvegarde_jeu.txt", "w"); //on ouvre le fichier en écriture
+    rewind(file); //on remonte le curseur en haut du fichier
+    fprintf(file,"1\n"); //on écrit le chiffre 1 pour pouvoir vérifier lors du prochain lancement de programme qu'il y a une sauvegarde
+    fprintf(file,"%d\n",NB_bateau);     //on ecrit le nombre total de bateau
+    fprintf(file,"%d\n",nombre_tour);   //on ecrit le nombre de tour ou l'utilisateur s'est arrêté
+    fprintf(file,"%c\n",mode);          //on ecrit le mode que l'utilisateur a choisi
 
-    fprintf(file,"%d\n",missile.artillerie);
-    fprintf(file,"%d\n",missile.tactique);
-    fprintf(file,"%d\n",missile.bombe);
-    fprintf(file,"%d\n",missile.simple);
+    fprintf(file,"%d\n",missile.artillerie);    //on écrit le nombre de missiles d'artillerie restants à l'utilisateur
+    fprintf(file,"%d\n",missile.tactique);      //on écrit le nombre de missiles tactiques restants à l'utilisateur
+    fprintf(file,"%d\n",missile.bombe);         //on écrit le nombre de bombes restantes à l'utilisateur
+    fprintf(file,"%d\n",missile.simple);        //on écrit le nombre de missiles simples restants à l'utilisateur
 
-    for(i=0;i<NB_bateau;i++){
-        fprintf(file,"%d\n",bateau[i].taille_bateau);
-        fprintf(file,"%d\n",bateau[i].ligne);
-        fprintf(file,"%d\n",bateau[i].colonne);
-        fprintf(file,"%d\n",bateau[i].H_V);
-        fprintf(file,"%d\n",bateau[i].touche);
-        fprintf(file,"%c\n",bateau[i].identification);
+    for(i=0;i<NB_bateau;i++){                                   //Pour chaque bateau on écrit :
+        fprintf(file,"%d\n",bateau[i].taille_bateau);   // sa taille
+        fprintf(file,"%d\n",bateau[i].ligne);           // sa ligne définissant sa position dans le tableau
+        fprintf(file,"%d\n",bateau[i].colonne);         // sa colonne définissant sa position dans le tableau
+        fprintf(file,"%d\n",bateau[i].H_V);             // son horizontalité ou verticalité
+        fprintf(file,"%d\n",bateau[i].touche);          // le nombre de fois que le bateau a été touché pendant la partie
+        fprintf(file,"%c\n",bateau[i].identification);  // sa lettre qui permet de l'identifier sur la tableau de l'ordinateur
     }
-
 
 
     for(i=0;i<tableau_joueur.hauteur;i++){
         for(j=0;j<tableau_joueur.largeur;j++) {
-            fprintf(file,"%c",tableau_joueur.grille[i][j]);
+            fprintf(file,"%c",tableau_joueur.grille[i][j]);     //Chaque cases du tableau du joueur sont stockés dans le fichier
         }
-        fprintf(file,"\n");
+        fprintf(file,"\n");                 //On saute une ligne pour respecter le rendu visuel du tableau et le format du tableau
     }
     for(i=0;i<tableau_ordi.hauteur;i++){
         for(j=0;j<tableau_ordi.largeur;j++) {
-            fprintf(file,"%c",tableau_ordi.grille[i][j]);
+            fprintf(file,"%c",tableau_ordi.grille[i][j]);       //Chaque cases du tableau de l'ordinateur sont stockés dans le fichier
         }
-        fprintf(file,"\n");
+        fprintf(file,"\n");                 //On saute une ligne pour respecter le rendu visuel du tableau et le format du tableau
     }
+    fclose(file);
 }
 
 int load(FILE* file){
@@ -536,16 +530,15 @@ int load(FILE* file){
     tableau_joueur.largeur = 12;
     rewind(file);
     char temp[20]={0};
-    fgets(temp, 20, file);
+
+    fgets(temp, 20, file);  //on saute le chiffre permattant de savoir si il y a une sauvegarde ou pas
+
     fgets(temp, 20, file);
     NB_bateau = atoi(temp);
     fgets(temp, 20, file);
     nombre_tour = atoi(temp);
     fgets(temp, 20, file);
     mode = temp[0];
-    Boat bateau[NB_bateau];
-
-    //while(i<tableau_joueur.hauteur && )
 
 
     fgets(temp, 20, file);
@@ -590,6 +583,7 @@ int load(FILE* file){
     return partie;
 }
 
+
 int fin_partie(Boat bateau[],Inventory missile,int NB_bateau){
     int i;
     int touche=0;
@@ -611,6 +605,7 @@ int fin_partie(Boat bateau[],Inventory missile,int NB_bateau){
     return partie;
 }
 
+
 void partie_finie(int partie) {
 
     if (partie == 1) {
@@ -623,6 +618,7 @@ void partie_finie(int partie) {
         printf("\nVotre partie a bien ete sauvegardee !\n\n");
     }
 }
+
 
 char recommencer()
 {
