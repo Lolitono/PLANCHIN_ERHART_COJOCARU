@@ -1,35 +1,19 @@
-//
-// Created by arnau on 27/05/2021.
-//
-
 #include <stdio.h>
 #include<ctype.h>
 #include "inventory.h"
 
 
-Inventory demande_difficulte(){
+Inventory assignation_missile(char difficulte){
     Inventory inventaire;
-    char rep;
-    printf("\n\n=======================================\nDIFFICULTE\n=======================================\n\n"
-            "\nQuelle difficulte voulez-vous ?\n"
-           "-Facile (F)\n"
-           "-Moyen (M)\n"
-           "-Difficile (D)\n");
-    scanf(" %c", &rep);
-    rep = toupper(rep);
-    while(rep != 'F' && rep != 'M' && rep != 'D') {
-        printf("Veuillez saisir une reponse valide (F/M/D):\n");
-        scanf(" %c", &rep);
-        rep = toupper(rep);
-    }
-    if(rep == 'F'){
+
+    if(difficulte == 'F'){ // Si la difficulté choisie est facile
         printf("\n===========Difficulte Facile===========\n\n"
                "Voici les missiles dont vous disposez:\n\n");
         inventaire.artillerie = 3;
         inventaire.tactique = 8;
         inventaire.bombe = 4;
         inventaire.simple = 18;
-    } else if (rep == 'M'){
+    } else if (difficulte == 'M'){ // Si la difficulté choisie est moyenne
         printf("\n==========Difficulte Moyenne==========\n\n"
                "Voici les missiles dont vous disposez:\n\n");
         inventaire.artillerie = 2;
@@ -108,3 +92,143 @@ int verification_missile(Inventory missile, char tir_actuel){
     return 0;
 }
 
+
+void tir_artillerie(Grid *tableau_joueur, Grid *tableau_ordi,Impact point_impact,int NB_bateau,Boat bateau[],char mode) {
+    int i, j;
+    for (j = 1; j < 11; j++) {
+        for (i = 0; i < NB_bateau; i++) {
+            if (tableau_joueur->grille[point_impact.ligne + 1][j] == '_' &&
+                tableau_ordi->grille[point_impact.ligne + 1][j] == bateau[i].identification) {          // Si un bateau se trouve sur la colonne de l'impact
+                tableau_joueur->grille[point_impact.ligne + 1][j] = 'X';                                // Il sera marqué sur le tableau joueur
+                bateau[i].touche++;
+                tableau_ordi->grille[point_impact.ligne + 1][j] = ' ';
+                if (mode == 'B') {
+                    printf("Un bateau a ete touche en %c%d.\n", 'A' + j - 1, point_impact.ligne);
+                }
+            }
+        }
+        if (tableau_joueur->grille[point_impact.ligne + 1][j] == '_') {
+            tableau_joueur->grille[point_impact.ligne + 1][j] = 'O';
+        }
+    }
+    for (j = 1; j < 11; j++) {
+        for (i = 0; i < NB_bateau; i++) {
+            if (tableau_joueur->grille[j][point_impact.colonne + 1] == '_' && tableau_ordi->grille[j][point_impact.colonne + 1] == bateau[i].identification) {    // Si un bateau se trouve sur la ligne de l'impact alors cela mettra qu'on l'a touché sur le tableau joueur
+                tableau_joueur->grille[j][point_impact.colonne + 1] = 'X';                                  // Il sera marqué sur le tableau joueur
+                bateau[i].touche++;
+                tableau_ordi->grille[j][1 + point_impact.colonne] = ' ';
+                if (mode == 'B') {
+                    printf("Un bateau a ete touche en %c%d.\n", 'A' + point_impact.colonne, j - 1);
+                }
+            }
+        }
+        if (tableau_joueur->grille[j][point_impact.colonne + 1] == '_' ) {
+            tableau_joueur->grille[j][point_impact.colonne + 1] = 'O';
+        }
+    }
+}
+
+
+void tir_bombe(Grid *tableau_joueur, Grid *tableau_ordi,Impact point_impact,int NB_bateau,Boat bateau[],char mode) {
+    int i, j, k;
+
+    for (j = -1; j < 4; j++) {
+        for (i = 0; i < NB_bateau; i++) {
+            if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne+j] == '_' && tableau_ordi->grille[point_impact.ligne + 1][point_impact.colonne+j] == bateau[i].identification && point_impact.colonne + j > 0 && point_impact.colonne + j <= 11) {
+                tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne+j] = 'X';
+                bateau[i].touche++;
+                tableau_ordi->grille[point_impact.ligne +1][point_impact.colonne+j] = ' ';
+                if (mode == 'B') {
+                    printf("Un bateau a ete touche en %c%d.\n", 'A' + (point_impact.colonne+j-1),
+                           point_impact.ligne);
+                }
+            }
+        }
+        if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne+j] == '_') {
+            tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne+j] = 'O';
+        }
+    }
+
+    for (j = -1; j < 4; j++) {
+        for (i = 0; i < NB_bateau; i++) {
+            if (tableau_joueur->grille[point_impact.ligne+j][point_impact.colonne + 1] == '_' && tableau_ordi->grille[point_impact.ligne+j][point_impact.colonne + 1] == bateau[i].identification && point_impact.ligne + j > 0 && point_impact.ligne + j <= 11) {
+                tableau_joueur->grille[point_impact.ligne+j][point_impact.colonne + 1] = 'X';
+                bateau[i].touche++;
+                tableau_ordi->grille[point_impact.ligne + j][1 + point_impact.colonne] = ' ';
+                if (mode == 'B') {
+                    printf("Un bateau a ete touche en %c%d.\n", 'A' + point_impact.colonne,
+                           point_impact.ligne+j-1);
+                }
+            }
+        }
+        if (tableau_joueur->grille[point_impact.ligne+j][point_impact.colonne + 1] == '_' ) {
+            tableau_joueur->grille[point_impact.ligne+j][point_impact.colonne + 1] = 'O';
+        }
+    }
+
+    for (j = 0; j < 3; j=j+2) {
+        for(k=0; k<3;k=k+2) {
+            for (i = 0; i < NB_bateau; i++) {
+                if (tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] == '_' &&
+                    tableau_ordi->grille[point_impact.ligne + j][point_impact.colonne + k] == bateau[i].identification && point_impact.ligne + j > 0 && point_impact.ligne + j <= 11) {
+                    tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] = 'X';
+                    bateau[i].touche++;
+                    tableau_ordi->grille[point_impact.ligne + j][point_impact.colonne + k] = ' ';
+                    if (mode == 'B') {
+                        printf("Un bateau a ete touche en %c%d.\n", 'A' + point_impact.colonne + k - 1,
+                               point_impact.ligne + j - 1);
+                    }
+                }
+            }
+            if (tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] == '_') {
+                tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] = 'O';
+            }
+        }
+    }
+}
+
+
+void tir_simple(Grid *tableau_joueur, Grid *tableau_ordi, Impact point_impact,char mode,int NB_bateau,Boat bateau[]){
+
+    int i;
+    for (i = 0; i < NB_bateau; i++) {
+        if(tableau_ordi->grille[1+point_impact.ligne][1+point_impact.colonne] == bateau[i].identification){
+            tableau_joueur->grille[1+point_impact.ligne][1+point_impact.colonne] = 'X';
+            bateau[i].touche++;
+            tableau_ordi->grille[1 + point_impact.ligne][1 + point_impact.colonne] = ' ';
+            if (mode == 'B') {
+                printf("Un bateau a ete touche en %c%d.\n", 'A' + point_impact.colonne, point_impact.ligne);
+            }
+        }
+    }
+    if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] == '_') {
+        tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] = 'O';
+    }
+}
+
+
+void tir_tactique(Grid *tableau_joueur, Grid *tableau_ordi, Impact point_impact,int NB_bateau, Boat bateau[], char mode){
+    int i,j,k;
+
+
+
+    for (i = 0; i < NB_bateau; i++) {
+        if(tableau_ordi->grille[1+point_impact.ligne][1+point_impact.colonne] == bateau[i].identification){
+            for (k = 1; k < 11; k++) {
+                for (j = 1; j < 11; j++) {
+                    if (tableau_ordi->grille[k][j] == bateau[i].identification) {
+                        tableau_joueur->grille[k][j] = 'X';
+                        tableau_ordi->grille[k][j] = ' ';
+                        if (mode == 'B') {
+                            printf("Un bateau a ete touche en %c%d.\n", 'A' + j - 1, k - 1);
+                        }
+                    }
+                }
+            }
+            bateau[i].touche = bateau[i].taille_bateau;
+        }
+    }
+    if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] == '_') {
+        tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] = 'O';
+    }
+}

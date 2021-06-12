@@ -40,6 +40,14 @@ char menu(FILE * file);
  */
 char demande_mode();
 
+
+/**
+ * Demande à l'utilisateur de choisir la difficulté du jeu
+ * @return la réponse de l'utilisateur
+ */
+char demande_difficulte();
+
+
 /**
  * Le jeu de la Bataille navale
  * @param tableau_joueur
@@ -53,6 +61,16 @@ char demande_mode();
  * @return un nombre définissant si la partie est finie ou non ou doit être sauvegardé
  */
 int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau,char mode,int nombre_tour, int charger);
+
+
+/**
+ * Demande où l'utilisateur veut tirer
+ * Message d'erreur si l'utilisateur tire sur une case inconnue ou s'il tire sur une case déjà touchée
+ * @param tableau_joueur
+ * @return le point d'impact du missile tiré
+ */
+Impact saisie_tir(Grid tableau_joueur);
+
 
 /**
  * Vérifie parmi tous les bateaux si un ou plusieurs bateaux sont touchés

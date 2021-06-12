@@ -36,7 +36,7 @@ int main() {
 
             for (i = 0; i < NB_bateau; i++) {
                 bateau[i] = initialisation_bateau(i);
-                bateau[i].touche = 0;
+                bateau[i].touche = 0;                                           // aucun bateau n'est touché initialement
                 bateau[i].H_V = rand() % 2;                                     //0 = horizontal, 1 = vertical
                 bateau[i].identification = 'A' + i;                             //lettre permettant d'identifier chaque bateau
                 bateau[i] = placement_bateau(tableau_ordi, bateau, i);
@@ -58,12 +58,12 @@ int main() {
 
     } else if (demarrer == 'C'){
 
-        FILE *file = fopen("sauvegarde_jeu.txt", "r");
-        if(file != NULL) {
+        FILE *file = fopen("sauvegarde_jeu.txt", "r"); //on ouvre le fichier en lecture seule
+        if(file != NULL) { //on vérifie qu'il n'y a pas de problèmes avec le ficher
             partie = load(file);
             fclose(file);
             partie_finie(partie);
-            if(partie == 4 || partie == 5){
+            if(partie == 4 || partie == 5){ //si on veut sauvegarder la partie
                 return 0;
             }
             FILE *file = fopen("sauvegarde_jeu.txt", "w");
@@ -79,10 +79,10 @@ int main() {
                     tableau_ordi = initialisation_tableau_ordi();   // On initialise le tableau ordi
 
                     for (i = 0; i < NB_bateau; i++) {
-                        bateau[i] = initialisation_bateau(i);       //
-                        bateau[i].touche = 0;
-                        bateau[i].H_V = rand() % 2;
-                        bateau[i].identification = 'A' + i;
+                        bateau[i] = initialisation_bateau(i);
+                        bateau[i].touche = 0;                                           // initialement aucun bateau n'est touché
+                        bateau[i].H_V = rand() % 2;                                     //0 = horizontal, 1 = vertical
+                        bateau[i].identification = 'A' + i;                             //lettre permettant d'identifier chaque bateau
                         bateau[i] = placement_bateau(tableau_ordi, bateau, i);
                         tableau_ordi = placement_grille_bateau(tableau_ordi, bateau, i);
                     }
@@ -92,7 +92,7 @@ int main() {
                     affichage_nb_bateau(bateau, NB_bateau);
 
                     //JEU
-                    nombre_tour = 1;
+                    nombre_tour = 1; //on est au premier tour
                     partie = game(tableau_joueur,tableau_ordi, missile,bateau,NB_bateau,mode,nombre_tour,0);
                     partie_finie(partie);
                     if(partie == 4 || partie == 5){
