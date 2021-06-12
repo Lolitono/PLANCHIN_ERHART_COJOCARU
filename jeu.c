@@ -325,6 +325,8 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
             }
 
         } while (deplacement.tableau_active[deplacement.choix_bateau] == ' ' && deplacement.verification_mode_active != 5); // tant qu'on a pas trouvé de bateau déplaçable et qu'il en reste au moins 1
+    } else{
+        deplacement.choix_bateau = 0;
     }
     return deplacement;
 }
