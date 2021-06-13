@@ -51,7 +51,7 @@ void affichage_missile(Inventory missile){
 }
 
 
-char demande_missile(Inventory missile){  //  Quel missile veut-il choisir
+char demande_missile(Inventory missile){  // Quel missile veut-il choisir
     char tir_actuel;
     int verification;
     do{
@@ -107,7 +107,7 @@ void tir_artillerie(Grid *tableau_joueur, Grid *tableau_ordi,Impact point_impact
                 }
             }
         }
-        if (tableau_joueur->grille[point_impact.ligne + 1][j] == '_') {     // Si aucun bateau ne se trouve sur la position
+        if (tableau_joueur->grille[point_impact.ligne + 1][j] == '_') {     // Si aucun bateau se trouve sur la position
             tableau_joueur->grille[point_impact.ligne + 1][j] = 'O';        // On le marque d'un 'O'
         }
     }
@@ -171,7 +171,7 @@ void tir_bombe(Grid *tableau_joueur, Grid *tableau_ordi,Impact point_impact,int 
             for (i = 0; i < NB_bateau; i++) {
                 if (tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] == '_' &&
                     tableau_ordi->grille[point_impact.ligne + j][point_impact.colonne + k] == bateau[i].identification && point_impact.ligne + j > 0 && point_impact.ligne + j <= 11) {
-                    //Si un bateau se trouve sur les diagonales en périphérie de la case et que le tir soit compris dans le tableau joueur
+                    //Si un bateau se trouve sur les diagonales en périphérie de la case et que le tir est compris dans le tableau joueur
                     tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] = 'X'; // Le bateau sera marqué d'une 'X' sur le tableau joueur
                     bateau[i].touche++;                                                             // On ajoute 1 au nombre de fois que le bateau a été touché
                     tableau_ordi->grille[point_impact.ligne + j][point_impact.colonne + k] = ' ';   // On retire la partie du bateau touchée sur le tableau de l'ordinateur
@@ -228,7 +228,7 @@ void tir_tactique(Grid *tableau_joueur, Grid *tableau_ordi, Impact point_impact,
             bateau[i].touche = bateau[i].taille_bateau; // On déclare le bateau comme coulé
         }
     }
-    if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] == '_') {  // Si aucun bateau ne se trouve sur la position// Si aucun bateau ne se trouve sur la position
+    if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] == '_') {  // Si aucun bateau ne se trouve sur la position
         tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne + 1] = 'O';     // On le marque d'un 'O'
     }
 }
