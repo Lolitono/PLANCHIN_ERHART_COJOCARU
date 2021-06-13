@@ -50,8 +50,8 @@ int demande_sauvegarde(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inven
         } else {
 
             printf("Voulez-vous quitter? (OUI/NON)\n");
-            fflush(stdin); //on vide le buffer
-            gets(quitter); //on récupère la réponse de l'utilisateur
+            fflush(stdin);  //on vide le buffer
+            gets(quitter);      //on récupère la réponse de l'utilisateur
 
             for (i=0;i<5;i++){
                 quitter[i] = toupper(quitter[i]);       //On met en majuscule pour que l'utilisateur puisse taper soit en majuscule, soit en minuscule
@@ -60,17 +60,17 @@ int demande_sauvegarde(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inven
             while(strcmp(quitter,"OUI")!=0 && strcmp(quitter,"NON")!=0)     // Verfication avec message d'erreur si l'utilisateur ne saisie pas la bonne chaine de caractère
             {
                 printf("Veuillez saisir un mot valide (OUI/NON)\n");
-                fflush(stdin); // on vide le buffer
-                gets(quitter); // on récupère la réponse de l'utilisateur
+                fflush(stdin);  // on vide le buffer
+                gets(quitter);      // on récupère la réponse de l'utilisateur
                 for (i=0;i<5;i++){
                     quitter[i] = toupper(quitter[i]); //on met en majuscule la saisie de l'utilisateur pour pouvoir lire ce qu'il a écrit même si c'est en minuscule
                 }
             }
 
-            if (strcmp(quitter,"OUI")==0){ // si l'utilisateur confirme qu'il veut quitter le programme
-                partie = 5; //On quitte la partie
+            if (strcmp(quitter,"OUI")==0){  // si l'utilisateur confirme qu'il veut quitter le programme
+                partie = 5;                 //On quitte la partie
             } else {
-                partie =0;  //On continue la partie
+                partie =0;                  //On continue la partie
             }
         }
     }
@@ -92,7 +92,7 @@ void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile,
     fprintf(file,"%d\n",missile.bombe);         //on écrit le nombre de bombes restantes à l'utilisateur
     fprintf(file,"%d\n",missile.simple);        //on écrit le nombre de missiles simples restants à l'utilisateur
 
-    for(i=0;i<NB_bateau;i++){                                   //Pour chaque bateau on écrit :
+    for(i=0;i<NB_bateau;i++){                                  //Pour chaque bateau on écrit :
         fprintf(file,"%d\n",bateau[i].taille_bateau);   // sa taille
         fprintf(file,"%d\n",bateau[i].ligne);           // sa ligne définissant sa position dans le tableau
         fprintf(file,"%d\n",bateau[i].colonne);         // sa colonne définissant sa position dans le tableau
@@ -106,13 +106,13 @@ void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile,
         for(j=0;j<tableau_joueur.largeur;j++) {
             fprintf(file,"%c",tableau_joueur.grille[i][j]);     //Chaque cases du tableau du joueur sont stockés dans le fichier
         }
-        fprintf(file,"\n");                 //On saute une ligne pour respecter le rendu visuel du tableau et le format du tableau
+        fprintf(file,"\n");                                     //On saute une ligne pour respecter le rendu visuel du tableau et le format du tableau
     }
     for(i=0;i<tableau_ordi.hauteur;i++){
         for(j=0;j<tableau_ordi.largeur;j++) {
             fprintf(file,"%c",tableau_ordi.grille[i][j]);       //Chaque cases du tableau de l'ordinateur sont stockés dans le fichier
         }
-        fprintf(file,"\n");                 //On saute une ligne pour respecter le rendu visuel du tableau et le format du tableau
+        fprintf(file,"\n");                                     //On saute une ligne pour respecter le rendu visuel du tableau et le format du tableau
     }
     fclose(file);
 }

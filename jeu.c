@@ -333,23 +333,23 @@ Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Boat bateau[], Actif dep
 
     int i;
 
-    if (bateau[deplacement.choix_bateau].H_V == 0) {    // Si le bateau à déplacer est horizontal
-        deplacement.mouvement_bateau = rand() % (deplacement.max_gauche + deplacement.max_droite) + 1; // On choisi aléatoirement le déplacement du bateau par rapport à l'horizontal
-        if (deplacement.mouvement_bateau <= deplacement.max_gauche) {   //Si le déplacement choisi est inférieur au déplcement max gauche, le bateau se déplacera à gauche
-            for (i = 1; i < (deplacement.mouvement_bateau + 1); i++) {  // On répète le décalage du bateau jusqu'à ce que le déplacement choisi soit atteint
+    if (bateau[deplacement.choix_bateau].H_V == 0) {                                                    // Si le bateau à déplacer est horizontal
+        deplacement.mouvement_bateau = rand() % (deplacement.max_gauche + deplacement.max_droite) + 1;  // On choisi aléatoirement le déplacement du bateau par rapport à l'horizontal
+        if (deplacement.mouvement_bateau <= deplacement.max_gauche) {                                   //Si le déplacement choisi est inférieur au déplcement max gauche, le bateau se déplacera à gauche
+            for (i = 1; i < (deplacement.mouvement_bateau + 1); i++) {                                  // On répète le décalage du bateau jusqu'à ce que le déplacement choisi soit atteint
                 tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +bateau[deplacement.choix_bateau].taille_bateau -i + 1] = ' '; // La case du bateau la plus à droite disparais sur le tableau ordi
                 tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne -i +1] = bateau[deplacement.choix_bateau].identification; // La case du bateau la plus à gauche plus un décalage de 1 est remplacé par la lettre du bateau sur le tableau ordi
             }
             bateau[deplacement.choix_bateau].colonne = bateau[deplacement.choix_bateau].colonne - deplacement.mouvement_bateau; // On remplace l'ancienne position sur la colonne par la nouvelle
         } else { //Sinon le bateau se déplacera à droite
-            for (i = 0; i < (deplacement.mouvement_bateau - deplacement.max_gauche); i++) { // On répète le décalage du bateau jusqu'à ce que le déplacement choisi soit atteint
+            for (i = 0; i < (deplacement.mouvement_bateau - deplacement.max_gauche); i++) {                                     // On répète le décalage du bateau jusqu'à ce que le déplacement choisi soit atteint
                 tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +i +1] = ' '; // La case du bateau la plus à gauche disparais sur le tableau ordi
                 tableau_ordi->grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +bateau[deplacement.choix_bateau].taille_bateau +i +1] = bateau[deplacement.choix_bateau].identification; // La case du bateau la plus à droite plus un décalage de 1 est remplacé par la lettre du bateau sur le tableau ordi
 
             }
             bateau[deplacement.choix_bateau].colonne = bateau[deplacement.choix_bateau].colonne + (deplacement.mouvement_bateau - deplacement.max_gauche); // On remplace l'ancienne position sur la colonne par la nouvelle
         }
-        // On a pas besoin de changer la ligne du bateau pour un déplacement horizontal car le bateau se déplace sur la même ligne
+                // On a pas besoin de changer la ligne du bateau pour un déplacement horizontal car le bateau se déplace sur la même ligne
     } else {    // Sinon le bateau a déplacer est vertical
         deplacement.mouvement_bateau = rand() % (deplacement.max_bas + deplacement.max_haut) + 1;// On choisi aléatoirement le déplacement du bateau sur la verticale
         if (deplacement.mouvement_bateau <= deplacement.max_haut) {
@@ -365,10 +365,10 @@ Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Boat bateau[], Actif dep
             }
             bateau[deplacement.choix_bateau].ligne =bateau[deplacement.choix_bateau].ligne + (deplacement.mouvement_bateau - deplacement.max_haut);
         }
-        // On a pas besoin de changer la colonne du bateau pour un déplacement vertical car le bateau se déplace sur la même colonne
+            // On a pas besoin de changer la colonne du bateau pour un déplacement vertical car le bateau se déplace sur la même colonne
     }
-    //printf("Un bateau de taille %d s'est deplace en nouvelle position : %c %d \n",bateau[choix_bateau].taille_bateau, 'A' + bateau[choix_bateau].colonne,bateau[choix_bateau].ligne);
-    // Ligne à décommenter si vous voulez voir la nouvelle position du bateau choisi
+            //printf("Un bateau de taille %d s'est deplace en nouvelle position : %c %d \n",bateau[choix_bateau].taille_bateau, 'A' + bateau[choix_bateau].colonne,bateau[choix_bateau].ligne);
+            // Ligne à décommenter si vous voulez voir la nouvelle position du bateau choisi
     printf("Un bateau s'est deplace");
 
     return bateau[deplacement.choix_bateau];
@@ -379,9 +379,9 @@ int fin_partie(Boat bateau[],Inventory missile,int NB_bateau){
     int i;
     int touche=0;
     int partie;
-    for (i=0;i<NB_bateau;i++){ //on répète cette boucle pour chaque bateau
-        if (bateau[i].touche == bateau[i].taille_bateau) { // si un bateau est touché autant de fois qu'il a de cases (si il est coulé)
-            touche++; //on incremente le nombre de bateaux coulés de 1
+    for (i=0;i<NB_bateau;i++){                              //on répète cette boucle pour chaque bateau
+        if (bateau[i].touche == bateau[i].taille_bateau) {  // si un bateau est touché autant de fois qu'il a de cases (si il est coulé)
+            touche++;                                       //on incremente le nombre de bateaux coulés de 1
         }
     }
     if(touche == 5 && (missile.tactique != 0 || missile.simple!=0 || missile.artillerie != 0 || missile.bombe != 0)){ //si tout les bateaux sont touches et qu'il lui reste au moins une munition
@@ -417,7 +417,7 @@ char recommencer()
     printf("Voulez vous rejouer? (O/N)\n");
     scanf(" %c", &rejouer);
     rejouer = toupper(rejouer);
-    while(rejouer != 'O' && rejouer != 'N')
+    while(rejouer != 'O' && rejouer != 'N') //Tant que l'utilisateur ne saisi pas une lettre correcte, on recommence
     {
         printf("Veuillez saisir une reponse valide (O/N).\n");
         scanf(" %c", &rejouer);

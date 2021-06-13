@@ -8,7 +8,7 @@
 
 Boat initialisation_bateau(int i,Boat bateau[]){
 
-    switch(i) {
+    switch(i) {                                                       // On donne la taille de chaque bateau
         case 0 :
             bateau[i].taille_bateau = 2;
             break;
@@ -34,10 +34,10 @@ Boat initialisation_bateau(int i,Boat bateau[]){
 
 Boat placement_bateau(Grid tableau_ordi, Boat bateau[], int i){
 
-    if (bateau[i].H_V == 0){ //Si la variable H_V pour un bateau i=0
-        bateau[i] = position_bateau_horizontal(tableau_ordi,bateau[i]); //Le bateau i sera horizontal
-    }else{ //Si cette variable est différente de 0
-        bateau[i] = position_bateau_vertical(tableau_ordi,bateau[i]); //Le bateau i sera vertical
+    if (bateau[i].H_V == 0){                                            // Si la variable H_V pour un bateau i=0
+        bateau[i] = position_bateau_horizontal(tableau_ordi,bateau[i]); // Le bateau i sera horizontal
+    }else{                                                              // Si cette variable est différente de 0
+        bateau[i] = position_bateau_vertical(tableau_ordi,bateau[i]);   // Le bateau i sera vertical
     }
 
     return bateau[i];
@@ -47,9 +47,9 @@ Boat placement_bateau(Grid tableau_ordi, Boat bateau[], int i){
 Boat position_bateau_horizontal(Grid tableau_ordi, Boat bateau)
 {
     do{
-        bateau.ligne = rand() % 10; //Le bateau commence à un ligne aléatoire entre 0 et 9
-        bateau.colonne = rand() % (10-bateau.taille_bateau); //Le bateau commence à une colonne aléatoire entre A et J
-    }while(collision_horizontale(tableau_ordi,bateau)==1);  // On répète tant qu'il y une collison avec un autre bateau
+        bateau.ligne = rand() % 10;                             // Le bateau commence à une ligne aléatoire entre 0 et 9
+        bateau.colonne = rand() % (10-bateau.taille_bateau);    // Le bateau commence à une colonne aléatoire entre A et J
+    }while(collision_horizontale(tableau_ordi,bateau)==1);      // On répète tant qu'il y une collison avec un autre bateau
     return bateau;
 }
 
@@ -68,8 +68,8 @@ int collision_horizontale(Grid tableau_ordi,Boat bateau){
 Boat position_bateau_vertical(Grid tableau_ordi,Boat bateau)
 {
     do{
-        bateau.ligne = rand() % (10-bateau.taille_bateau); //Le bateau commence à un ligne aléatoire entre 0 et 9
-        bateau.colonne = rand() % 10; //Le bateau commence à une colonne aléatoire entre A et J
+        bateau.ligne = rand() % (10-bateau.taille_bateau);  // Le bateau commence à une ligne aléatoire entre 0 et 9 - la taille du bateau
+        bateau.colonne = rand() % 10;                       // Le bateau commence à une colonne aléatoire entre A et J
     }while(collision_verticale(tableau_ordi,bateau)==1);    // On répète tant qu'il y une collison avec un autre bateau
     return bateau;
 }
