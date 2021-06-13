@@ -135,7 +135,7 @@ void tir_bombe(Grid *tableau_joueur, Grid *tableau_ordi,Impact point_impact,int 
     for (j = -1; j < 4; j++) {
         for (i = 0; i < NB_bateau; i++) {
             if (tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne+j] == '_' && tableau_ordi->grille[point_impact.ligne + 1][point_impact.colonne+j] == bateau[i].identification && point_impact.colonne + j > 0 && point_impact.colonne + j <= 11) {
-                //Si un bateau se trouve sur le point d'impact, 2 cases à gauche du point d'impact ou 2 cases à droite ET que le tir est compris dans le tableau joueur
+                // Si un bateau se trouve sur le point d'impact, 2 cases à gauche du point d'impact ou 2 cases à droite ET que le tir est compris dans le tableau joueur
                 tableau_joueur->grille[point_impact.ligne + 1][point_impact.colonne+j] = 'X';   // Le bateau sera marqué d'une 'X' sur le tableau joueur
                 bateau[i].touche++;                                                             // On ajoute 1 au nombre de fois que le bateau a été touché
                 tableau_ordi->grille[point_impact.ligne +1][point_impact.colonne+j] = ' ';      // On retire la partie du bateau touchée sur le tableau de l'ordinateur
@@ -152,7 +152,7 @@ void tir_bombe(Grid *tableau_joueur, Grid *tableau_ordi,Impact point_impact,int 
     for (j = -1; j < 4; j++) {
         for (i = 0; i < NB_bateau; i++) {
             if (tableau_joueur->grille[point_impact.ligne+j][point_impact.colonne + 1] == '_' && tableau_ordi->grille[point_impact.ligne+j][point_impact.colonne + 1] == bateau[i].identification && point_impact.ligne + j > 0 && point_impact.ligne + j <= 11) {
-                //Si un bateau se trouve sur le point d'impact, 2 cases en haut du point d'impact ou 2 cases en bas ET que le tir est compris dans le tableau joueur
+                // Si un bateau se trouve sur le point d'impact, 2 cases en haut du point d'impact ou 2 cases en bas ET que le tir est compris dans le tableau joueur
                 tableau_joueur->grille[point_impact.ligne+j][point_impact.colonne + 1] = 'X';   // Le bateau sera marqué d'une 'X' sur le tableau joueur
                 bateau[i].touche++;                                                             // On ajoute 1 au nombre de fois que le bateau a été touché
                 tableau_ordi->grille[point_impact.ligne + j][1 + point_impact.colonne] = ' ';   // On retire la partie du bateau touchée sur le tableau de l'ordinateur
@@ -171,7 +171,7 @@ void tir_bombe(Grid *tableau_joueur, Grid *tableau_ordi,Impact point_impact,int 
             for (i = 0; i < NB_bateau; i++) {
                 if (tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] == '_' &&
                     tableau_ordi->grille[point_impact.ligne + j][point_impact.colonne + k] == bateau[i].identification && point_impact.ligne + j > 0 && point_impact.ligne + j <= 11) {
-                    //Si un bateau se trouve sur les diagonales en périphérie de la case ET que le tir est compris dans le tableau joueur
+                    // Si un bateau se trouve sur les diagonales en périphérie de la case ET que le tir est compris dans le tableau joueur
                     tableau_joueur->grille[point_impact.ligne + j][point_impact.colonne + k] = 'X'; // Le bateau sera marqué d'une 'X' sur le tableau joueur
                     bateau[i].touche++;                                                             // On ajoute 1 au nombre de fois que le bateau a été touché
                     tableau_ordi->grille[point_impact.ligne + j][point_impact.colonne + k] = ' ';   // On retire la partie du bateau touchée sur le tableau de l'ordinateur
@@ -213,10 +213,10 @@ void tir_tactique(Grid *tableau_joueur, Grid *tableau_ordi, Impact point_impact,
 
 
     for (i = 0; i < NB_bateau; i++) {
-        if(tableau_ordi->grille[1+point_impact.ligne][1+point_impact.colonne] == bateau[i].identification){ //Si le missile tombe sur un bateau
+        if(tableau_ordi->grille[1+point_impact.ligne][1+point_impact.colonne] == bateau[i].identification){ // Si le missile tombe sur un bateau
             for (k = 1; k < 11; k++) {
                 for (j = 1; j < 11; j++) {
-                    if (tableau_ordi->grille[k][j] == bateau[i].identification) {   //On regarde où le bateau est positionné
+                    if (tableau_ordi->grille[k][j] == bateau[i].identification) {   // On regarde où le bateau est positionné
                         tableau_joueur->grille[k][j] = 'X'; // Le bateau en entier sera marqué d'une 'X' sur le tableau joueur
                         tableau_ordi->grille[k][j] = ' ';   // et il sera effacé du tableau de l'ordinateur
                         if (mode == 'B') {
