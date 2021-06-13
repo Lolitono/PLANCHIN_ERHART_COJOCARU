@@ -56,4 +56,5 @@ void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile,
  */
 int load(FILE* file);
 
+
 #endif //PLANCHIN_ERHART_COJOCARU_SAUVEGARDE_H
