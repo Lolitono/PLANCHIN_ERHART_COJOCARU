@@ -10,16 +10,16 @@ Inventory assignation_missile(char difficulte){
         printf("\n===========Difficulte Facile===========\n\n"
                "Voici les missiles dont vous disposez:\n\n");
         inventaire.artillerie = 3;
-        inventaire.tactique = 8;
-        inventaire.bombe = 4;
-        inventaire.simple = 18;
+        inventaire.tactique = 6;
+        inventaire.bombe = 3;
+        inventaire.simple = 10;
     } else if (difficulte == 'M'){ // Si la difficulté choisie est Moyenne
         printf("\n==========Difficulte Moyenne==========\n\n"
                "Voici les missiles dont vous disposez:\n\n");
         inventaire.artillerie = 2;
         inventaire.tactique = 5;
         inventaire.bombe = 2;
-        inventaire.simple = 16;
+        inventaire.simple = 12;
     } else { // Si la difficulté choisie est Difficile
         printf("\n=========Difficulte Difficile=========\n\n"
                "Voici les missiles dont vous disposez:\n\n");
