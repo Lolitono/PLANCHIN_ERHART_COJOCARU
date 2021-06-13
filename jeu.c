@@ -203,7 +203,7 @@ Impact saisie_tir(Grid tableau_joueur){
 
     do{                                                                                                                     //On demande la position où l'utilisateur veut tirer
         verification=0;
-        printf("En quelle case voulez vous tirer ( de A0 a J9) ?\n");
+        printf("En quelle case voulez vous tirer (de A0 a J9) ?\n");
         scanf(" %s", &T);                                                                                            // On récupère le choix de l'utilisateur
         lettre = toupper(T[0]);                                                                                         // On met la lettre en majuscule
         ligne[0] = T[1];                                                                                                    // On transmet le chiffre dans un autre tableau de caractère
