@@ -21,7 +21,7 @@ Inventory assignation_missile(char difficulte);
 
 
 /**
- * Affiche le nombre de missiles au début du jeu selon la difficulté et développe ce qu'ils font
+ * Affiche le nombre de missiles au début du jeu selon la difficulté et explique ce qu'ils font
  * @param missile L'inventaire des missiles possédés par l'utilisateur
  */
 void affichage_missile_depart(Inventory missile);
@@ -36,7 +36,7 @@ void affichage_missile(Inventory missile);
 
 /**
  * Demande à l'utilisateur avec quel missile il souhaite tirer
- * Message d'erreur (redemande le choix) si missile choisi n'existe pas ou que l'utilisateur n'a plus de ce missile
+ * Message d'erreur (redemande le choix) si le missile choisi n'existe pas ou que l'utilisateur n'a plus de ce missile
  * @param missile L'inventaire des missiles possédés par l'utilisateur
  * @return Le missile que l'utilisateur a choisi
  */
@@ -44,7 +44,7 @@ char demande_missile(Inventory missile);
 
 
 /**
- * Indique si il reste assez de missiles de la catégorie choisie
+ * Indique s'il reste assez de missiles de la catégorie choisie
  * @param missile L'inventaire des missiles possédés par l'utilisateur
  * @param tir_actuel Le missile choisi par l'utilisateur
  * @return 1 si l'utilisateur n'a plus assez de missile et 0 s'il en a encore
@@ -86,7 +86,7 @@ void tir_bombe(Grid *tableau_joueur, Grid *tableau_ordi,Impact point_impact,int 
 /**
  * Recherche sur le tableau de l'ordinateur si un bateau a été touché
  * Indique sur la grille du joueur si un bateau a été touché
- * Enlève du tableau de l'ordinateaur l'identification des bateaux correspondant à la case touchée si un bateau a été touché
+ * Enlève du tableau de l'ordinateaur l'identification du bateau correspondant à la case touchée si un bateau a été touché
  * @param tableau_joueur Le tableau de l'utilisateur
  * @param tableau_ordi Le tableau de l'ordinateur
  * @param point_impact Le point d'imapct du missile
@@ -99,7 +99,7 @@ void tir_simple(Grid *tableau_joueur, Grid *tableau_ordi, Impact point_impact,ch
 
 /**
  * Recherche sur le tableau de l'ordinateur si un bateau a été touché
- * Indique sur la grille du joueur la/les case(s) ou 1 (des) bateaux a (ont) été touché(s) (ou envoie juste un message si on est en mode blind)
+ * Indique sur la grille du joueur la/les case(s) ou un (des) bateaux a (ont) été touché(s) (ou envoie juste un message si on est en mode blind)
  * Enlève du tableau de l'ordinateaur l'identification des bateaux correspondant à la/aux case(s) touchée(s) si un bateau a été touché
  * @param tableau_joueur Le tableau de l'utilisateur
  * @param tableau_ordi Le tableau de l'ordinateur
