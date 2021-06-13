@@ -52,9 +52,9 @@ Grid initialisation_tableau_ordi(){
 
 Grid placement_grille_bateau(Grid tableau_ordi, Boat bateau[], int i){
 
-    if (bateau[i].H_V  == 0){
+    if (bateau[i].H_V  == 0){                                            // Si le bateau est horizontal
         tableau_ordi = placement_horizontal(tableau_ordi,bateau[i]);
-    }else{
+    }else{                                                               // Si le tableau est vertical
         tableau_ordi = placement_vertical(tableau_ordi,bateau[i]);
     }
 

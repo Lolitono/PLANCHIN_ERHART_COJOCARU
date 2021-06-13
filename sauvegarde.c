@@ -114,7 +114,7 @@ void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile,
         }
         fprintf(file,"\n");                                     // On saute une ligne pour respecter le rendu visuel du tableau et son format
     }
-    fclose(file);
+    fclose(file);                                                      // On ferme le fichier
 }
 
 int load(FILE* file){

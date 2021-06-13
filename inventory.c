@@ -216,7 +216,7 @@ void tir_tactique(Grid *tableau_joueur, Grid *tableau_ordi, Impact point_impact,
         if(tableau_ordi->grille[1+point_impact.ligne][1+point_impact.colonne] == bateau[i].identification){ //Si le missile tombe sur un bateau
             for (k = 1; k < 11; k++) {
                 for (j = 1; j < 11; j++) {
-                    if (tableau_ordi->grille[k][j] == bateau[i].identification) {   //On regarde où le bateau est positionner
+                    if (tableau_ordi->grille[k][j] == bateau[i].identification) {   //On regarde où le bateau est positionné
                         tableau_joueur->grille[k][j] = 'X'; // Le bateau en entier sera marqué d'une 'X' sur le tableau joueur
                         tableau_ordi->grille[k][j] = ' ';   // et il sera effacé du tableau de l'ordinateur
                         if (mode == 'B') {
