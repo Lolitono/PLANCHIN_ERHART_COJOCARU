@@ -235,7 +235,7 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
             deplacement.verification_mode_active++;                                                                         // On incrémente de 1 le nombre de bateaux non déplacables
         }
     }
-    deplacement.tableau_active[i] = '\0'; // on rajoute le caractère de finde chaîne
+    deplacement.tableau_active[i] = '\0';                                                                                   // On rajoute le caractère de fin de chaîne pour finir le tablaeu
     //printf("%s\n", tableau_active); //Ligne à décommenter pour voir les bateaux pouvant ce déplacer
 
     if (deplacement.verification_mode_active != 5) {                                                                        // S'il reste au moins un bateau non touché
