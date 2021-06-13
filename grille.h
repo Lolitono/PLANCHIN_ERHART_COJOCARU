@@ -28,7 +28,7 @@ Grid initialisation_tableau();
 
 
 /**
- * Initialisation du tableau de l'ordinateur, qui enregistre la position des bateaux
+ * Initialisation du tableau de l'ordinateur, qui enregistra la position des bateaux
  * @return Le tableau de l'ordinateur
  */
 Grid initialisation_tableau_ordi();
@@ -48,7 +48,7 @@ Grid placement_grille_bateau(Grid tableau_ordi, Boat bateau[], int i);
  * Place les bateaux horizontalement (de gauche à droite) sur le tableau de l'ordinateur
  * @param tableau_ordi Le tableau de l'ordinateur
  * @param bateau Le bateau choisi
- * @return La grille de l'ordi avec un bateau placer horizontalement de la gauche vers la droite
+ * @return Le tableau de l'ordinateur avec un bateau placé horizontalement de la gauche vers la droite
  */
 Grid placement_horizontal(Grid tableau_ordi,Boat bateau);
 
@@ -57,7 +57,7 @@ Grid placement_horizontal(Grid tableau_ordi,Boat bateau);
  * Place les bateaux verticalement (du haut vers le bas) sur le tableau de l'ordinateur
  * @param tableau_ordi Le tableau de l'ordinateur
  * @param bateau Le bateau choisi
- * @return La grille de l'ordi avec un bateau placer horizontalement de la gauche vers la droite
+ * @return Le tableau de l'ordinateur avec un bateau placé verticalement du haut vers le bas
  */
 Grid placement_vertical(Grid tableau_ordi,Boat bateau);
 

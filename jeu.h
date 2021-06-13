@@ -89,7 +89,7 @@ Impact saisie_tir(Grid tableau_joueur);
  * @param tableau_joueur Le tableau de l'utilisateur
  * @param bateau Le tableau de bateau
  * @param NB_bateau Le nombre de bateau au total (5)
- * @return La structure Actif avec les déplacements max du bateau choisi
+ * @return La structure Actif avec les déplacements maximums du bateau choisi
  */
 Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tableau_joueur, Boat bateau[],int NB_bateau);
 
@@ -98,7 +98,7 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
  * Déplace le bateau choisi par l'ordinateur d'une distance aléatoire en fonction de ses déplacements maximums
  * @param tableau_ordi Le tableau de l'ordinateur
  * @param bateau Le tableau de bateau
- * @param deplacement La structure Actif avec les déplacements max du bateau choisi
+ * @param deplacement La structure Actif avec les déplacements maximums du bateau choisi
  * @return La nouvelle position du bateau
  */
 Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Boat bateau[],Actif deplacement);

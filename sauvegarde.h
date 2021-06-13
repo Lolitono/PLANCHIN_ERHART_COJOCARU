@@ -22,7 +22,7 @@
  * @param NB_bateau Le nombre de bateau au total (5)
  * @param nombre_tour Le nombre de tour de la partie
  * @param mode Le mode de jeu choisi par l'utilisateur
- * @return un chiffre entre 4 et 5 (Sauvegarder ou quitter la partie si on ne veut pas ecraser la sauvegarde)
+ * @return Un chiffre entre 4 et 5 (Sauvegarder ou quitter la partie si on ne veut pas ecraser la sauvegarde)
  */
 int demande_sauvegarde(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau, int nombre_tour, char mode);
 
@@ -52,7 +52,7 @@ void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile,
  * Partie chargée devient la partie en cours
  * On lance la partie avec les données chargées
  * @param file Le fichier de sauvegarde
- * @return Un nombre définissant si la partie est finie ou non ou doit etre sauvegardé
+ * @return Un chiffre définissant si la partie est finie ou non ou doit etre sauvegardée
  */
 int load(FILE* file);
 

@@ -23,13 +23,13 @@ typedef struct {
  * Initialise la taille du bateau, son orientation, son nombre de cases touchées (0 au début) et assigne une lettre identificatrice à chaque bateau
  * @param i Un compteur
  * @param bateau Le tableau de bateau
- * @return La taille, l'orientation, le nombre de cases touchées et la lettre identificatrice du bateau selectionnée
+ * @return La taille, l'orientation, le nombre de cases touchées et la lettre identificatrice du bateau selectionné
  */
 Boat initialisation_bateau(int i,Boat bateau[]);
 
 
 /**
- * Place les bateaux dans la grille de jeu ordinateur en fonction de son horizontalité ou de sa verticalité
+ * Place un bateau dans la grille de jeu ordinateur en fonction de son horizontalité ou de sa verticalité
  * @param tableau Le tableau de l'ordinateur
  * @param bateau Le tableau de bateau
  * @param i Un compteur
@@ -39,7 +39,7 @@ Boat placement_bateau(Grid tableau, Boat bateau[], int i);
 
 
 /**
- * Définit aléatoirement la position des bateaux horizontaux
+ * Définit aléatoirement la position d'un bateau horizontal
  * @param tableau_ordi Le tableau de l'ordinateur
  * @param bateau Le bateau choisi
  * @return La position du bateau (ligne et colonne)
@@ -51,13 +51,13 @@ Boat position_bateau_horizontal(Grid tableau_ordi, Boat bateau);
  * Vérifie et empêche les collisions horizontales entre les bateaux déjà positionnés
  * @param tableau_ordi Le tableau de l'ordinateur
  * @param bateau Le bateau choisi
- * @return 1 si il peut y avoir une collision ou 0 si il n'y en a pas
+ * @return 1 s'il peut y avoir une collision ou 0 si il n'y en a pas
  */
 int collision_horizontale(Grid tableau_ordi,Boat bateau);
 
 
 /**
- * Définit aléatoirement la position des bateaux verticaux
+ * Définit aléatoirement la position d'un bateau vertical
  * @param tableau_ordi Le tableau de l'ordinateur
  * @param bateau Le bateau choisi
  * @return La position du bateau (ligne et colonne)
