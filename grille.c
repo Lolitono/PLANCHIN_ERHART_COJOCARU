@@ -66,7 +66,7 @@ Grid placement_horizontal(Grid tableau_ordi,Boat bateau){
     int i;
 
     for (i=0;i<bateau.taille_bateau;i++){
-        tableau_ordi.grille[1+bateau.ligne][1+bateau.colonne+i] = bateau.identification; // On place les lettres représentant les bateaux horizontaux sur la grille ordinateur
+        tableau_ordi.grille[1+bateau.ligne][1+bateau.colonne+i] = bateau.identification; // On place les lettres représentant les bateaux horizontaux sur la grille de l'ordinateur
     }
     return tableau_ordi;
 }
@@ -77,7 +77,7 @@ Grid placement_vertical(Grid tableau_ordi,Boat bateau){
 
     for (i=0;i<bateau.taille_bateau;i++)
     {
-        tableau_ordi.grille[1+bateau.ligne+i][1+bateau.colonne] = bateau.identification; // On place les lettres représentant les bateaux verticaux sur la grille ordinateur
+        tableau_ordi.grille[1+bateau.ligne+i][1+bateau.colonne] = bateau.identification; // On place les lettres représentant les bateaux verticaux sur la grille de l'ordinateur
     }
     return tableau_ordi;
 }

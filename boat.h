@@ -51,7 +51,7 @@ Boat position_bateau_horizontal(Grid tableau_ordi, Boat bateau);
  * Vérifie et empêche les collisions horizontales entre les bateaux déjà positionnés
  * @param tableau_ordi
  * @param bateau le tableau de bateau
- * @return 1 si il peut y avoir une colision ou 0 si il n'y en a pas
+ * @return 1 si il peut y avoir une collision ou 0 si il n'y en a pas
  */
 int collision_horizontale(Grid tableau_ordi,Boat bateau);
 
@@ -69,7 +69,7 @@ Boat position_bateau_vertical(Grid tableau_ordi, Boat bateau);
  * Vérifie et empêche les collisions verticales entre les bateaux déjà positionnés
  * @param tableau_ordi
  * @param bateau le tableau de bateau
- * @return 1 si il peut y avoir une colision ou 0 si il n'y en a pas
+ * @return 1 si il peut y avoir une collision ou 0 si il n'y en a pas
  */
 int collision_verticale(Grid tableau_ordi,Boat bateau);
 

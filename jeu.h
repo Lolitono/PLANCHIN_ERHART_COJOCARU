@@ -6,15 +6,15 @@
 #define PLANCHIN_ERHART_COJOCARU_JEU_H
 
 typedef struct {
-    int decision;                   // Un nombre choisi aléatoirement par l'ordinateur afin de savoir si il veut bouger un bateau
-    char tableau_active[6];         /* Liste des bateaux pouvant se déplacer prenant sur chauqe case soit la lettre du bateau si celui-ci peut se déplacer,
+    int decision;                   // Un nombre choisi aléatoirement par l'ordinateur afin de savoir s'il veut bouger un bateau
+    char tableau_active[6];         /* Liste des bateaux pouvant se déplacer prenant sur chaque case soit la lettre du bateau si celui-ci peut se déplacer,
                                     soit un espace si il ne peut pas se déplacer */
     int verification_mode_active;   // nombre de bateau ne pouvant pas se déplacer
     int choix_bateau;               // Bateau choisi parmi les bateaux pouvant se déplacer
-    int max_gauche;                 // Déplacement max vers la gauche du bateau choisi
-    int max_droite;                 // Déplacement max vers la droite du bateau choisi
-    int max_haut;                   // Déplacement max vers le haut du bateau choisi
-    int max_bas;                    // Déplacement max vers le bas du bateau choisi
+    int max_gauche;                 // Déplacement maximal vers la gauche du bateau choisi
+    int max_droite;                 // Déplacement maximal vers la droite du bateau choisi
+    int max_haut;                   // Déplacement maximal vers le haut du bateau choisi
+    int max_bas;                    // Déplacement maximal vers le bas du bateau choisi
     int mouvement_bateau;           // Déplacement du bateau choisi
 }Actif;
 
@@ -26,7 +26,7 @@ typedef struct {
 
 /**
  * Affiche le menu avec les trois choix (Démarrer, Charger, Quitter)
- * Le choix "Charger" ne s'affiche pas si il n'y a aucune partie dans la sauvegarde
+ * Le choix "Charger" ne s'affiche pas si il y a aucune partie dans la sauvegarde
  * Message d'erreur si l'utilisateur saisit une lettre incorrecte (en fonction des choix possibles)
  * @param file  fichier de sauvegarde
  * @return une lettre entre D/C/Q en fonction du choix de l'utilisateur

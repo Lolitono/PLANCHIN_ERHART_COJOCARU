@@ -26,13 +26,13 @@ char menu(FILE * file){
     printf("-Quitter (Q)\n\n");
     scanf(" %c", &demarrer);                 // On récupère le choix de l'utilisateur
     demarrer = toupper(demarrer);                   // On le met en majuscule (pour qu'il puisse écrire en majuscule ou minuscule)
-    if(charger == 0){                               // Si il n'y a pas de sauvegarde dans le fichier
+    if(charger == 0){                               // S'il n'y a pas de sauvegarde dans le fichier
         while(demarrer != 'D' && demarrer != 'Q') { // On lui demande de recommencer tant qu'il n'a pas saisit de valeur valide
             printf("Veuillez saisir une reponse valide (D/Q):\n");
             scanf(" %c", &demarrer);         // On récupère le choix de l'utilisateur
             demarrer = toupper(demarrer);           // On met son choix en majuscule
         }
-    } else {                                                            // Si il y a une sauvegarde dans le fichier
+    } else {                                                            // S'il y a une sauvegarde dans le fichier
         while(demarrer != 'D' && demarrer != 'Q' && demarrer != 'C'){   // On lui demande de recommencer tant qu'il n'a pas saisit de valeur valide
             printf("Veuillez saisir une reponse valide (D/C/Q):\n");
             scanf(" %c", &demarrer);                             // On récupère le choix de l'utilisateur
@@ -86,7 +86,7 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
     Actif deplacement_actif={0};
     Impact point_impact;
 
-    if (nombre_tour == 1) {                                             // On donne ces informations si on commence une nouvelle partie
+    if (nombre_tour == 1) {                                             // On affiche ces informations si on commence une nouvelle partie
         affichage_missile_depart(missile);
         printf("Voici le nombre de bateaux que l'ordinateur va placer aleatoirement:\n\n");
         affichage_nb_bateau(bateau, NB_bateau);
@@ -113,7 +113,7 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
                nombre_tour);
 
         if(nombre_tour!=1 && mode=='A') {
-            deplacement_actif.decision = rand()%3;                      // L'ordinateur décide si il veut bouger un bateau ou pas
+            deplacement_actif.decision = rand()%3;                      // L'ordinateur décide s'il veut bouger un bateau ou pas
             if(deplacement_actif.decision != 0) {                       // On a choisi que le bateau avait 2 chances sur 3 de bouger
                 deplacement_actif = verification_deplacement_bateau_mode_active(tableau_ordi,tableau_joueur, bateau ,NB_bateau);
                 if (deplacement_actif.tableau_active[deplacement_actif.choix_bateau] == bateau[deplacement_actif.choix_bateau].identification && deplacement_actif.verification_mode_active!=5){
@@ -129,22 +129,22 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
 
         if (missile_utilise == 'A') {                                                               // Si l'utilisateur utilise un missile d'artillerie
 
-            missile.artillerie = missile.artillerie - 1;                                            // Il en pert un de son inventaire
+            missile.artillerie = missile.artillerie - 1;                                            // Il en pert un dans son inventaire
             tir_artillerie(&tableau_joueur, &tableau_ordi, point_impact, NB_bateau, bateau,mode);
 
         } else if (missile_utilise == 'T') {                                                        // Si l'utilisateur utilise un missile tactique
 
-            missile.tactique = missile.tactique - 1;                                                // Il en pert un de son inventaire
+            missile.tactique = missile.tactique - 1;                                                // Il en pert un dans son inventaire
             tir_tactique(&tableau_joueur, &tableau_ordi, point_impact,NB_bateau,bateau,mode);
 
         } else if (missile_utilise == 'B') {                                                        // Si l'utilisateur utilise une bombe
 
-            missile.bombe = missile.bombe - 1;                                                      // Il en pert une de son inventaire
+            missile.bombe = missile.bombe - 1;                                                      // Il en pert une dans son inventaire
             tir_bombe(&tableau_joueur, &tableau_ordi, point_impact, NB_bateau, bateau,mode);
 
         } else {                                                                                    // Si l'utilisateur utilise un missile simple
 
-            missile.simple = missile.simple - 1;                                                    // Il en pert un de son inventaire
+            missile.simple = missile.simple - 1;                                                    // Il en pert un dans son inventaire
             tir_simple(&tableau_joueur, &tableau_ordi,point_impact,mode,NB_bateau,bateau);
 
         }
@@ -152,7 +152,7 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
         nombre_tour++;                                                                              // Le tour est fini, on l'incrémente donc de 1
         partie = fin_partie(bateau, missile, NB_bateau);
 
-        if (partie==0){                                                                             // Si il reste des munitions à l'utilisateur et des bateaux à détruire
+        if (partie==0){                                                                             // S'il reste des munitions à l'utilisateur et des bateaux à détruire
             printf("\nVoici le nombre de bateaux qu'il vous reste a detruire:\n\n");
             affichage_nb_bateau(bateau, NB_bateau);
             affichage_missile(missile);
@@ -218,7 +218,7 @@ Impact saisie_tir(Grid tableau_joueur){
         }
     }while(verification == 1);                                                                                              // Jusqu'à ce que l'utilisateur choisisse une case valide
 
-    return tir_actuel;                                                                                                      // On retourne les coordonnes du tir
+    return tir_actuel;                                                                                                      // On retourne les coordonnées du tir
 }
 
 
@@ -228,11 +228,11 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
 
     deplacement.verification_mode_active = 0;                                                                               // On part du principe que tout les bateaux peuvent se déplacer
     for (i = 0; i < NB_bateau; i++) {                                                                                       // On fait ceci pour tout les bateaux
-        if (bateau[i].touche == 0) {                                                                                        // Si le bateau n'est pas touche
+        if (bateau[i].touche == 0) {                                                                                        // Si le bateau n'est pas touché
             deplacement.tableau_active[i] = bateau[i].identification;                                                       // Il aura la possibilité de se déplacer
         } else {                                                                                                            // Sinon
             deplacement.tableau_active[i] = ' ';                                                                            // Il ne pourra pas se déplacer
-            deplacement.verification_mode_active++;                                                                         // On incrémente de 1 le nombre de bateaux non déplacables
+            deplacement.verification_mode_active++;                                                                         // On incrémente de 1 le nombre de bateaux non déplaçables
         }
     }
     deplacement.tableau_active[i] = '\0';                                                                                   // On rajoute le caractère de fin de chaîne pour finir le tablaeu
@@ -261,7 +261,7 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
                         deplacement.max_gauche++;                                           // On incrémente le déplacement maximal vers la gauche de 1
                     }
                     i++;                                                                    // On incrémente le compteur de 1
-                } while (i < 4 && deplacement.max_gauche + 1 == i);                         // On répète jusqu'à ce que le déplacement maximaximal soit égal à 3 ou qu'il y ait un bateau sur la route
+                } while (i < 4 && deplacement.max_gauche + 1 == i);                         // On répète jusqu'à ce que le déplacement maximal soit égal à 3 ou qu'il y ait un bateau sur la route
 
                 //printf("deplacement max gauche : %d\n", deplacement_max_gauche); // Ligne à décommenter si vous voulez voir le déplacement max gauche du bateau choisi
 
@@ -308,9 +308,9 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
                 deplacement.verification_mode_active++;                                     // On incrémente de 1 le nombre de bateaux non déplaçables
             }
 
-        } while (deplacement.tableau_active[deplacement.choix_bateau] == ' ' && deplacement.verification_mode_active != 5); // On regarde si un bateau est déplacebale tant qu'on n'a pas trouvé de bateau déplaçable et qu'il en reste au moins 1
+        } while (deplacement.tableau_active[deplacement.choix_bateau] == ' ' && deplacement.verification_mode_active != 5); // On regarde si un bateau est déplaçable tant qu'on n'a pas trouvé de bateau déplaçable et qu'il en reste au moins 1
     } else{                                     // Si aucun bateau ne peut se déplacer
-        deplacement.choix_bateau = 0;           // On prends un bateau qui ne peut pas se déplacer
+        deplacement.choix_bateau = 0;           // On prend un bateau qui ne peut pas se déplacer
     }
     return deplacement;
 }
@@ -336,7 +336,7 @@ Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Boat bateau[], Actif dep
             }
             bateau[deplacement.choix_bateau].colonne = bateau[deplacement.choix_bateau].colonne + (deplacement.mouvement_bateau - deplacement.max_gauche); // On remplace l'ancienne position sur la colonne par la nouvelle
         }
-        // On a pas besoin de changer la ligne du bateau pour un déplacement horizontal car le bateau se déplace sur la même ligne
+        // On n'a pas besoin de changer la ligne du bateau pour un déplacement horizontal car le bateau se déplace sur la même ligne
 
     } else {                                                                                         // Sinon le bateau à déplacer est vertical
         deplacement.mouvement_bateau = rand() % (deplacement.max_bas + deplacement.max_haut) + 1;    // On choisit aléatoirement le déplacement du bateau sur la verticale
@@ -353,7 +353,7 @@ Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Boat bateau[], Actif dep
             }
             bateau[deplacement.choix_bateau].ligne =bateau[deplacement.choix_bateau].ligne + (deplacement.mouvement_bateau - deplacement.max_haut); // On remplace l'ancienne position sur la colonne par la nouvelle
         }
-        // On a pas besoin de changer la colonne du bateau pour un déplacement vertical car le bateau se déplace sur la même colonne
+        // On n'a pas besoin de changer la colonne du bateau pour un déplacement vertical car le bateau se déplace sur la même colonne
     }
     //printf("Un bateau de taille %d s'est deplace en nouvelle position : %c %d \n",bateau[choix_bateau].taille_bateau, 'A' + bateau[choix_bateau].colonne,bateau[choix_bateau].ligne); // Ligne à décommenter si vous voulez voir la nouvelle position du bateau choisi
     printf("Un bateau s'est deplace");
@@ -367,7 +367,7 @@ int fin_partie(Boat bateau[],Inventory missile,int NB_bateau){
     int touche=0;
     int partie;
     for (i=0;i<NB_bateau;i++){                              // On répète cette boucle pour chaque bateau
-        if (bateau[i].touche == bateau[i].taille_bateau) {  // Si un bateau est touché autant de fois qu'il a de cases (si il est coulé)
+        if (bateau[i].touche == bateau[i].taille_bateau) {  // Si un bateau est touché autant de fois qu'il a de cases (s'il est coulé)
             touche++;                                       // On incremente le nombre de bateaux coulés de 1
         }
     }
@@ -404,7 +404,7 @@ char recommencer()
     printf("Voulez vous rejouer? (O/N)\n");
     scanf(" %c", &rejouer);
     rejouer = toupper(rejouer);
-    while(rejouer != 'O' && rejouer != 'N')                             //Tant que l'utilisateur ne saisi pas une lettre correcte, on redemande
+    while(rejouer != 'O' && rejouer != 'N')                             //Tant que l'utilisateur ne saisit pas une lettre correcte, on redemande
     {
         printf("Veuillez saisir une reponse valide (O/N).\n");
         scanf(" %c", &rejouer);

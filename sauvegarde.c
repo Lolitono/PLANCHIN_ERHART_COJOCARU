@@ -17,10 +17,10 @@ int demande_sauvegarde(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inven
     char quitter[5]={0};
 
     rewind(file);
-    fgets(temp,5,file);             // On prend le chiffre au tout début du fichier pour voir si il y a une sauvegarde dans ce fichier
+    fgets(temp,5,file);             // On prend le chiffre au tout début du fichier pour voir s'il y a une sauvegarde dans ce fichier
     verification=atoi(temp);
     fclose(file);
-    if(verification == 0){                    // Si il n'y a pas de sauvegarde, on sauvegarde
+    if(verification == 0){                    // S'il n'y a pas de sauvegarde, on sauvegarde
         save(file, tableau_joueur, tableau_ordi, missile, bateau, NB_bateau, nombre_tour, mode);
         partie = 4;
     } else {                                  // Sinon on demande à l'utilisateur si il veut écraser cette sauvegarde
@@ -84,7 +84,7 @@ void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile,
     rewind(file);                                               // On remonte le curseur en haut du fichier
     fprintf(file,"1\n");                                 // On écrit le chiffre 1 pour pouvoir vérifier lors du prochain lancement de programme qu'il y a une sauvegarde
     fprintf(file,"%d\n",NB_bateau);                      // On écrit le nombre total de bateau
-    fprintf(file,"%d\n",nombre_tour);                    // On écrit le nombre de tour ou l'utilisateur s'est arrêté
+    fprintf(file,"%d\n",nombre_tour);                    // On écrit le nombre de tour où l'utilisateur s'est arrêté
     fprintf(file,"%c\n",mode);                           // On écrit le mode que l'utilisateur a choisi
 
     fprintf(file,"%d\n",missile.artillerie);    // On écrit le nombre de missiles d'artillerie restants à l'utilisateur
@@ -96,7 +96,7 @@ void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile,
         fprintf(file,"%d\n",bateau[i].taille_bateau);   // sa taille
         fprintf(file,"%d\n",bateau[i].ligne);           // sa ligne définissant sa position dans le tableau
         fprintf(file,"%d\n",bateau[i].colonne);         // sa colonne définissant sa position dans le tableau
-        fprintf(file,"%d\n",bateau[i].H_V);             // son horizontalité ou verticalité
+        fprintf(file,"%d\n",bateau[i].H_V);             // son orientation
         fprintf(file,"%d\n",bateau[i].touche);          // le nombre de fois que le bateau a été touché pendant la partie
         fprintf(file,"%c\n",bateau[i].identification);  // sa lettre qui permet de l'identifier sur la tableau de l'ordinateur
     }
@@ -104,15 +104,15 @@ void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile,
 
     for(i=0;i<tableau_joueur.hauteur;i++){
         for(j=0;j<tableau_joueur.largeur;j++) {
-            fprintf(file,"%c",tableau_joueur.grille[i][j]);     // Chaque cases du tableau du joueur sont stockées dans le fichier
+            fprintf(file,"%c",tableau_joueur.grille[i][j]);     // On écrit chaque cases du tableau du joueur dans le fichier
         }
-        fprintf(file,"\n");                                     // On saute une ligne pour respecter le rendu visuel du tableau et le format du tableau
+        fprintf(file,"\n");                                     // On saute une ligne pour respecter le rendu visuel du tableau et son format
     }
     for(i=0;i<tableau_ordi.hauteur;i++){
         for(j=0;j<tableau_ordi.largeur;j++) {
-            fprintf(file,"%c",tableau_ordi.grille[i][j]);       // Chaque cases du tableau de l'ordinateur sont stockées dans le fichier
+            fprintf(file,"%c",tableau_ordi.grille[i][j]);       // On écrit chaque cases du tableau de l'ordinateur dans le fichier
         }
-        fprintf(file,"\n");                                     // On saute une ligne pour respecter le rendu visuel du tableau et le format du tableau
+        fprintf(file,"\n");                                     // On saute une ligne pour respecter le rendu visuel du tableau et son format
     }
     fclose(file);
 }
@@ -130,54 +130,54 @@ int load(FILE* file){
     rewind(file);
     char temp[20]={0};
 
-    fgets(temp, 20, file);  // On saute le chiffre permattant de savoir si il y a une sauvegarde ou pas
+    fgets(temp, 20, file);            // On saute la récupération du chiffre permattant de savoir si il y a une sauvegarde ou pas
 
     fgets(temp, 20, file);
-    NB_bateau = atoi(temp);
+    NB_bateau = atoi(temp);                     // On récupère le nombre total de bateau
     fgets(temp, 20, file);
-    nombre_tour = atoi(temp);
+    nombre_tour = atoi(temp);                   // On récupère le nombre de tour où l'utilisateur s'est arrêté
     fgets(temp, 20, file);
-    mode = temp[0];
+    mode = temp[0];                             // On récupère le mode que l'utilisateur a choisi
 
 
     fgets(temp, 20, file);
-    missile.artillerie = atoi(temp);
+    missile.artillerie = atoi(temp);            // On récupère le nombre de missiles d'artillerie restants à l'utilisateur
     fgets(temp, 20, file);
-    missile.tactique = atoi(temp);
+    missile.tactique = atoi(temp);              // On récupère le nombre de missiles tactiques restants à l'utilisateur
     fgets(temp, 20, file);
-    missile.bombe = atoi(temp);
+    missile.bombe = atoi(temp);                 // On récupère le nombre de bombes restantes à l'utilisateur
     fgets(temp, 20, file);
-    missile.simple = atoi(temp);
+    missile.simple = atoi(temp);                // On récupère le nombre de missiles simples restants à l'utilisateur
 
     Boat bateau[NB_bateau];
-    for(i=0;i<NB_bateau;i++){
+    for(i=0;i<NB_bateau;i++){                   // Pour chaque bateau on récupère :
         fgets(temp, 20, file);
-        bateau[i].taille_bateau = atoi(temp);
+        bateau[i].taille_bateau = atoi(temp);   // sa taille
         fgets(temp, 20, file);
-        bateau[i].ligne = atoi(temp);
+        bateau[i].ligne = atoi(temp);           // sa ligne définissant sa position dans le tableau
         fgets(temp, 20, file);
-        bateau[i].colonne = atoi(temp);
+        bateau[i].colonne = atoi(temp);         // sa colonne définissant sa position dans le tableau
         fgets(temp, 20, file);
-        bateau[i].H_V = atoi(temp);
+        bateau[i].H_V = atoi(temp);             // son orientation
         fgets(temp, 20, file);
-        bateau[i].touche = atoi(temp);
+        bateau[i].touche = atoi(temp);          // le nombre de fois que le bateau a été touché pendant la partie
         fgets(temp, 20, file);
-        bateau[i].identification=temp[0];
+        bateau[i].identification=temp[0];       // sa lettre qui permet de l'identifier sur la tableau de l'ordinateur
     }
 
     for(i=0;i<tableau_joueur.hauteur;i++){
-        fgets(temp, 20, file);
+        fgets(temp, 20, file);              // On récupère chaque cases du tableau du joueur dans le fichier
         for(j=0;j<tableau_joueur.largeur;j++){
-            tableau_joueur.grille[i][j] = temp[j];
+            tableau_joueur.grille[i][j] = temp[j];    // On associe chaque ligne du fichier à la case correspondante du tableau
         }
     }
     for(i=0;i<tableau_ordi.hauteur;i++){
-        fgets(temp, 20, file);
+        fgets(temp, 20, file);              // On récupère chaque cases du tableau de l'ordinateur dans le fichier
         for(j=0;j<tableau_ordi.largeur;j++){
-            tableau_ordi.grille[i][j] = temp[j];
+            tableau_ordi.grille[i][j] = temp[j];      // On associe chaque ligne du fichier à la case correspondante du tableau
         }
     }
     fclose(file);
-    partie = game(tableau_joueur, tableau_ordi, missile, bateau, NB_bateau, mode, nombre_tour,1);
+    partie = game(tableau_joueur, tableau_ordi, missile, bateau, NB_bateau, mode, nombre_tour,1); // On lance la aprtie avec les données chargées
     return partie;
 }

@@ -33,7 +33,7 @@ int demande_sauvegarde(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inven
  * Nombre de tour sauvegardé
  * Mode sauvegardé
  * Nombre de missiles restants sauvegardé
- * Taille, Ligne, Colonne, Sens, Cases touchées et identification de chauqe bateau sauvegardé
+ * Taille, Ligne, Colonne, Orientation, Cases touchées et identification de chaque bateau sauvegardé
  * Tableau joueur et ordinateur sauvegardé
  * @param file le fichier de sauvegarde
  * @param tableau_joueur
@@ -50,6 +50,7 @@ void save(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile,
 /**
  * Récupère les données sauvegardées dans la fonction save
  * Partie chargée devient la partie en cours
+ * On lance la partie avec les données chargées
  * @param file
  * @return un nombre définissant si la partie est finie ou non ou doit etre sauvegardé
  */

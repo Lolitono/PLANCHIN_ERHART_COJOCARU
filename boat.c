@@ -34,7 +34,7 @@ Boat initialisation_bateau(int i,Boat bateau[]){
 
 Boat placement_bateau(Grid tableau_ordi, Boat bateau[], int i){
 
-    if (bateau[i].H_V == 0){                                            // Si la variable H_V pour un bateau i=0
+    if (bateau[i].H_V == 0){                                            // Si la variable H_V pour un bateau =0
         bateau[i] = position_bateau_horizontal(tableau_ordi,bateau[i]); // Le bateau i sera horizontal
     }else{                                                              // Si cette variable est différente de 0
         bateau[i] = position_bateau_vertical(tableau_ordi,bateau[i]);   // Le bateau i sera vertical
