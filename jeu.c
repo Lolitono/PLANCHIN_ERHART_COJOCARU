@@ -7,6 +7,7 @@
 #include <ctype.h>
 #include <string.h>
 #include "jeu.h"
+#include "sauvegarde.h"
 
 char menu(FILE * file){
     char demarrer;
