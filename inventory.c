@@ -6,21 +6,21 @@
 Inventory assignation_missile(char difficulte){
     Inventory inventaire;
 
-    if(difficulte == 'F'){ // Si la difficulté choisie est facile
+    if(difficulte == 'F'){ // Si la difficulté choisie est Facile
         printf("\n===========Difficulte Facile===========\n\n"
                "Voici les missiles dont vous disposez:\n\n");
         inventaire.artillerie = 3;
         inventaire.tactique = 8;
         inventaire.bombe = 4;
         inventaire.simple = 18;
-    } else if (difficulte == 'M'){ // Si la difficulté choisie est moyenne
+    } else if (difficulte == 'M'){ // Si la difficulté choisie est Moyenne
         printf("\n==========Difficulte Moyenne==========\n\n"
                "Voici les missiles dont vous disposez:\n\n");
         inventaire.artillerie = 2;
         inventaire.tactique = 6;
         inventaire.bombe = 2;
         inventaire.simple = 16;
-    } else { // Si la difficulté choisie est difficile
+    } else { // Si la difficulté choisie est Difficile
         printf("\n=========Difficulte Difficile=========\n\n"
                "Voici les missiles dont vous disposez:\n\n");
         inventaire.artillerie = 2;
@@ -51,18 +51,18 @@ void affichage_missile(Inventory missile){
 }
 
 
-char demande_missile(Inventory missile){  // Quel missile veut-il choisir
+char demande_missile(Inventory missile){  // Quel missile veut-il choisir?
     char tir_actuel;
     int verification;
     do{
         printf("\nAvec quel missile voulez_vous tirer (A/T/B/S) ?\n");
         scanf(" %c", &tir_actuel);
-        tir_actuel = toupper(tir_actuel); // On remplace les lettres écrites en minuscule par leur majuscule respective
+        tir_actuel = toupper(tir_actuel); // On remplace les lettres écrites en minuscule par leurs majuscules respectives
         while(  tir_actuel != 'A' && tir_actuel != 'T' && tir_actuel != 'B' && tir_actuel != 'S' ) // Tant que l'utilisateur aura écrit une lettre différente de "a","t","b","s"
         {
             printf("Veuillez saisir une munition valide (A/T/B/S).\n");
             scanf(" %c", &tir_actuel);
-            tir_actuel = toupper(tir_actuel); // On remplace les lettres écrites en minuscule par leur majuscule respective
+            tir_actuel = toupper(tir_actuel); // On remplace les lettres écrites en minuscule par leurs majuscules respectives
         }
         verification = verification_missile(missile,tir_actuel);    // On vérfie si l'utilisateur a encore le missile qu'il a choisi
 
@@ -73,19 +73,19 @@ char demande_missile(Inventory missile){  // Quel missile veut-il choisir
 
 
 int verification_missile(Inventory missile, char tir_actuel){
-    if (tir_actuel=='A' && missile.artillerie==0){ // Si le tir choisi est un tir d'artillerie et qu'il n'en reste pas
+    if (tir_actuel=='A' && missile.artillerie==0){ // Si le missile choisi est un tir d'artillerie et qu'il n'en reste plus
         printf("Vous n'avez plus de missiles d'artillerie...\n");
         return 1;
     }
-    if (tir_actuel=='T' && missile.tactique==0){ // Si le tir choisi est un tir tactique et qu'il n'en reste pas
+    if (tir_actuel=='T' && missile.tactique==0){ // Si le missile choisi est un tir tactique et qu'il n'en reste plus
         printf("Vous n'avez plus de missiles tactiques...\n");
         return 1;
     }
-    if (tir_actuel=='B' && missile.bombe==0){ // Si le tir choisi est une bombe et qu'il n'en reste pas
+    if (tir_actuel=='B' && missile.bombe==0){ // Si le missile choisi est une bombe et qu'il n'en reste plus
         printf("Vous n'avez plus de bombes...\n");
         return 1;
     }
-    if (tir_actuel=='S' && missile.simple==0){ // Si le tir choisi est un tir simple et qu'il n'en reste pas
+    if (tir_actuel=='S' && missile.simple==0){ // Si le missile choisi est un tir simple et qu'il n'en reste plus
         printf("Vous n'avez plus de missiles simples...\n");
         return 1;
     }
