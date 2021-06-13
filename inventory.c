@@ -17,7 +17,7 @@ Inventory assignation_missile(char difficulte){
         printf("\n==========Difficulte Moyenne==========\n\n"
                "Voici les missiles dont vous disposez:\n\n");
         inventaire.artillerie = 2;
-        inventaire.tactique = 6;
+        inventaire.tactique = 5;
         inventaire.bombe = 2;
         inventaire.simple = 16;
     } else { // Si la difficulté choisie est Difficile

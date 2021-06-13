@@ -81,6 +81,7 @@ char demande_difficulte()
 
 
 int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau, char mode, int nombre_tour, int charger){
+    int i,j;
     int partie;
     char missile_utilise,sauvegarde;
     Actif deplacement_actif={0};
@@ -105,6 +106,14 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
         if (mode == 'C' || mode == 'A') {                               // On affiche le tableau sauf si on est en mode Blind
             affichage_tableau(tableau_joueur);
            // affichage_tableau(tableau_ordi); //Décommenter pour voir le tableau de l'ordinateur en même temps que le tableau du joueur et comparer
+        } else {
+            for (i=0;i<tableau_joueur.hauteur;i++){
+                for(j=0;j<tableau_joueur.largeur;j++){
+                    if (tableau_joueur.grille[i][j] =='X') {
+                        printf("Un bateau avait ete touche en %c%d.\n", 'A' + j - 1, i-1);   // On indique à l'utilisateur la position où le missile a touché un bateau si on est en mode "Blind"
+                    }
+                }
+            }
         }
     }
 
