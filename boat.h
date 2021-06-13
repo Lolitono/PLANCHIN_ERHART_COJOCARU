@@ -19,7 +19,7 @@ typedef struct {
 #include "inventory.h"
 
 /**
- * Initialise la taille du bateau
+ * Initialise la taille du bateau, son orientation, son nombre de cases touchées (0 au début) et assigne une lettre identificatrice à chaque bateau
  * @param i
  * @param bateau tableau des bateaux
  * @return la taille, l'orientation, le nombre de cases touchées et la lettre identificatrice du bateau selectionnée

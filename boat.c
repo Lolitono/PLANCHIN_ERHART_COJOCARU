@@ -16,13 +16,13 @@ Boat initialisation_bateau(int i,Boat bateau[]){
             bateau[i].taille_bateau = 3;
             break;
         case 2 :
-            bateau.taille_bateau = 3;
+            bateau[i].taille_bateau = 3;
             break;
         case 3 :
             bateau[i].taille_bateau = 4;
             break;
         case 4 :
-            bateau.taille_bateau = 5;
+            bateau[i].taille_bateau = 5;
             break;
     }
     bateau[i].touche = 0;                                           // initialement aucun bateau n'est touché
