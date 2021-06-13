@@ -28,8 +28,8 @@ typedef struct {
  * Affiche le menu avec les trois choix (Démarrer, Charger, Quitter)
  * Le choix "Charger" ne s'affiche pas si il y a aucune partie dans la sauvegarde
  * Message d'erreur si l'utilisateur saisit une lettre incorrecte (en fonction des choix possibles)
- * @param file  fichier de sauvegarde
- * @return une lettre entre D/C/Q en fonction du choix de l'utilisateur
+ * @param file Le fichier de sauvegarde
+ * @return Une lettre entre D/C/Q en fonction du choix de l'utilisateur
  */
 char menu(FILE * file);
 
@@ -37,14 +37,14 @@ char menu(FILE * file);
 /**
  * Affiche les modes disponibles et demande au joueur lequel il souhaite utiliser
  * Message d'erreur si l'utilisateur saisit une lettre incorrecte
- * @return une lettre entre F/M/D pour le niveau de difficulté associé
+ * @return Le mode de jeu choisi par l'utilisateur (C/B/A)
  */
 char demande_mode();
 
 
 /**
  * Demande à l'utilisateur de choisir la difficulté du jeu
- * @return la réponse de l'utilisateur
+ * @return La réponse de l'utilisateur
  */
 char demande_difficulte();
 
@@ -60,15 +60,15 @@ char demande_difficulte();
  * Tire un missile et montre le tableau avec les changements (bateau touché ou non)
  * Demande à l'utilisateur s'il veut sauvegarder ou continuer à la fin de chaque tour
  * Ouvre un fichier "sauvegarde_jeu.txt" si l'utilisateur choisi de sauvegarder
- * @param tableau_joueur
- * @param tableau_ordi
- * @param missile
- * @param bateau le tableau de bateau
- * @param NB_bateau Nombre de bateau au total
- * @param mode mode de jeu choisi par l'utilisateur
- * @param nombre_tour nombre de tour de la partie
- * @param charger
- * @return un nombre définissant si la partie est finie ou non ou doit être sauvegardé
+ * @param tableau_joueur Le tableau de l'utilisateur
+ * @param tableau_ordi Le tableau de l'ordinateur
+ * @param missile L'inventaire des missiles possédés par l'utilisateur
+ * @param bateau Le tableau de bateau
+ * @param NB_bateau Le nombre de bateau au total (5)
+ * @param mode Le mode de jeu choisi par l'utilisateur
+ * @param nombre_tour Le nombre de tour de la partie
+ * @param charger Un nombre entre 0 et 1 (0 = partie non chargée, 1 = partie chargée)
+ * @return Un nombre définissant si la partie est finie ou non ou doit être sauvegardé
  */
 int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau,char mode,int nombre_tour, int charger);
 
@@ -76,8 +76,8 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
 /**
  * Demande où l'utilisateur veut tirer
  * Message d'erreur si l'utilisateur tire sur une case inconnue ou s'il tire sur une case déjà touchée
- * @param tableau_joueur
- * @return le point d'impact du missile tiré
+ * @param tableau_joueur Le tableau de l'utilisateur
+ * @return Le point d'impact du missile tiré
  */
 Impact saisie_tir(Grid tableau_joueur);
 
@@ -85,20 +85,20 @@ Impact saisie_tir(Grid tableau_joueur);
 /**
  * Vérifie parmi tous les bateaux si un ou plusieurs bateaux sont touchés
  * Prends un bateau au hasard dans le tableau et regarde ses déplacements maximum à l'horizontal ou à la vertical
- * @param tableau_ordi
- * @param tableau_joueur
- * @param bateau
- * @param NB_bateau
- * @return la structure Actif avec les déplacements max du bateau choisi
+ * @param tableau_ordi Le tableau de l'ordinateur
+ * @param tableau_joueur Le tableau de l'utilisateur
+ * @param bateau Le tableau de bateau
+ * @param NB_bateau Le nombre de bateau au total (5)
+ * @return La structure Actif avec les déplacements max du bateau choisi
  */
 Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tableau_joueur, Boat bateau[],int NB_bateau);
 
 
 /**
  * Déplace le bateau choisi par l'ordinateur d'une distance aléatoire en fonction de ses déplacements maximums
- * @param tableau_ordi
- * @param bateau
- * @param deplacement Les déplacements max du bateau choisi
+ * @param tableau_ordi Le tableau de l'ordinateur
+ * @param bateau Le tableau de bateau
+ * @param deplacement La structure Actif avec les déplacements max du bateau choisi
  * @return La nouvelle position du bateau
  */
 Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Boat bateau[],Actif deplacement);
@@ -106,17 +106,17 @@ Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Boat bateau[],Actif depl
 
 /**
  * Conditionne la victoire ou la défaite en fonction du nombre de missiles restants ou des bateaux coulés
- * @param bateau
- * @param missile
- * @param NB_bateau
- * @return Un chiffre selon le resultat de la partie (Victoire, Défaite, Sauvegarde ou Pas encore finie)
+ * @param bateau Le tableau de bateau
+ * @param missile L'inventaire des missiles possédés par l'utilisateur
+ * @param NB_bateau Le nombre de bateau au total (5)
+ * @return Un chiffre selon le resultat de la partie (1 ou 2 = Victoire, 3 = Défaite ou 0 = Pas encore finie)
  */
 int fin_partie(Boat bateau[],Inventory missile,int NB_bateau);
 
 
 /**
  * Affiche le résultat de la partie (Victoire, Défaite ou Sauvegarde)
- * @param partie
+ * @param partie Le chiffre signifiant le résultat de la partie (1 = partie gagnée, 2 = partie gagnée de peu, 3 = partie perdue)
  */
 void partie_finie(int partie);
 
@@ -124,7 +124,7 @@ void partie_finie(int partie);
 /**
  * Demande à l'utilisateur si il souhaite recommencer une partie
  * Message d'erreur si l'utilisateur saisit une lettre incorrecte
- * @return le choix de l'utilisateur entre entre 0(Oui)/N(Non)
+ * @return Le choix de l'utilisateur entre entre 0(Oui)/N(Non)
  */
 char recommencer();
 
