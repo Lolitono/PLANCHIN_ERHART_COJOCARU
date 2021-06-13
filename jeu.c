@@ -5,15 +5,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <string.h>
 #include "jeu.h"
-#include "sauvegarde.h"
+
 
 char menu(FILE * file){
     char demarrer;
     int charger;
     char temp[5];
-
 
     rewind(file); //on remonte le curseur en haut du fichier
     fgets(temp, 20, file); // on saisit la première valeur du fichier
@@ -41,9 +39,9 @@ char menu(FILE * file){
             demarrer = toupper(demarrer); //on le met en majuscule
         }
     }
-
     return demarrer;
 }
+
 
 char demande_mode(){
     char mode;
@@ -80,6 +78,7 @@ char demande_difficulte()
     }
     return rep; //retourne le choix de l'utilisateur
 }
+
 
 int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau, char mode, int nombre_tour, int charger){
     int partie;
@@ -184,6 +183,7 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
     return partie; // on retourne la situation de la partie (continue/gagnée/sauvegardée/perdue)
 }
 
+
 Impact saisie_tir(Grid tableau_joueur){
     Impact tir_actuel;
     char ligne[2]={0};
@@ -221,6 +221,7 @@ Impact saisie_tir(Grid tableau_joueur){
     return tir_actuel; // on retourne les coordonnes du tir
 }
 
+
 Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tableau_joueur, Boat bateau[],int NB_bateau){
     int i,j;
     Actif deplacement;
@@ -235,7 +236,7 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
         }
     }
     deplacement.tableau_active[i] = '\0'; // on rajoute le caractère de finde chaîne
-    //printf("%s", tableau_active);
+    //printf("%s\n", tableau_active); //Ligne à décommenter pour voir les bateaux pouvant ce déplacer
 
     if (deplacement.verification_mode_active != 5) { // si il reste au moins un bateau non touche
 
@@ -244,7 +245,7 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
                 deplacement.choix_bateau = rand() % 5;
             } while (deplacement.tableau_active[deplacement.choix_bateau] == ' '); // Choix d'un bateau aléatoire non touché
 
-            //printf("bateau choisie : %c, H_V = %d", bateau[choix_bateau].identification,bateau[choix_bateau].H_V);
+            //printf("bateau choisie : %c, H_V = %d\n", bateau[choix_bateau].identification,bateau[choix_bateau].H_V); // Ligne à décommenter si vous voulez voir le bateau choisi ainsi que son orientation pour avoir une idée des deplacements possibles de ce bateau
             deplacement.max_gauche = 0;
             deplacement.max_droite = 0;
             deplacement.max_haut = 0;
@@ -266,7 +267,7 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
                     i++;
                 } while (i < 4 && deplacement.max_gauche + 1 == i); // jusqu'a ce que le déplacement max soit 3 ou qu'il y ait un bateau sur la route
 
-                //printf("deplacement max gauche : %d", deplacement_max_gauche); // Ligne à décommenter si vous voulez voir le déplacement max gauche du bateau choisi
+                //printf("deplacement max gauche : %d\n", deplacement_max_gauche); // Ligne à décommenter si vous voulez voir le déplacement max gauche du bateau choisi
 
                 do {
                     if (tableau_joueur.grille[bateau[deplacement.choix_bateau].ligne + 1][bateau[deplacement.choix_bateau].colonne +
@@ -280,7 +281,7 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
                     j++;
                 } while (j < 3 && deplacement.max_droite == j);//jusqu'a ce que le déplacement max soit 3 ou qu'il y ait un bateau sur la route
 
-                //printf("deplacement max droite : %d", deplacement_max_droite); // Ligne à décommenter si vous voulez voir le déplacement max droite du bateau choisi
+                //printf("deplacement max droite : %d\n", deplacement_max_droite); // Ligne à décommenter si vous voulez voir le déplacement max droite du bateau choisi
 
             } else { // on fait la même démarche mais pour les bateaux verticaux ayant qui se déplaceront vers le haut ou le bas
 
@@ -296,7 +297,7 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
                     i++;
                 } while (i < 4 && deplacement.max_haut + 1 == i);
 
-                //printf("deplacement max haut : %d", deplacement_max_haut); // Ligne à décommenter si vous voulez voir le déplacement max haut du bateau choisi
+                //printf("deplacement max haut : %d\n", deplacement_max_haut); // Ligne à décommenter si vous voulez voir le déplacement max haut du bateau choisi
 
                 do {
                     if (tableau_joueur.grille[bateau[deplacement.choix_bateau].ligne +
@@ -310,10 +311,9 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
                     j++;
                 } while (j < 3 && deplacement.max_bas == j);
 
-                //printf("deplacement max bas : %d", deplacement_max_bas); // Ligne à décommenter si vous voulez voir le déplacement max bas du bateau choisi
+                //printf("deplacement max bas : %d\n", deplacement_max_bas); // Ligne à décommenter si vous voulez voir le déplacement max bas du bateau choisi
 
             }
-
 
             if (deplacement.max_droite == 0 && deplacement.max_gauche == 0 && deplacement.max_bas == 0 &&
                 deplacement.max_haut == 0) { // si la baeatu choisi n'a pas de déplacement possible

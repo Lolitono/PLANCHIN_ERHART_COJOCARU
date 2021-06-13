@@ -25,11 +25,12 @@ Boat initialisation_bateau(int i,Boat bateau[]){
             bateau[i].taille_bateau = 5;
             break;
     }
-    bateau[i].touche = 0;                                           // initialement aucun bateau n'est touché
+    bateau[i].touche = 0;                                           // Initialement aucun bateau n'est touché
     bateau[i].H_V = rand() % 2;                                     // 0 = horizontal, 1 = vertical
-    bateau[i].identification = 'A' + i;                             // lettre permettant d'identifier chaque bateau
+    bateau[i].identification = 'A' + i;                             // Lettre permettant d'identifier chaque bateau
     return bateau[i];
 }
+
 
 Boat placement_bateau(Grid tableau_ordi, Boat bateau[], int i){
 
@@ -42,6 +43,7 @@ Boat placement_bateau(Grid tableau_ordi, Boat bateau[], int i){
     return bateau[i];
 }
 
+
 Boat position_bateau_horizontal(Grid tableau_ordi, Boat bateau)
 {
     do{
@@ -50,6 +52,7 @@ Boat position_bateau_horizontal(Grid tableau_ordi, Boat bateau)
     }while(collision_horizontale(tableau_ordi,bateau)==1);  // On répète tant qu'il y une collison avec un autre bateau
     return bateau;
 }
+
 
 int collision_horizontale(Grid tableau_ordi,Boat bateau){
     int i;
@@ -87,7 +90,7 @@ void affichage_nb_bateau(Boat bateau[],int NB_bateau) {
     int i;
 
     for (i = 0; i < NB_bateau; i++) {
-        if (bateau[i].touche == bateau[i].taille_bateau) {      // On regarde si un bateau est coulé (c'est à dire que la taille du bateau est égale au nombre de fois que le bateau a été touché
+        if (bateau[i].touche == bateau[i].taille_bateau) {      // On regarde si un bateau est coulé (c'est à dire que la taille du bateau est égale au nombre de fois que le bateau a été touché)
             printf("Vous avez coule un bateau de taille %d.\n", bateau[i].taille_bateau);
         } else {
             printf("-Bateau de taille %d | Nombre de cases touchees = %d\n\n", bateau[i].taille_bateau, bateau[i].touche);

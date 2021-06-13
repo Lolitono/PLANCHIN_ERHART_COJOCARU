@@ -15,23 +15,22 @@ int main() {
 
     srand(time(0));
 
-    // FILE *file = fopen("sauvegarde_jeu.txt", "w");       /*
-    //  fprintf(file,"0");                                    3 lignes à décommenter pour initialiser le fichier de sauvegarde
-    // fclose(file);                                         */
+    //FILE *file = fopen("sauvegarde_jeu.txt", "w");           //
+    //fprintf(file,"0");                                       // 3 lignes à décommenter pour initialiser le fichier de sauvegarde
+    //fclose(file);                                            //
 
-    FILE *file = fopen("sauvegarde_jeu.txt", "r");  // ligne à commenter si aucun fichier de sauvegarde n'existe
+    FILE *file = fopen("sauvegarde_jeu.txt", "r");  // Ligne à commenter si aucun fichier de sauvegarde n'existe et décommenter les 3 lignes ci-dessus pour en créer un
 
     demarrer = menu(file);
     fclose(file);
 
     if (demarrer == 'D'){
         do {
-
-            mode = demande_mode();                          // On demande le mode de jeu auquelle l'utilisateur veut jouer
-            rejouer = demande_difficulte();                 // On demande la difficulté
-            missile = assignation_missile(rejouer);         // On assigne le nombre de missile en fonction de la difficulté
-            tableau_joueur = initialisation_tableau();      // On initialise le tableau joueur
-            tableau_ordi = initialisation_tableau_ordi();   // On initialise le tableau ordi
+            mode = demande_mode();
+            rejouer = demande_difficulte();
+            missile = assignation_missile(rejouer);
+            tableau_joueur = initialisation_tableau();
+            tableau_ordi = initialisation_tableau_ordi();
 
             for (i = 0; i < NB_bateau; i++) {
                 bateau[i] = initialisation_bateau(i,bateau);
@@ -39,39 +38,39 @@ int main() {
                 tableau_ordi = placement_grille_bateau(tableau_ordi, bateau, i);
             }
 
-            //JEU
             nombre_tour=1;
             partie = game(tableau_joueur,tableau_ordi, missile,bateau,NB_bateau,mode,nombre_tour,0);
             partie_finie(partie);
             if(partie == 4 || partie == 5){
-                return 0;
+                return 0;           // On arrête le programme si l'utilisateur sauvegarde la partie ou quitte une partie pour ne pas écraser la sauvegarde
             }
             rejouer = recommencer();
 
         }while(rejouer == 'O');
 
-        return 0;
+        return 0;                   // On arrête le programme si l'utilisateur ne veut pas recommencer une nouvelle partie
 
     } else if (demarrer == 'C'){
 
-        FILE *file = fopen("sauvegarde_jeu.txt", "r"); //on ouvre le fichier en lecture seule
-        if(file != NULL) { //on vérifie qu'il n'y a pas de problèmes avec le ficher
+        FILE *file = fopen("sauvegarde_jeu.txt", "r");       // On ouvre le fichier en lecture seule
+        if(file != NULL) {                                                  // On vérifie qu'il n'y a pas de problèmes avec le ficher
             partie = load(file);
             partie_finie(partie);
-            if(partie == 4 || partie == 5){ //si on veut sauvegarder la partie
+            if(partie == 4 || partie == 5){                                 // On arrête le programme si l'utilisateur sauvegarde la partie ou quitte une partie pour ne pas écraser la sauvegarde
                 return 0;
             }
-            FILE *file = fopen("sauvegarde_jeu.txt", "w");
+            FILE *file = fopen("sauvegarde_jeu.txt", "w");   // On efface la sauvegarde si on a fini une partie chargée
             fprintf(file,"0");
             fclose(file);
+
             rejouer = recommencer();
             if(rejouer == 'O'){
                 do {
-                    mode = demande_mode();                          // On demande le mode de jeu auquelle l'utilisateur veut jouer
-                    rejouer = demande_difficulte();                 // On demande la difficulté
-                    missile = assignation_missile(rejouer);         // On assigne le nombre de missile en fonction de la difficulté
-                    tableau_joueur = initialisation_tableau();      // On initialise le tableau joueur
-                    tableau_ordi = initialisation_tableau_ordi();   // On initialise le tableau ordi
+                    mode = demande_mode();
+                    rejouer = demande_difficulte();
+                    missile = assignation_missile(rejouer);
+                    tableau_joueur = initialisation_tableau();
+                    tableau_ordi = initialisation_tableau_ordi();
 
                     for (i = 0; i < NB_bateau; i++) {
                         bateau[i] = initialisation_bateau(i,bateau);
@@ -83,21 +82,20 @@ int main() {
                     printf("Voici le nombre de bateaux que l'ordinateur va placer aleatoirement:\n\n");
                     affichage_nb_bateau(bateau, NB_bateau);
 
-                    //JEU
-                    nombre_tour = 1; //on est au premier tour
+                    nombre_tour = 1;            // On est au premier tour
                     partie = game(tableau_joueur,tableau_ordi, missile,bateau,NB_bateau,mode,nombre_tour,0);
                     partie_finie(partie);
                     if(partie == 4 || partie == 5){
-                        return 0;
+                        return 0;               // On arrête le programme si l'utilisateur sauvegarde la partie ou quitte une partie pour ne pas écraser la sauvegarde
                     }
                     rejouer = recommencer();
                 }while(rejouer == '0');
             }
-            return 0;
+            return 0;                           // On arrête le programme si l'utilisateur ne veut pas recommencer une nouvelle partie
         } else {
             printf("Erreur de sauvegarde");
         }
     } else {
-        return 0;
+        return 0;                               // On arrête le programme si l'utilisateur veut quitter le jeu depuis le menu
     }
 }

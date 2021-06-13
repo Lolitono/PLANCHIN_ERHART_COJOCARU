@@ -3,9 +3,7 @@
 //
 
 #include <stdio.h>
-#include<ctype.h>
 #include "grille.h"
-#include <stdlib.h>
 
 Grid initialisation_tableau(){
     Grid tableau;
@@ -16,7 +14,7 @@ Grid initialisation_tableau(){
 
     for(i=0;i<tableau.hauteur;i++){
         for(j=0;j<tableau.largeur;j++) {
-            tableau.grille[i][j] = '_';                                 // Des underscore pour montrer les cases encore non touchées
+            tableau.grille[i][j] = '_';                                 // Des underscores pour montrer les cases encore non touchées
             if ((i == 0 || i==11) && (j == 0 || j == 11)) {
                 tableau.grille[i][j] = ' ';                             // Des espaces aux coins du tableau pour le visuel
             } else if ((i == 0 && i != j) || (i == 11 && i != j)) {
@@ -26,9 +24,9 @@ Grid initialisation_tableau(){
             }
         }
     }
-
     return tableau;
 }
+
 
 Grid initialisation_tableau_ordi(){
     Grid tableau;
@@ -40,9 +38,9 @@ Grid initialisation_tableau_ordi(){
         for(j=0;j<tableau.largeur;j++){
             tableau.grille[i][j] = ' ';                                 // Des espaces sur le tableau pour rendre la détection des bateaux plus facile
             if ((i == 0 || i==11) && (j == 0 || j == 11)) {
-                tableau.grille[i][j] = ' ';                             // Des espaces aux coins du tableau pour le visuel si l'on affiche le tableau de l'ordinateur
+                tableau.grille[i][j] = ' ';                             // Des espaces aux coins du tableau pour le visuel si on affiche le tableau de l'ordinateur
             } else if ((i == 0 && i != j) || (i == 11 && i != j)) {
-                tableau.grille[i][j] = '_';                             // Des underscore sur la première et dernière ligne du tableau pour améliorer le visuel si l'on affiche le tableau de l'ordinateur
+                tableau.grille[i][j] = '_';                             // Des underscores sur la première et dernière ligne du tableau pour améliorer le visuel si l'on affiche le tableau de l'ordinateur
             } else if ((j == 0 && j != i) || (j == 11 && j != i)) {
                 tableau.grille[i][j] = '|';                             // Des '|' sur la première et dernière colonne du tableau pour améliorer le visuel si l'on affiche le tableau de l'ordinateur
             }
@@ -50,6 +48,7 @@ Grid initialisation_tableau_ordi(){
     }
     return tableau;
 }
+
 
 Grid placement_grille_bateau(Grid tableau_ordi, Boat bateau[], int i){
 
@@ -61,6 +60,7 @@ Grid placement_grille_bateau(Grid tableau_ordi, Boat bateau[], int i){
 
     return tableau_ordi;
 }
+
 
 Grid placement_horizontal(Grid tableau_ordi,Boat bateau){
     int i;
@@ -81,6 +81,7 @@ Grid placement_vertical(Grid tableau_ordi,Boat bateau){
     }
     return tableau_ordi;
 }
+
 
 void affichage_tableau(Grid tableau)
 {
