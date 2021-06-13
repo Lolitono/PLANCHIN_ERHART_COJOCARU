@@ -6,27 +6,29 @@
 #include <stdlib.h>
 #include "boat.h"
 
-Boat initialisation_bateau(int i){
-    Boat bateau;
+Boat initialisation_bateau(int i,Boat bateau[]){
+
     switch(i) {
         case 0 :
-            bateau.taille_bateau = 2;
+            bateau[i].taille_bateau = 2;
             break;
         case 1 :
-            bateau.taille_bateau = 3;
+            bateau[i].taille_bateau = 3;
             break;
         case 2 :
             bateau.taille_bateau = 3;
             break;
         case 3 :
-            bateau.taille_bateau = 4;
+            bateau[i].taille_bateau = 4;
             break;
         case 4 :
             bateau.taille_bateau = 5;
             break;
     }
-
-    return bateau;
+    bateau[i].touche = 0;                                           // initialement aucun bateau n'est touché
+    bateau[i].H_V = rand() % 2;                                     // 0 = horizontal, 1 = vertical
+    bateau[i].identification = 'A' + i;                             // lettre permettant d'identifier chaque bateau
+    return bateau[i];
 }
 
 Boat placement_bateau(Grid tableau_ordi, Boat bateau[], int i){

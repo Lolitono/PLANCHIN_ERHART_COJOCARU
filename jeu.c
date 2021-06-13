@@ -83,10 +83,7 @@ char demande_difficulte()
 int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau, char mode, int nombre_tour, int charger){
     int partie;
     char missile_utilise,sauvegarde;
-
-
     Actif deplacement_actif={0};
-
     Impact point_impact;
 
     if (nombre_tour == 1) { //on donne ces informations si on est au premier tour
@@ -110,14 +107,12 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
             affichage_tableau(tableau_ordi); //Décommenter pour voir le tableau de l'ordinateur en même temps que le tableau du joueur et comparer
         }
     }
+
     do {
         printf("\n\n=======================================\nTOUR %d\n=======================================\n\n",
                nombre_tour);
 
-
-
         if(nombre_tour!=1 && mode=='A') {
-
             deplacement_actif.decision = rand()%3; // Decision de l'ordi si il veut bouger un bateau ou pas
             if(deplacement_actif.decision != 0) { //Nous avons choisi que le bateau avait 2 chances sur 3 de bouger
                 deplacement_actif = verification_deplacement_bateau_mode_active(tableau_ordi,tableau_joueur, bateau ,NB_bateau);
@@ -128,12 +123,12 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
             }
         }
 
-
         missile_utilise = demande_missile(missile);
         point_impact = saisie_tir(tableau_joueur);
         printf("Le missile tombera en %c%d.\n\n", 'A' + point_impact.colonne, point_impact.ligne);
 
         if (missile_utilise == 'A') { //si l'utilisateur utilise un missile d'artillerie
+
             missile.artillerie = missile.artillerie - 1; //il en pert un de son inventaire
             tir_artillerie(&tableau_joueur, &tableau_ordi, point_impact, NB_bateau, bateau,mode);
 
@@ -153,6 +148,7 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
             tir_simple(&tableau_joueur, &tableau_ordi,point_impact,mode,NB_bateau,bateau);
 
         }
+
         nombre_tour++; //le tour est fini, on l'incrémente donc de 1
         partie = fin_partie(bateau, missile, NB_bateau);
 
@@ -176,14 +172,14 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
             if (sauvegarde == 'S') { // si l'utilisateur veut sauvegarder
                 FILE *file = fopen("sauvegarde_jeu.txt", "r"); // on ouvre le fichier en mode lecture
                 partie = demande_sauvegarde(file, tableau_joueur, tableau_ordi, missile, bateau, NB_bateau, nombre_tour, mode);
-
             }
         }
-
     } while (partie == 0); // on répète ceci tant que l'utilisateur peut et veut continuer à jouer
+
     if (partie<=3) { // on affiche le tableau sauf si il sauvegarde
         affichage_tableau(tableau_joueur);
     }
+
     return partie; // on retourne la situation de la partie (continue/gagnée/sauvegardée/perdue)
 }
 

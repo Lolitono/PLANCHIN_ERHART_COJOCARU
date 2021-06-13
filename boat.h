@@ -21,9 +21,10 @@ typedef struct {
 /**
  * Initialise la taille du bateau
  * @param i
- * @return la taille du bateau selectionnée
+ * @param bateau tableau des bateaux
+ * @return la taille, l'orientation, le nombre de cases touchées et la lettre identificatrice du bateau selectionnée
  */
-Boat initialisation_bateau(int i);
+Boat initialisation_bateau(int i,Boat bateau[]);
 
 /**
  * Place les bateaux dans la grille de jeu ordinateur en fonction de son horizontalité ou de sa verticalité

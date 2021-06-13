@@ -5,7 +5,6 @@
 
 #define NB_bateau 5
 
-// denis.dubaj@utbm.fr
 int main() {
     int i,demarrer, partie,nombre_tour;
     Grid tableau_joueur;
@@ -35,10 +34,7 @@ int main() {
             tableau_ordi = initialisation_tableau_ordi();   // On initialise le tableau ordi
 
             for (i = 0; i < NB_bateau; i++) {
-                bateau[i] = initialisation_bateau(i);
-                bateau[i].touche = 0;                                           // aucun bateau n'est touché initialement
-                bateau[i].H_V = rand() % 2;                                     //0 = horizontal, 1 = vertical
-                bateau[i].identification = 'A' + i;                             //lettre permettant d'identifier chaque bateau
+                bateau[i] = initialisation_bateau(i,bateau);
                 bateau[i] = placement_bateau(tableau_ordi, bateau, i);
                 tableau_ordi = placement_grille_bateau(tableau_ordi, bateau, i);
             }
@@ -78,10 +74,7 @@ int main() {
                     tableau_ordi = initialisation_tableau_ordi();   // On initialise le tableau ordi
 
                     for (i = 0; i < NB_bateau; i++) {
-                        bateau[i] = initialisation_bateau(i);
-                        bateau[i].touche = 0;                                           // initialement aucun bateau n'est touché
-                        bateau[i].H_V = rand() % 2;                                     //0 = horizontal, 1 = vertical
-                        bateau[i].identification = 'A' + i;                             //lettre permettant d'identifier chaque bateau
+                        bateau[i] = initialisation_bateau(i,bateau);
                         bateau[i] = placement_bateau(tableau_ordi, bateau, i);
                         tableau_ordi = placement_grille_bateau(tableau_ordi, bateau, i);
                     }
