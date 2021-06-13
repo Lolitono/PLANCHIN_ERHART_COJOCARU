@@ -26,7 +26,7 @@ typedef struct {
 
 /**
  * Affiche le menu avec les trois choix (Démarrer, Charger, Quitter)
- * Le choix "Charger" ne s'affiche pas si il n'y a aucune partie en sauvegarde
+ * Le choix "Charger" ne s'affiche pas si il n'y a aucune partie dans la sauvegarde
  * Message d'erreur si l'utilisateur saisit une lettre incorrecte (en fonction des choix possibles)
  * @param file  fichier de sauvegarde
  * @return une lettre entre D/C/Q en fonction du choix de l'utilisateur
@@ -98,7 +98,7 @@ Actif verification_deplacement_bateau_mode_active(Grid tableau_ordi, Grid tablea
  * Déplace le bateau choisi par l'ordinateur d'une distance aléatoire en fonction de ses déplacements maximums
  * @param tableau_ordi
  * @param bateau
- * @param deplacement   les déplacements max du bateau choisi
+ * @param deplacement Les déplacements max du bateau choisi
  * @return La nouvelle position du bateau
  */
 Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Boat bateau[],Actif deplacement);
@@ -109,7 +109,7 @@ Boat deplacement_bateau_mode_active(Grid *tableau_ordi, Boat bateau[],Actif depl
  * @param bateau
  * @param missile
  * @param NB_bateau
- * @return un chiffre selon le resultat de la partie (Victoire, Défaite, Sauvegarde ou Pas encore finie)
+ * @return Un chiffre selon le resultat de la partie (Victoire, Défaite, Sauvegarde ou Pas encore finie)
  */
 int fin_partie(Boat bateau[],Inventory missile,int NB_bateau);
 

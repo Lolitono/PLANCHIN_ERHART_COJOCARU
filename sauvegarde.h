@@ -22,7 +22,7 @@
  * @param NB_bateau
  * @param nombre_tour
  * @param mode
- * @return un chiffre entre 4 et 5 (Sauvegarder ou quitter la partie car on ne veut pas ecraser la sauvegarde)
+ * @return un chiffre entre 4 et 5 (Sauvegarder ou quitter la partie si on ne veut pas ecraser la sauvegarde)
  */
 int demande_sauvegarde(FILE* file, Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[], int NB_bateau, int nombre_tour, char mode);
 

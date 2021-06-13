@@ -35,9 +35,9 @@ Grid initialisation_tableau_ordi();
 
 
 /**
- * Place les bateaux de manière aléatoire horizotalement ou verticalement
+ * Place les bateaux sur le tableau de l'ordianteur en fonction de l'orientation du bateau déterminé au préalable
  * @param tableau_ordi
- * @param bateau
+ * @param bateau tableau de bateau
  * @param i
  * @return le nouveau tableau ordi avec le bateau positionné en fonction de son horizontalité/verticalité et de sa taille
  */
@@ -47,7 +47,7 @@ Grid placement_grille_bateau(Grid tableau_ordi, Boat bateau[], int i);
 /**
  * Place les bateaux horizontalement (de gauche à droite) sur le tableau ordinateur
  * @param tableau_ordi
- * @param bateau
+ * @param bateau un bateau parmi les 5 autres
  * @return La grille de l'ordi avec un bateau placer horizontalement de la gauche vers la droite
  */
 Grid placement_horizontal(Grid tableau_ordi,Boat bateau);
@@ -56,7 +56,7 @@ Grid placement_horizontal(Grid tableau_ordi,Boat bateau);
 /**
  * Place les bateaux verticalement (du haut vers le bas) sur le tableau ordinateur
  * @param tableau_ordi
- * @param bateau
+ * @param bateau un bateau parmi les 5 autres
  * @return La grille de l'ordi avec un bateau placer horizontalement de la gauche vers la droite
  */
 Grid placement_vertical(Grid tableau_ordi,Boat bateau);
@@ -64,7 +64,7 @@ Grid placement_vertical(Grid tableau_ordi,Boat bateau);
 
 /**
  * Affiche le tableau de jeu
- * @param tableau le tabelau que l'on veut afficher
+ * @param tableau le tableau que l'on veut afficher
  */
 void affichage_tableau(Grid tableau);
 

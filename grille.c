@@ -13,14 +13,14 @@ Grid initialisation_tableau(){
     int i,j;
 
     for(i=0;i<tableau.hauteur;i++){
-        for(j=0;j<tableau.largeur;j++) {
+        for(j=0;j<tableau.largeur;j++) {                                // On met différents caractères dans la grille du tableau joueur pour que le visuel soit plus attrayant :
             tableau.grille[i][j] = '_';                                 // Des underscores pour montrer les cases encore non touchées
             if ((i == 0 || i==11) && (j == 0 || j == 11)) {
                 tableau.grille[i][j] = ' ';                             // Des espaces aux coins du tableau pour le visuel
             } else if ((i == 0 && i != j) || (i == 11 && i != j)) {
                 tableau.grille[i][j] = 'A' + (j - 1);                   // Des lettres sur la première et dernière ligne du tableau pour caractériser chaque colonne sur laquelle le joueur pourra lancer un missile
             } else if ((j == 0 && j != i) || (j == 11 && j != i)) {
-                tableau.grille[i][j] = '0' + (i - 1);                   // Des chiffres sur la première et dernière colonne du tableau pour caractériser chaque ligne sur laquelle le joueur pourront lancer un missile
+                tableau.grille[i][j] = '0' + (i - 1);                   // Des chiffres sur la première et dernière colonne du tableau pour caractériser chaque ligne sur laquelle le joueur pourra lancer un missile
             }
         }
     }
