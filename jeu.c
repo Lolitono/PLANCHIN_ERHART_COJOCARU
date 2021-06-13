@@ -104,7 +104,7 @@ int game(Grid tableau_joueur, Grid tableau_ordi, Inventory missile, Boat bateau[
         affichage_missile(missile);
         if (mode == 'C' || mode == 'A') { //on affiche le tableau sauf si on est en mode Blind
             affichage_tableau(tableau_joueur);
-            affichage_tableau(tableau_ordi); //Décommenter pour voir le tableau de l'ordinateur en même temps que le tableau du joueur et comparer
+           // affichage_tableau(tableau_ordi); //Décommenter pour voir le tableau de l'ordinateur en même temps que le tableau du joueur et comparer
         }
     }
 
